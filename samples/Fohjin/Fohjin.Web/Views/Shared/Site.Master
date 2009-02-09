@@ -1,0 +1,113 @@
+﻿<%@ Import Namespace="FubuMVC.Core"%>
+<%@ Import Namespace="Fohjin.Core.Web.DisplayModels"%>
+<%@ Import Namespace="Fohjin.Core.Web.Html"%>
+<%@ Import Namespace="StructureMap"%>
+<%@ Master Language="C#" Inherits="SiteMasterView" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <%= this.PageTitle(Model.SiteName)%>
+    <%= this.MetaTag().AsContentType() %>
+    <%= this.MetaTag().Name("language").Content(Model.LanguageDefault) %>
+    <%= this.MetaTag().Name("robots").Content(Model.SEORobots)%>
+    <%= this.MetaTag().Name("description").Content("example description")%>
+    <%= this.MetaTag().Name("keywords").Content(new[] { "keyword1", "keyword2" })%>
+    <%= this.LinkTag().Rel("shortcut icon").Href("~/content/images/favicon.ico".ToFullUrl())%>
+<%--
+    <%= this.LinkTag().Href("Pingback.Url").AsPingBack()%>
+    <%= this.LinkTag().Rel("EditURI").Href("RsdLink").Type("application/rsd+xml").Title("RSD")%>
+    <%= this.LinkTag().Rel("wlwmanifest").Href("LiveWriterManifest.xml").Type("application/wlwmanifest+xml")%>
+    <%
+        // TODO: Replace this with an IEnumerable from the model
+        var links = new[]
+        {
+            new {url = "link1", type = "application/atom+xml", title = "Link Atom"},
+            new {url = "link2", type = "application/rss+xml", title = "Link RSS"}
+        };
+    %>
+    <%= this.LinkTag().FromList(links, (x,l) => l.AsAlternate().Href(x.url).Type(x.type).Title(x.title)).Indent("    ")%>
+    <%= this.LinkTag().Href("OpenSearch.Url").Title("OpenSearch.Title").AsOpenSearch()%>
+--%>
+    <%= this.SkinCSS("yui.reset.2.6.0.css") %>
+    <%= this.SkinCSS("text.css").Media("all")%>
+    <%= this.SkinCSS("960.css").Media("all")%>
+    <%= this.SkinCSS("style.css").Media("all")%>
+    <%--<%= this.SkinCSS("site.css") %>--%>
+    <!-- //TODO: CSS  Additional skin stylesheets  -->
+    <%= this.SkinScript(new[] { "jquery-1.2.6.min.js", "jquery.curvycorners.min.js", "jquery.pngFix.js", "site.js" }).Indent("    ")%>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.curvy_corner').corner({
+                tl: { radius: 0 },
+                tr: { radius: 0 },
+                bl: { radius: 5 },
+                br: { radius: 5 },
+                antiAlias: true,
+                autoPad: false,
+                validTags: ["div"]
+            });
+        });
+
+        $(document).ready(function() {
+            $('.curvy_corner_all').corner({
+                tl: { radius: 5 },
+                tr: { radius: 5 },
+                bl: { radius: 5 },
+                br: { radius: 5 },
+                antiAlias: true,
+                autoPad: false,
+                validTags: ["div"]
+            });
+        });
+
+        $(document).ready(function() {
+            $(document).pngFix();
+        }); 
+    </script>
+</head>
+<body>
+    <div id="header">
+	    <div class="container_16" id="header">
+		    <a href="<%= this.UrlTo().Home() %>"><%= this.Image("logo2.gif").ElementId("logo").Alt("")%></a>
+		    <div id="search">
+			    <form>
+				    <input id="search_field" type="text" name="search"  onfocus="this.value=''" value="Search" />
+				    <input id="search_submit" type="submit" value="Submit" />
+			    </form>
+		    </div>
+            <%= this.DisplayDependingOnLoginStatus().For(Model.CurrentUser).WhenLoggedInShow<LoggedInMenu>().WhenLoggedOutShow<LoggedOutMenu>()%>
+	    </div>	
+    </div>
+
+    <div class="container_16" id="content">
+	    <div class="grid_12">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+	    </div>
+	    <div class="grid_4">
+
+        <asp:ContentPlaceHolder ID="SidePannelContent" runat="server"></asp:ContentPlaceHolder>
+
+	    </div>
+	    <div class="clear">&nbsp;</div>
+    </div>
+
+    <div class="container_16 curvy_corner" id="footer">
+	    <div class="grid_16">
+		    <p></p>
+	    </div>
+	    <div class="clear">&nbsp;</div>
+    </div>
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-116586-6");
+        pageTracker._trackPageview();
+    } catch (err) { }
+</script>
+</body>
+</html>
