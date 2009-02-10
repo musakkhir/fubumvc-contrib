@@ -90,24 +90,37 @@
         <asp:ContentPlaceHolder ID="SidePannelContent" runat="server"></asp:ContentPlaceHolder>
 
 	    </div>
-	    <div class="clear">&nbsp;</div>
+	    <div class="clear" id="BelowSidePanels">&nbsp;</div>
     </div>
 
-    <div class="container_16 curvy_corner" id="footer">
-	    <div class="grid_16">
-		    <p></p>
-	    </div>
-	    <div class="clear">&nbsp;</div>
-    </div>
-<script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("UA-116586-6");
-        pageTracker._trackPageview();
-    } catch (err) { }
-</script>
+
+    <div class="container_16" id="footer"> 
+	    <div class="nda_image"> 
+		    <a href="#"><img alt="image" src="/content/images/nda/nda_128px.jpg" /></a> 
+	    </div> 
+	    <div class="about_box curvy_corner_all"> 
+	        <div class="about_text">
+		        <h2>About Mark Nijhof</h2> 
+		        <img alt="Mark Nijhof" class="left" src="http://www.gravatar.com/avatar/01d418308faffa0d07f34ace68b686ad?s=80" /> 
+		        <p>Mark is a Software Developer experienced in the Microsoft .Net framework; he has developed/implemented a diverse range of Object-Oriented software solutions. Mark has been working closely with customers to achieve high quality solutions. Mark is always learning new technologies en theories to improve his programming skills; he is especially interested in all the different Object-Oriented design principles like: SRP, OCP, LSP, ISP and DIP. In his free time he contributes to an OSS project, and is a board member of NNUG.</p> 
+		    </div>
+	    </div> 
+	    <div class="clear">&nbsp;</div> 
+	    <div class="roundbottom_footer"> 
+	 	    <img alt="image"  src="/content/images/footer_left_corner.gif" width="5" height="5" class="corner" style="display: none" /> 
+	    </div> 
+    </div> 
+
+    <div id="BelowEverything">&nbsp;</div>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-116586-6");
+            pageTracker._trackPageview();
+        } catch (err) { }
+    </script>
 </body>
 </html>

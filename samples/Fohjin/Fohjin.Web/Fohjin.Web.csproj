@@ -128,6 +128,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="content\images\bl.gif" />
+    <Content Include="content\images\comment_bottom.gif" />
+    <Content Include="content\images\comment_top.gif" />
     <Content Include="content\images\content_background.jpg" />
     <Content Include="content\images\content_background.jpg.gif" />
     <Content Include="content\images\content_background_50.gif" />
@@ -135,6 +137,8 @@
     <Content Include="content\images\favicon.ico" />
     <Content Include="content\images\footer_background.gif" />
     <Content Include="content\images\footer_background.png" />
+    <Content Include="content\images\footer_left_corner.gif" />
+    <Content Include="content\images\footer_right_corner.gif" />
     <Content Include="content\images\FubuMVC_Logo_Medium.jpg" />
     <Content Include="content\images\FubuMVC_Logo_small_double.jpg" />
     <Content Include="content\images\header_background.gif" />
@@ -159,13 +163,24 @@
     <Content Include="content\images\nda\puzzle_dark_blue.gif" />
     <Content Include="content\images\nda\puzzle_green.gif" />
     <Content Include="content\images\nda\puzzle_red.gif" />
+    <Content Include="content\images\one_pixel_blue_50.png" />
+    <Content Include="content\images\one_pixel_white_10.png" />
+    <Content Include="content\images\one_pixel_white_20.png" />
+    <Content Include="content\images\one_pixel_white_50.png" />
+    <Content Include="content\images\puzzle_all.gif" />
+    <Content Include="content\images\puzzle_blue.gif" />
+    <Content Include="content\images\puzzle_dark_blue.gif" />
+    <Content Include="content\images\puzzle_green.gif" />
+    <Content Include="content\images\puzzle_red.gif" />
     <Content Include="content\images\search_background.gif" />
     <Content Include="content\images\search_background.png" />
     <Content Include="content\images\search_button_background.gif" />
     <Content Include="content\images\search_field.gif" />
     <Content Include="content\images\sidepanel_bg.gif" />
+    <Content Include="content\images\sidepanel_bg_2lines.gif" />
     <Content Include="content\images\sidepanel_bg_2lines_50.gif" />
     <Content Include="content\images\sidepanel_header_bg.gif" />
+    <Content Include="content\images\sidepanel_header_bg_2.gif" />
     <Content Include="content\scripts\jquery-1.2.6.min.js" />
     <Content Include="content\scripts\jquery.curvycorners.min.js" />
     <Content Include="content\scripts\jquery-1.3.1.min.js" />
@@ -182,6 +197,9 @@
     <Content Include="Views\Debug\Index.aspx" />
     <Content Include="Views\PageNotFound\Index.aspx" />
     <Content Include="Views\Shared\ControllerAction.ascx" />
+    <Content Include="Views\Shared\BlogPostLink.ascx" />
+    <Content Include="Views\Shared\IsReading.ascx" />
+    <Content Include="Views\Shared\RecentBlogPosts.ascx" />
     <Content Include="Views\Shared\DebugSingleLine.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +225,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>64202</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Fohjin.Web</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
