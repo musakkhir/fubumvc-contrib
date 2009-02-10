@@ -133,6 +133,7 @@
     <Compile Include="Services\SecurityDataService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Web\Behaviors\access_the_database_through_a_unit_of_work.cs" />
+    <Compile Include="Web\Behaviors\get_recent_blog_posts.cs" />
     <Compile Include="Web\Behaviors\set_user_from_http_cookie_if_current_user_is_not_authenticated.cs" />
     <Compile Include="Web\Behaviors\set_empty_default_user_on_the_output_viewmodel_to_make_sure_one_exists.cs" />
     <Compile Include="Web\Behaviors\set_the_current_logged_in_user_on_the_output_viewmodel.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="Web\DisplayModels\ControllerActionDisplay.cs" />
     <Compile Include="Web\DisplayModels\LoginStatusDisplay.cs" />
     <Compile Include="Web\DisplayModels\PostDisplay.cs" />
+    <Compile Include="Web\DisplayModels\BlogPostLinkDisplay.cs" />
+    <Compile Include="Web\DisplayModels\RecentPostsDisplay.cs" />
     <Compile Include="Web\DisplayModels\TagDisplay.cs" />
     <Compile Include="Web\FeedConvertors\IndexViewModelFeedConvertor.cs" />
     <Compile Include="Web\Html\BlogPostHtmlExtension.cs" />

@@ -139,15 +139,20 @@ li
 {
 	border-left: 1px solid #666;
 	border-right: 1px solid #666;
-	border-collapse:collapse;
-	background-color:#fff;
-	width:958px;
+	border-collapse: collapse;
+	background-color: #fff;
+	width: 958px;
+	padding-bottom: 30px;
 }
 #content .grid_12, #content .grid_4
 {
 	margin: 0 0 0 0;
 }
 
+#about-me .grid_12
+{
+	margin: 10 0 0 0;
+}
 #content .grid_4
 {
     width: 240px;
@@ -360,6 +365,7 @@ li
 {
 	background: url(/content/images/sidepanel_header_bg.gif) no-repeat top left; 
 	padding: 4px 10px 2px 10px;
+	background-color: #142f48;
 }
 
 .sidepanel .sidepanel_header h2
@@ -376,12 +382,13 @@ li
 	border-right: none;
 	border-top: none;
 	padding: 10px 0 0 10px;
-	background: url(/content/images/sidepanel_bg.gif) no-repeat top left; 
+	background: url(/content/images/sidepanel_bg_2lines_50.gif) no-repeat top left; 
 }
 
 .sidepanel .sidepanel_body ul li
 {
 	margin-left: 10px;
+	list-style-type: square;
 }
 
 .roundbottom 
@@ -409,14 +416,14 @@ img.corner
 	background-position: top;
 	margin-bottom: 80px;
 	background-color: #162433;
+	position: relative;
 }
 #footer a
 {
 	color: #fff;
 }
 
-#footer ul li
-{
+#footer ul li{
 	margin-left: 0px;
 	list-style: none;
 	line-height: 1.7em;
@@ -424,10 +431,67 @@ img.corner
 #footer p
 {
 	color: #fff;
-	
 	line-height: 1.3em;
 }
 #footer .grid_16
 {
 	margin-top: 20px;
+}
+
+#footer .nda_image
+{
+	width: 128px;
+	float: left;
+	padding-left: 9px;
+}
+
+#footer .about_box
+{
+	background-image: url(/content/images/one_pixel_blue_50.png);
+	background-repeat: repeat;
+	border: none;
+	margin: 6px;
+	margin-right: 9px;
+	width: 795px;
+	height: 151px;
+	float: right;
+	padding: 5px 10px 5px 10px;
+}
+
+#footer .about_text
+{
+	margin: 5px 10px 5px 10px;
+}
+
+#footer .left
+{
+	float: left;
+	padding-top: 3px;
+}
+
+.roundbottom_footer 
+{
+	background: url(/content/images/footer_right_corner.gif) no-repeat top right; 
+}
+
+.roundbottom_footer img.corner 
+{
+	margin-top:0;
+}
+
+#BelowSidePanels
+{
+	height: 20px;
+	border: solid 1px white;
+}
+#BelowEverything
+{
+	height: 80px;
+	border: solid 1px #faf9f9;
+	background: #faf9f9;
+}
+.clear
+{
+	height: 20px;
+	border: solid 1px white;
 }

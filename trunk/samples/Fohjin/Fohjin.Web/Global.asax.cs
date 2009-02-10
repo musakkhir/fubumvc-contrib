@@ -38,6 +38,8 @@ namespace Fohjin.Web
                     .Will<set_the_current_logged_in_user_on_the_output_viewmodel>()
                     .Will<set_user_from_http_cookie_if_current_user_is_not_authenticated>()
 
+                    .Will<get_recent_blog_posts>()
+
                     .Will<execute_the_result>()
                     .Will<OutputAsRssOrAtomFeed>()
                     .Will<set_the_current_site_details_on_the_output_viewmodel>()

@@ -20,3 +20,7 @@
     <%= this.DisplayDependingOnLoginStatus().For(Model.CurrentUser).UseModel(Model.Comment).WhenLoggedInShow<LoggedInCommentForm>().WhenLoggedOutShow<LoggedOutCommentForm>()%>
 </div>
 </asp:Content>
+<asp:Content ID="SidePannelContent" ContentPlaceHolderID="SidePannelContent" runat="server">
+    <%= this.RenderPartial().Using<RecentBlogPosts>().For(Model.RecentPosts) %>
+    <%= this.RenderPartial().Using<IsReading>().For(Model) %>
+</asp:Content>

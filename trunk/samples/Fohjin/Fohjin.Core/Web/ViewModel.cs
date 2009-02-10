@@ -1,4 +1,5 @@
 using Fohjin.Core.Domain;
+using Fohjin.Core.Web.DisplayModels;
 
 namespace Fohjin.Core.Web
 {
@@ -8,5 +9,6 @@ namespace Fohjin.Core.Web
         public string LanguageDefault { get; set; }
         public string SEORobots { get; set; }
         public User CurrentUser { get; set; }
+        public RecentPostsDisplay RecentPosts { get; set; }
     }
 }
