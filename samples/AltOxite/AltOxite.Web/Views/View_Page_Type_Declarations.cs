@@ -12,6 +12,7 @@ public class PageNotFoundIndexView : AltOxitePage<PageNotFoundViewModel> { }
 public class LoginIndexView : AltOxitePage<LoginViewModel> { }
 public class BlogPostIndexView : AltOxitePage<BlogPostViewModel> { }
 public class TagIndexView : AltOxitePage<TagViewModel> { }
+public class AllTagsView : AltOxitePage<TagListViewModel> { }
 
 // User Controls
 public class LoggedInStatus : AltOxiteUserControl<ViewModel> { }

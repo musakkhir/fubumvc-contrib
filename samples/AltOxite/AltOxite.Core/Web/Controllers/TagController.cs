@@ -30,6 +30,28 @@ namespace AltOxite.Core.Web.Controllers
                 Tag = tag
             };
         }
+
+        public TagListViewModel AllTags(TagSearchViewModel model)
+        {
+            IQueryable<Tag> tags;
+            if (model.SuggestQuery.IsEmpty())
+            {
+                tags = from t in _repository.Query<Tag>()
+                       select t;
+            }
+            else
+            {
+                tags = from t in _repository.Query<Tag>()
+                       where t.Name.StartsWith(model.SuggestQuery)
+                       select t;
+            }
+
+            var outModel = new TagListViewModel
+            {
+                Tags = tags.ToList().Select(item => item.Name)
+            };
+            return outModel;
+        }
     }
 
     public class TagSetupViewModel : ViewModel
@@ -42,5 +64,19 @@ namespace AltOxite.Core.Web.Controllers
     {
         public Tag Tag { get; set; }
         public IEnumerable<Post> Posts { get; set; }
+    }
+
+    [Serializable]
+    public class TagListViewModel : ViewModel
+    {
+        public IEnumerable<string> Tags { get; set; }
+    }
+
+    [Serializable]
+    public class TagSearchViewModel : ViewModel
+    {
+        public string q { get; set; }
+
+        public string SuggestQuery { get { return q; } }
     }
 }
