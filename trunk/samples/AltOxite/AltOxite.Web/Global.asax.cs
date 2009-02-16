@@ -95,6 +95,16 @@ namespace AltOxite.Web
                     config.PrimaryUrl = "tag/{Tag}";
                 });
 
+                x.OverrideConfigFor(AllTagsAction, config =>
+                                                       {
+                                                           config.PrimaryUrl = "AllTags";
+                                                           config.RemoveAllBehaviors();
+                                                           config.AddBehavior<execute_the_result>();
+                                                           config.AddBehavior<access_the_database_through_a_unit_of_work>();
+                                                           config.AddBehavior<OutputAsJson>();
+                                                           config.AddJsonUrl();
+                                                       });
+
                 x.OverrideConfigFor(PageNotFoundIndexAction, config => config.IsPageNotFoundAction());
 
                 x.OverrideConfigFor(DebugIndexAction, config =>
@@ -156,6 +166,7 @@ namespace AltOxite.Web
         private readonly Expression<Func<BlogPostController, object>> BlogPostIndexAction = c => c.Index(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
+        private readonly Expression<Func<TagController, object>> AllTagsAction = c => c.AllTags(null);
         private readonly Expression<Func<PageNotFoundController, object>> PageNotFoundIndexAction = c => c.Index(null);
         private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
     }
