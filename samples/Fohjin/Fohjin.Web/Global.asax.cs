@@ -99,6 +99,49 @@ namespace Fohjin.Web
                 {
                     config.PrimaryUrl = "__debug_controller_actions";
                 });
+
+                x.OverrideConfigFor(RedirectToOldBlogIndexAction, config =>
+                {
+                    config.AddOtherUrl("2008/12/hire-funny-guy.html");
+                    config.AddOtherUrl("2008/11/linq-is-cool-but.html");
+                    config.AddOtherUrl("2008/11/being-specific-with-your-generics_26.html");
+                    config.AddOtherUrl("2008/11/nnug-tfs-with-terje-sandstrm.html");
+                    config.AddOtherUrl("2008/11/announcing-isolator-for-sharepoint-unit.html");
+                    config.AddOtherUrl("2008/10/arnon-rotam-gal-oz-talks-about.html");
+                    config.AddOtherUrl("2008/10/what-tools-i-use-when-developing.html");
+                    config.AddOtherUrl("2008/10/cracknet-by-josh-smith.html");
+                    config.AddOtherUrl("2008/10/james-kovacs-talks-about-roll-your-own.html");
+                    config.AddOtherUrl("2008/10/my-todo-list.html");
+                    config.AddOtherUrl("2008/10/new-design-of-my-blog.html");
+                    config.AddOtherUrl("2008/09/is-nda-in-conflict-with-yagni.html");
+                    config.AddOtherUrl("2008/09/no-dependency-architecture-nda.html");
+                    config.AddOtherUrl("2008/09/silverlight-with-einar-ingebrigtsen.html");
+                    config.AddOtherUrl("2008/09/that-agile-thing.html");
+                    config.AddOtherUrl("2008/09/how-to-test-your-xaml-behavior-using.html");
+                    config.AddOtherUrl("2008/09/how-to-reference-dlls-in-your-net.html");
+                    config.AddOtherUrl("2008/09/msdn-live-bergen.html");
+                    config.AddOtherUrl("2008/09/google-chrome.html");
+                    config.AddOtherUrl("2008/08/ddd-and-bdd-with-dan-north-of.html");
+                    config.AddOtherUrl("2008/07/saving-wpf-xaml-flowdocument-to-xps.html");
+                    config.AddOtherUrl("2008/04/composite-pattern.html");
+                    config.AddOtherUrl("2008/04/specification-pattern-using-springnet.html");
+                    config.AddOtherUrl("2008/04/specification-pattern.html");
+                    config.AddOtherUrl("2008/04/fluent-interfaces.html");
+                    config.AddOtherUrl("2008/04/adapter-pattern.html");
+                    config.AddOtherUrl("2008/04/strategy-pattern.html");
+                    config.AddOtherUrl("2008/04/decorator-pattern.html");
+                    config.AddOtherUrl("2008/04/lod-law-of-demeter.html");
+                    config.AddOtherUrl("2008/04/dip-dependency-inversion-principle_21.html");
+                    config.AddOtherUrl("2008/04/dip-dependency-inversion-principle.html");
+                    config.AddOtherUrl("2008/04/isp-interface-segregation-principle.html");
+                    config.AddOtherUrl("2008/04/lsp-liskov-substitution-principle.html");
+                    config.AddOtherUrl("2008/04/ocp-open-closed-principle.html");
+                    config.AddOtherUrl("2008/04/srp-single-responsibility-principle.html");
+                    config.AddOtherUrl("2008/04/solid-object-orientated-design.html");
+                    config.AddOtherUrl("2008/04/syntax-highlighting-in-blogger.html");
+                    config.AddOtherUrl("2008/04/google-custom-search-engine-cse-for.html");
+                    config.AddOtherUrl("2008/04/i-have-been-reading-about-design-by_12.html");
+                });
             };
 
             Bootstrapper.Bootstrap();
@@ -173,5 +216,6 @@ namespace Fohjin.Web
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
         private readonly Expression<Func<PageNotFoundController, object>> PageNotFoundIndexAction = c => c.Index(null);
         private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
+        private readonly Expression<Func<RedirectToOldBlogController, object>> RedirectToOldBlogIndexAction = c => c.Index(null);
     }
 }
