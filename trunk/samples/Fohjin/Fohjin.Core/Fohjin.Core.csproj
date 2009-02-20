@@ -69,6 +69,12 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -128,8 +134,10 @@
     <Compile Include="Security\FohjinPrincipalFactory.cs" />
     <Compile Include="Services\BlogPostCommentService.cs" />
     <Compile Include="Services\IBlogPostCommentService.cs" />
+    <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\SecurityDataService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Web\Behaviors\access_the_database_through_a_unit_of_work.cs" />
@@ -145,6 +153,7 @@
     <Compile Include="Web\Controllers\HomeController.cs" />
     <Compile Include="Web\Controllers\LoginController.cs" />
     <Compile Include="Web\Controllers\PageNotFoundController.cs" />
+    <Compile Include="Web\Controllers\RedirectToOldBlogController.cs" />
     <Compile Include="Web\Controllers\TagController.cs" />
     <Compile Include="Web\DisplayModels\DebugSingleLineDisplay.cs" />
     <Compile Include="Web\DisplayModels\CommentFormDisplay.cs" />
