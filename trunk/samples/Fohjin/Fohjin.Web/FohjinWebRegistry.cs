@@ -19,19 +19,19 @@ namespace Fohjin.Web
     {
         public FohjinWebRegistry()
         {
-            //ForRequestedType<ISessionSourceConfiguration>().AsSingletons()
-            //    .TheDefault.Is.OfConcreteType<SQLiteSessionSourceConfiguration>()
-            //    .WithCtorArg("db_file_name")
-            //        .EqualToAppSetting("Fohjin.blog.sql_lite_db_file_name");
-
             ForRequestedType<ISessionSourceConfiguration>().AsSingletons()
-                .TheDefault.Is.OfConcreteType<SQLServerSessionSourceConfiguration>()
-                .WithCtorArg("db_server_address")
-                    .EqualToAppSetting("fohjin.blog.db_server_address")
-                .WithCtorArg("db_name")
-                    .EqualToAppSetting("fohjin.blog.db_name")
-                .WithCtorArg("reset_db")
-                    .EqualToAppSetting("fohjin.blog.reset_db");
+                .TheDefault.Is.OfConcreteType<SQLiteSessionSourceConfiguration>()
+                .WithCtorArg("db_file_name")
+                    .EqualToAppSetting("Fohjin.blog.sql_lite_db_file_name");
+
+            //ForRequestedType<ISessionSourceConfiguration>().AsSingletons()
+            //    .TheDefault.Is.OfConcreteType<SQLServerSessionSourceConfiguration>()
+            //    .WithCtorArg("db_server_address")
+            //        .EqualToAppSetting("fohjin.blog.db_server_address")
+            //    .WithCtorArg("db_name")
+            //        .EqualToAppSetting("fohjin.blog.db_name")
+            //    .WithCtorArg("reset_db")
+            //        .EqualToAppSetting("fohjin.blog.reset_db");
 
             ForRequestedType<ICookieHandler>().AsSingletons()
                 .TheDefault.Is.OfConcreteType<CookieHandler>()
