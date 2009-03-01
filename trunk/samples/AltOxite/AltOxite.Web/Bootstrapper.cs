@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Web.Routing;
+using FubuMVC.Core;
 using FubuMVC.Core.Controller.Config;
+using FubuMVC.Core.Conventions;
 using Microsoft.Practices.ServiceLocation;
 using FubuMVC.Container.StructureMap.Config;
 using StructureMap;
@@ -20,10 +23,12 @@ namespace AltOxite.Web
             });
 
             ObjectFactory.AssertConfigurationIsValid();
-            
-            initialize_routes();
-            
+
             setup_service_locator();
+
+            apply_action_conventions();
+
+            initialize_routes();
         }
 
         private static void setup_service_locator()
@@ -34,6 +39,16 @@ namespace AltOxite.Web
         private static void initialize_routes()
         {
             ObjectFactory.GetInstance<IRouteConfigurer>().LoadRoutes(RouteTable.Routes);
+        }
+
+        private static void apply_action_conventions()
+        {
+            var fubuConfiguration = ObjectFactory.GetInstance<FubuConfiguration>();
+            var actionConventions = ObjectFactory.GetAllInstances<IFubuConvention<ControllerActionConfig>>();
+
+            fubuConfiguration.GetControllerActionConfigs().Each(actionConfig => 
+                actionConventions.Each(conv => 
+                    conv.Apply(actionConfig)));
         }
 
         public static void Restart()

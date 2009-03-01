@@ -9,6 +9,7 @@ using AltOxite.Core.Web.DisplayModels;
 using FubuMVC.Container.StructureMap.Config;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Conventions.ControllerActions;
 using FubuMVC.Core.Html.Expressions;
 
 namespace AltOxite.Web
@@ -26,6 +27,14 @@ namespace AltOxite.Web
                     conventions.PartialForEachOfBeforeEachItem = AltOxiteDefaultPartialBeforeEachItem;
                 });
 
+                x.ActionConventions( custom =>
+                {
+                    custom.Add<wire_up_JSON_URL_if_required>();
+                    custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
+                    custom.Add<wire_up_404_handler_URL>();
+                    custom.Add<wire_up_debug_handler_URL>();
+                });
+
                 // Default Behaviors for all actions -- ordered as they're executed
                 /////////////////////////////////////////////////
                 x.ByDefault.EveryControllerAction(d => d
@@ -41,7 +50,7 @@ namespace AltOxite.Web
                     .Will<OutputAsRssOrAtomFeed>()
                     .Will<set_the_current_site_details_on_the_output_viewmodel>()
                     .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
-                    );
+                );
                 
                 // Automatic controller registration
                 /////////////////////////////////////////////////
@@ -59,13 +68,6 @@ namespace AltOxite.Web
                 // Manual overrides
                 /////////////////////////////////////////////////
 
-                // Enable this line to get the RSS to be triggered on the Home page 
-                x.OverrideConfigFor(HomeAction, config =>
-                {
-                    config.AddRssFeedUrl();
-                    config.AddAtomFeedUrl();
-                });
-
                 //-- Make the primary URL for logout be "/logout" instead of "login/logout"
                 x.OverrideConfigFor(LogoutAction, config =>
                 {
@@ -78,8 +80,6 @@ namespace AltOxite.Web
                 {
                     //TODO: This stinks, there should be a way to do the "blog" part without having to deal with the URL parameters
                     config.PrimaryUrl = "blog{0}".ToFormat(x.Conventions.UrlRouteParametersForAction(config));
-                    config.AddRssFeedUrl();
-                    config.AddAtomFeedUrl();
                 });
 
                 x.OverrideConfigFor(BlogPostCommentAction, config =>
@@ -102,15 +102,7 @@ namespace AltOxite.Web
                                                            config.AddBehavior<execute_the_result>();
                                                            config.AddBehavior<access_the_database_through_a_unit_of_work>();
                                                            config.AddBehavior<OutputAsJson>();
-                                                           config.AddJsonUrl();
                                                        });
-
-                x.OverrideConfigFor(PageNotFoundIndexAction, config => config.IsPageNotFoundAction());
-
-                x.OverrideConfigFor(DebugIndexAction, config =>
-                {
-                    config.PrimaryUrl = "__debug_controller_actions";
-                });
             };
 
             Bootstrapper.Bootstrap();
@@ -161,13 +153,10 @@ namespace AltOxite.Web
             return expr;
         }
 
-        private readonly Expression<Func<HomeController, object>> HomeAction = c => c.Index(null);
         private readonly Expression<Func<LoginController, object>> LogoutAction = c => c.Logout(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostIndexAction = c => c.Index(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
         private readonly Expression<Func<TagController, object>> AllTagsAction = c => c.AllTags(null);
-        private readonly Expression<Func<PageNotFoundController, object>> PageNotFoundIndexAction = c => c.Index(null);
-        private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
     }
 }
