@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="BehaviorTests.cs" />
     <Compile Include="FuncCompareTests.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="ValidationConfigTest.cs" />
     <Compile Include="ValidationRuleTest.cs" />
     <Compile Include="ViewModels\ValidationTestSUT.cs" />
