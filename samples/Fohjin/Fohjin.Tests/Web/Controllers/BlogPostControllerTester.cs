@@ -104,28 +104,12 @@ namespace Fohjin.Tests.Web.Controllers
             
             _validInput = new BlogPostCommentViewModel
             {
-                UserDisplayName = "username",
-                UserEmail = "email",
+                DisplayName = "username",
+                Email = "email",
                 Body = "body",
-                UserSubscribed = true,
+                Subscribed = true,
                 Slug = _testSlug
             };
-        }
-
-        [Test]
-        public void should_return_validation_error_if_name_not_specified()
-        {
-            var output = _controller.Comment(_invalidInput);
-
-            output.InvalidFields.Count.ShouldBeGreaterThan(0);
-        }
-
-        [Test]
-        public void should_return_the_field_name_of_the_invalid_field()
-        {
-            var output = _controller.Comment(_invalidInput);
-
-            output.InvalidFields[0].ShouldEqual("UserDisplayName");
         }
 
         [Test]

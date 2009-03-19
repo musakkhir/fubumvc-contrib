@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using Fohjin.Core.Domain;
 using Fohjin.Core.Persistence;
@@ -12,7 +10,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Controller;
 using FubuMVC.Core.Controller.Config;
 using FubuMVC.Core.Controller.Results;
-using FubuMVC.Core.Util;
+using FubuMVC.Validation.Results;
 
 namespace Fohjin.Core.Web.Controllers
 {
@@ -47,7 +45,7 @@ namespace Fohjin.Core.Web.Controllers
             return new BlogPostViewModel
             {
                 Post = postDisplay,
-                Comment = new CommentFormDisplay(user, new Comment(), postDisplay)
+                Comment = new CommentFormDisplay(new Comment { User = user }, postDisplay)
             };
         }
 
@@ -61,73 +59,68 @@ namespace Fohjin.Core.Web.Controllers
 
             if (post == null) return badRedirectResult;
 
-            var result = new BlogPostViewModel();
-
-            valid_comment_submission(inModel, result);
-
-            if( result.InvalidFields.Count > 0 )
-            {
-                result.ResultOverride = new RedirectResult(_resolver.PublishedPost(new PostDisplay(post)));
-                return result;
-            }
-
-            var user = _userService.AddOrUpdateUser(inModel.UserEmail, HttpUtility.HtmlEncode(inModel.UserDisplayName), HttpUtility.HtmlEncode(inModel.UserUrl));
-
-            _blogPostCommentService.AddCommentToBlogPost(HttpUtility.HtmlEncode(inModel.Body), inModel.UserSubscribed, user, post);
-
             var postDisplay = new PostDisplay(post);
 
-            result.ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay));
+            if (inModel.ValidationResults.GetInvalidFields().Count() > 0)
+            {
+                var bblo = new BlogPostViewModel
+                {
+                    Post = postDisplay,
+                    Comment = new CommentFormDisplay(new Comment
+                    {
+                        Body = inModel.Body,
+                        UserSubscribed = inModel.Subscribed,
+                        User = new User
+                        {
+                            DisplayName = inModel.DisplayName,
+                            Email = inModel.Email,
+                            Url = inModel.OptionalUrl,
+                        }, 
+                    }, postDisplay),
+                    //ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay) + "#leave_comment"),
+                };
+                bblo.Comment.ValidationResults.CloneFrom(inModel.ValidationResults);
+                return bblo;
+            }
 
-            return result;
-        }
+            var user = _userService.AddOrUpdateUser(inModel.Email, HttpUtility.HtmlEncode(inModel.DisplayName), HttpUtility.HtmlEncode(inModel.OptionalUrl));
+            _blogPostCommentService.AddCommentToBlogPost(HttpUtility.HtmlEncode(inModel.Body), inModel.Subscribed, user, post);
 
-        private static void valid_comment_submission(BlogPostCommentViewModel inModel, BlogPostViewModel result)
-        {
-            // TODO: have attributes on the viewmodel and do validation elsewhere 
-            if (inModel.UserDisplayName.IsEmpty()) result.AddInvalidField<BlogPostCommentViewModel>(x => x.UserDisplayName);
-            if (inModel.UserEmail.IsEmpty()) result.AddInvalidField<BlogPostCommentViewModel>(x => x.UserEmail);
-            if (inModel.Body.IsEmpty()) result.AddInvalidField<BlogPostCommentViewModel>(x => x.Body);
+            return new BlogPostViewModel {ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay))};
         }
     }
 
     [Serializable]
     public class BlogPostViewModel : ViewModel, ISupportResultOverride
     {
-        public BlogPostViewModel()
-        {
-            InvalidFields = new List<string>();
-        }
-
-        public void AddInvalidField<MODEL>(Expression<Func<MODEL, object>> fieldExpression)
-        {
-            var name = ReflectionHelper.GetAccessor(fieldExpression).Name;
-            InvalidFields.Add(name);
-        }
-
-        public IList<string> InvalidFields { get; set; }
         public IInvocationResult ResultOverride { get; set; }
 
-        [Required] public int PostYear { get; set; }
-        [Required] public int PostMonth { get; set; }
-        [Required] public int PostDay { get; set; }
-        [Required] public string Slug { get; set; }
+        [Required]public int PostYear { get; set; }
+        [Required]public int PostMonth { get; set; }
+        [Required]public int PostDay { get; set; }
+        [Required]public string Slug { get; set; }
         public PostDisplay Post { get; set; }
         public CommentFormDisplay Comment { get; set; }
     }
 
     [Serializable]
-    public class BlogPostCommentViewModel : ViewModel
+    public class BlogPostCommentViewModel : ICanBeValidated
     {
-        [Required] public int PostYear { get; set; }
-        [Required] public int PostMonth { get; set; }
-        [Required] public int PostDay { get; set; }
-        [Required] public string Slug { get; set; }
-        public string UserDisplayName { get; set; }
-        public string UserEmail { get; set; }
+        [Required]public int PostYear { get; set; }
+        [Required]public int PostMonth { get; set; }
+        [Required]public int PostDay { get; set; }
+        [Required]public string Slug { get; set; }
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
         public string Body { get; set; }
-        public string UserUrl { get; set; }
+        public string OptionalUrl { get; set; }
         public bool Remember { get; set; }
-        public bool UserSubscribed { get; set; }
+        public bool Subscribed { get; set; }
+
+        private readonly IValidationResults _validationResults = new ValidationResults();
+        public IValidationResults ValidationResults
+        {
+            get { return _validationResults; }
+        }
     }
 }

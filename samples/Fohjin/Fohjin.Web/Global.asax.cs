@@ -9,7 +9,12 @@ using Fohjin.Core.Web.DisplayModels;
 using FubuMVC.Container.StructureMap.Config;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Conventions.ControllerActions;
 using FubuMVC.Core.Html.Expressions;
+using FubuMVC.Validation;
+using FubuMVC.Validation.Behaviors;
+using FubuMVC.Validation.Dsl;
+using FubuMVC.Validation.Rules;
 
 namespace Fohjin.Web
 {
@@ -27,11 +32,19 @@ namespace Fohjin.Web
                     conventions.PartialForEachOfFooter = FohjinDefaultPartialFooter;
                 });
 
+                x.ActionConventions(custom =>
+                {
+                    custom.Add<wire_up_JSON_URL_if_required>();
+                    custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
+                    custom.Add<wire_up_404_handler_URL>();
+                    custom.Add<wire_up_debug_handler_URL>();
+                });
+
                 // Default Behaviors for all actions -- ordered as they're executed
                 /////////////////////////////////////////////////
                 x.ByDefault.EveryControllerAction(d => d
                     .Will<access_the_database_through_a_unit_of_work>()
-                    .Will<set_up_default_data_the_first_time_this_app_is_run>()
+                    //.Will<set_up_default_data_the_first_time_this_app_is_run>()
 
                     .Will<set_empty_default_user_on_the_output_viewmodel_to_make_sure_one_exists>()
                     .Will<load_the_current_principal>()
@@ -39,6 +52,7 @@ namespace Fohjin.Web
                     .Will<set_user_from_http_cookie_if_current_user_is_not_authenticated>()
 
                     .Will<get_recent_blog_posts>()
+                    .Will<validate_input_view_model_using_convention_based_validation_rules>()
 
                     .Will<execute_the_result>()
                     .Will<OutputAsRssOrAtomFeed>()
@@ -58,10 +72,6 @@ namespace Fohjin.Web
 
                     c.MapActionsWhere((m,i,o) => true);
                 });
-
-                // Manual overrides
-                /////////////////////////////////////////////////
-                x.OverrideConfigFor(HomeIndexAction, config => config.AddRssFeedUrl());
 
                 //-- Make the primary URL for logout be "/logout" instead of "login/logout"
                 x.OverrideConfigFor(LogoutAction, config =>
@@ -88,16 +98,6 @@ namespace Fohjin.Web
                 x.OverrideConfigFor(TagIndexAction, config =>
                 {
                     config.PrimaryUrl = "tag/{Tag}";
-                });
-
-                x.OverrideConfigFor(PageNotFoundIndexAction, config =>
-                {
-                    config.PrimaryUrl = "404";
-                });
-
-                x.OverrideConfigFor(DebugIndexAction, config =>
-                {
-                    config.PrimaryUrl = "__debug_controller_actions";
                 });
 
                 x.OverrideConfigFor(RedirectToOldBlogIndexAction, config =>
@@ -142,6 +142,27 @@ namespace Fohjin.Web
                     config.AddOtherUrl("2008/04/google-custom-search-engine-cse-for.html");
                     config.AddOtherUrl("2008/04/i-have-been-reading-about-design-by_12.html");
                 });
+
+                //x.OverrideConfigFor(DebugIndexAction, config =>
+                //{
+                //    config.PrimaryUrl = "__debug_controller_actions";
+                //});
+            };
+
+            ValidationConfig.Configure = x =>
+            {
+                x.ByDefault.PropertiesMatching(property => !property.Name.StartsWith("Optional"), rule => 
+                    rule.WillBeValidatedBy<IsRequired<CanBeAnyViewModel>>());
+
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Email"), rule =>
+                    rule.WillBeValidatedBy<IsEmail<CanBeAnyViewModel>>());
+
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Url"), rule =>
+                    rule.WillBeValidatedBy<IsUrl<CanBeAnyViewModel>>());
+
+                x.AddViewModelsFromAssembly
+                    .ContainingType<ViewModel>()
+                    .Where(t => t.Namespace.EndsWith("Web.Controllers"));
             };
 
             Bootstrapper.Bootstrap();
@@ -209,13 +230,11 @@ namespace Fohjin.Web
             return "</li>";
         }
 
-        private readonly Expression<Func<HomeController, object>> HomeIndexAction = c => c.Index(null);
         private readonly Expression<Func<LoginController, object>> LogoutAction = c => c.Logout(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostIndexAction = c => c.Index(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
-        private readonly Expression<Func<PageNotFoundController, object>> PageNotFoundIndexAction = c => c.Index(null);
-        private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
         private readonly Expression<Func<RedirectToOldBlogController, object>> RedirectToOldBlogIndexAction = c => c.Index(null);
+        //private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
     }
 }

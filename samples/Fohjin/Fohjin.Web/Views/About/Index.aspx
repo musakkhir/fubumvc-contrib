@@ -8,9 +8,14 @@
 	        <div class="subline">E-mail: <a href="mailto:Mark.Nijhof@Gmail.com">Mark.Nijhof@Gmail.com</a> | Phone: 0047 95 00 99 37 | Location: Bergen, Norway</div>
         </div>
         <div class="body">
-            Mark is a Software Developer experienced in the Microsoft .Net framework; he has developed/implemented a diverse range of Object-Oriented software solutions. Mark has been working closely with customers to achieve high quality solutions. Mark is always learning new technologies en theories to improve his programming skills; he is especially interested in all the different Object-Oriented design principles like: SRP, OCP, LSP, ISP and DIP. In his free time he contributes to an OSS project, and is a board member of NNUG.
-            <br /><br />
-            He started his career with CSC Computer Sciences BV working on different web based applications. In April 2004 he moved to Norway and started working for Vizrt joining an existing development team in product development of one of Vizrt’s product groups. Mark moved on March 2006 to Sydney Australia to start working for Vizrt as a Solution Architect and support person. In July 2007 Mark started working for his first employer again joining the software factory in Agile SOA development. Then in June 2008 he moved back to Bergen and started working for Reaktor Consulting as an Architect.
+            <div class="right">
+                <a href="http://twitter.com/MarkNijhof" target="_blank"><img alt="Twitter" src="/content/images/twitter.png" /></a><br />
+                <a href="http://feeds2.feedburner.com/Fohjin" target="_blank"><img alt="Twitter" src="/content/images/RSS.png" /></a><br />
+                <a href="/Tag/NDA"><img alt="Twitter" src="/content/images/NDA.png" /></a><br />
+            </div>
+	        This blog is presenting my opinions about what proper Software Architecture is, and also what you can do to improve yourself and others. And of course the different technologies that I use on a daily basis will be discussed, especially when I am having trouble with it. If you want you can contact me at <a href="mailto:Mark.Nijhof@Gmail.com">Mark.Nijhof@Gmail.com</a> and you’ll also find me at <a href="http://twitter.com/MarkNijhof" target="_blank">Twitter</a>. If you want to automatically receive notification when I post a new blog post then you can register my <a href="http://feeds2.feedburner.com/Fohjin" target="_blank">RSS feed</a> in your favorite RSS Reader.
+	        <br /><br />
+	        A better explanation for the existence of this blog will come later.
         </div>
     </div>
 </div>

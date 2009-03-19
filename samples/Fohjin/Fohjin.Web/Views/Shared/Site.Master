@@ -11,8 +11,8 @@
     <%= this.MetaTag().AsContentType() %>
     <%= this.MetaTag().Name("language").Content(Model.LanguageDefault) %>
     <%= this.MetaTag().Name("robots").Content(Model.SEORobots)%>
-    <%= this.MetaTag().Name("description").Content("example description")%>
-    <%= this.MetaTag().Name("keywords").Content(new[] { "keyword1", "keyword2" })%>
+    <%= this.MetaTag().Name("description").Content("Mark is a Software Developer experienced in the Microsoft .Net framework; he has developed/implemented a diverse range of Object-Oriented software solutions. Mark has been working closely with customers to achieve high quality solutions. Mark is always learning new technologies en theories to improve his programming skills; he is especially interested in all the different Object-Oriented design principles like: SRP, OCP, LSP, ISP and DIP. In his free time he contributes to FubuMVC an OSS project, and is a board member of NNUG.")%>
+    <%= this.MetaTag().Name("keywords").Content(new[] { "Mark Nijhof", "Fohjin", "Software Developer", "FubuMVC", "SOLID", "OOD Principles" })%>
     <%= this.LinkTag().Rel("shortcut icon").Href("~/content/images/favicon.ico".ToFullUrl())%>
 <%--
     <%= this.LinkTag().Href("Pingback.Url").AsPingBack()%>
@@ -95,14 +95,20 @@
 
 
     <div class="container_16" id="footer"> 
-	    <div class="nda_image"> 
-		    <a href="#"><img alt="image" src="/content/images/nda/nda_128px.jpg" /></a> 
+	    <div class="footer_image"> 
+		    <img alt="Mark Nijhof" width="150px" height="150px" style="border: solid 1px black;" src="http://www.gravatar.com/avatar/01d418308faffa0d07f34ace68b686ad?s=150" />
 	    </div> 
 	    <div class="about_box curvy_corner_all"> 
 	        <div class="about_text">
-		        <h2>About Mark Nijhof</h2> 
-		        <img alt="Mark Nijhof" class="left" src="http://www.gravatar.com/avatar/01d418308faffa0d07f34ace68b686ad?s=80" /> 
-		        <p>Mark is a Software Developer experienced in the Microsoft .Net framework; he has developed/implemented a diverse range of Object-Oriented software solutions. Mark has been working closely with customers to achieve high quality solutions. Mark is always learning new technologies en theories to improve his programming skills; he is especially interested in all the different Object-Oriented design principles like: SRP, OCP, LSP, ISP and DIP. In his free time he contributes to an OSS project, and is a board member of NNUG.</p> 
+	            <div class="right">
+	                <a href="http://twitter.com/MarkNijhof" target="_blank"><img alt="Twitter" src="/content/images/twitter.png" /></a>
+	                <a href="http://feeds2.feedburner.com/Fohjin" target="_blank"><img alt="Twitter" src="/content/images/RSS.png" /></a>
+	                <a href="/Tag/NDA"><img alt="Twitter" src="/content/images/NDA.png" /></a>
+	            </div>
+		        <h2>Mark Nijhof - About Software Architecture</h2> 
+		        <p>
+    		        This blog is presenting my opinions about what proper Software Architecture is, and also what you can do to improve yourself and others. And of course the different technologies that I use on a daily basis will be discussed, especially when I am having trouble with it. If you want you can contact me at <a href="mailto:Mark.Nijhof@Gmail.com">Mark.Nijhof@Gmail.com</a> and you’ll also find me at <a href="http://twitter.com/MarkNijhof" target="_blank">Twitter</a>. If you want to automatically receive notification when I post a new blog post then you can register my <a href="http://feeds2.feedburner.com/Fohjin" target="_blank">RSS feed</a> in your favorite RSS Reader.
+		        </p> 
 		    </div>
 	    </div> 
 	    <div class="clear">&nbsp;</div> 
