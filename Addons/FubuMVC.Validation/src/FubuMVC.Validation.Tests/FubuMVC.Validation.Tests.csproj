@@ -71,11 +71,14 @@
     <Compile Include="Behaviors\BehaviorTests.cs" />
     <Compile Include="Dsl\ValidationDslSyntaxTests.cs" />
     <Compile Include="Dsl\ValidationDslTests.cs" />
+    <Compile Include="Exensions\ValidationExtensionsTests.cs" />
+    <Compile Include="Helper\TestView.cs" />
     <Compile Include="Helper\TestViewModel.cs" />
     <Compile Include="Helper\TestViewModel1.cs" />
     <Compile Include="Helper\TestViewModel2.cs" />
     <Compile Include="Helper\TestViewModel3.cs" />
     <Compile Include="Helper\TestViewModelNotImplementingICanBeValidated.cs" />
+    <Compile Include="Helper\ValidTestViewModel.cs" />
     <Compile Include="Rules\ValidatorRuleTests.cs" />
     <Compile Include="SemanticModel\SemanticModelTests.cs" />
     <Compile Include="StructureMap\StructureMapTests.cs" />

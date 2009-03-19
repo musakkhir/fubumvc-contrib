@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core;
 
 namespace FubuMVC.Validation.Results
 {
@@ -31,6 +32,22 @@ namespace FubuMVC.Validation.Results
             return _invalidFields.ContainsKey(propertyString)
                        ? _invalidFields[propertyString].Distinct().AsEnumerable()
                        : new List<Type>();
+        }
+
+        public bool IsValid()
+        {
+            return _invalidFields.Count() == 0;
+        }
+
+        public bool IsValid(string propertyString)
+        {
+            return !_invalidFields.ContainsKey(propertyString);
+        }
+
+        public void CloneFrom(IValidationResults validationResults)
+        {
+            validationResults.GetInvalidFields()
+                .Each(x => _invalidFields.Add(x, validationResults.GetBrokenRulesFor(x).ToList()));
         }
     }
 }
