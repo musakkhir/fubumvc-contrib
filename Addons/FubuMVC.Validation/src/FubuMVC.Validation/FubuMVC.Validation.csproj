@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{00BD8D00-B6AE-4200-BEBF-5F989FD807A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Validation</RootNamespace>
+    <AssemblyName>FubuMVC.Validation</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FubuMVC.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FubuMVC\FubuMVC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Behaviors\validate_input_view_model_using_convention_based_validation_rules.cs" />
+    <Compile Include="Dsl\AssemblyControllerScanningExpression.cs" />
+    <Compile Include="Dsl\ByDefaultDslChain.cs" />
+    <Compile Include="Dsl\CanBeAnyViewModel.cs" />
+    <Compile Include="Dsl\ExtendedRuleExpression.cs" />
+    <Compile Include="Dsl\PropertiesMatchingExpression.cs" />
+    <Compile Include="Dsl\RuleExpression.cs" />
+    <Compile Include="Dsl\ValidationDsl.cs" />
+    <Compile Include="Dsl\ViewModelTypeScanningExpression.cs" />
+    <Compile Include="Results\ICanBeValidated.cs" />
+    <Compile Include="Results\IValidationResults.cs" />
+    <Compile Include="Rules\IsEmail.cs" />
+    <Compile Include="Rules\IsNumberBelow100.cs" />
+    <Compile Include="Rules\IsRequired.cs" />
+    <Compile Include="Rules\IsUrl.cs" />
+    <Compile Include="Rules\IValidationRule.cs" />
+    <Compile Include="SemanticModel\DefaultPropertyConvention.cs" />
+    <Compile Include="SemanticModel\DefaultPropertyConventionComparer.cs" />
+    <Compile Include="Behaviors\IValidate.cs" />
+    <Compile Include="StructureMap\StructureMapConfigurer.cs" />
+    <Compile Include="SemanticModel\UglyExpressionConvertor.cs" />
+    <Compile Include="ValidationConfig.cs" />
+    <Compile Include="SemanticModel\ValidationConfiguration.cs" />
+    <Compile Include="Results\ValidationResults.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
