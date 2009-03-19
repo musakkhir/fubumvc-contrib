@@ -8,5 +8,8 @@ namespace FubuMVC.Validation.Results
         void AddInvalidField(string propertyString, Type validationRule);
         IEnumerable<string> GetInvalidFields();
         IEnumerable<Type> GetBrokenRulesFor(string propertyString);
+        bool IsValid();
+        bool IsValid(string propertyString);
+        void CloneFrom(IValidationResults validationResults);
     }
 }

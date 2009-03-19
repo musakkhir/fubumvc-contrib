@@ -65,6 +65,8 @@
     <Compile Include="Dsl\RuleExpression.cs" />
     <Compile Include="Dsl\ValidationDsl.cs" />
     <Compile Include="Dsl\ViewModelTypeScanningExpression.cs" />
+    <Compile Include="Extensions\ValidationExpression.cs" />
+    <Compile Include="Extensions\ValidationExtensions.cs" />
     <Compile Include="Results\ICanBeValidated.cs" />
     <Compile Include="Results\IValidationResults.cs" />
     <Compile Include="Rules\IsEmail.cs" />

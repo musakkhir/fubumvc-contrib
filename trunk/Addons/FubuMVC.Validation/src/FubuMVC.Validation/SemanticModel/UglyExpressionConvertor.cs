@@ -21,6 +21,11 @@ namespace FubuMVC.Validation.SemanticModel
             return ExpressionStringParser(expression.ToString());
         }
 
+        public string ToString<TViewModel>(Expression<Func<TViewModel, object>> expression)
+        {
+            return ExpressionStringParser(expression.ToString());
+        }
+
         private static string ExpressionStringParser(string expressionString)
         {
             if (expressionString.Contains(" => "))
