@@ -25,7 +25,7 @@ namespace Fohjin.IntegrationTests.Domain_Persistence
                 .CheckProperty(u => u.PasswordSalt, "salt, anything here")
                 .CheckProperty(u => u.Status, 99)
                 .CheckProperty(u => u.UserRole, UserRoles.SiteUser)
-                .CheckList(u=>u._posts, new[]{new Post()})
+                //.CheckList(u=>u._posts, new[]{new Post()})
                 .VerifyTheMappings();
         }
     }

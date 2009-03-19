@@ -17,7 +17,7 @@
 </div>
 <div class="comment"><a name="comments"></a>
     <%= this.RenderPartial().Using<BlogPostComment>().WithoutListWrapper().WithDefault("<h2>{0}</h2>".ToFormat("No comments yet!<br /><br />")).ForEachOf(Model.Post.Comments) %>
-    <%= this.DisplayDependingOnLoginStatus().For(Model.CurrentUser).UseModel(Model.Comment).WhenLoggedInShow<LoggedInCommentForm>().WhenLoggedOutShow<LoggedOutCommentForm>()%>
+    <%= this.RenderPartial().Using<LoggedOutCommentForm>().For(Model.Comment) %>
 </div>
 </asp:Content>
 <asp:Content ID="SidePannelContent" ContentPlaceHolderID="SidePannelContent" runat="server">

@@ -47,7 +47,7 @@ namespace Fohjin.Tests.Config
             var user = catcher.First<User>();
 
             user.Username.ShouldEqual("Admin");
-            user.Password.ShouldEqual("pa$$w0rd");
+            user.Password.ShouldEqual("Atlantis");
         }
 
         [Test]

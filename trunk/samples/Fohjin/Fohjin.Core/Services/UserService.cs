@@ -30,7 +30,11 @@ namespace Fohjin.Core.Services
             if (!user.IsAuthenticated)
             {
                 user.DisplayName = userDisplayName;
-                user.Url = (userUrl.StartsWith("http://") || userUrl.StartsWith("https://")) ? userUrl : "http://{0}".ToFormat(userUrl);
+                user.Url = !string.IsNullOrEmpty(userUrl) 
+                    ? (userUrl.StartsWith("http://") || userUrl.StartsWith("https://")) 
+                        ? userUrl 
+                        : "http://{0}".ToFormat(userUrl)
+                    : "";
             }
 
             _repository.Save(user);
