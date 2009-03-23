@@ -10,7 +10,8 @@ namespace FubuMVC.Validation.Tests.Helper
             Null_String = null;
             Filled_String = "Something";
             Valid_Email = "Mark.Nijof@Gmail.com";
-            False_Email = "Mark.Nijhof";
+            False_Email_1 = "Mark.Nijhof";
+            False_Email_2 = "Mark.Nijhof@nijhof.moc";
             Valid_Url_1 = "blog.fohjin.com";
             Valid_Url_2 = "http://blog.fohjin.com";
             False_Url = "http://test";
@@ -22,7 +23,8 @@ namespace FubuMVC.Validation.Tests.Helper
         }
 
         public string Valid_Email { get; set; }
-        public string False_Email { get; set; }
+        public string False_Email_1 { get; set; }
+        public string False_Email_2 { get; set; }
         public string Filled_String { get; set; }
         public string Empty_String { get; set; }
         public string Valid_Url_1 { get; set; }

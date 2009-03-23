@@ -136,7 +136,7 @@ namespace FubuMVC.Validation.Tests.SemanticModel
             _validationConfiguration.Validate(_testViewModel);
                 
             _testViewModel.ValidationResults.GetInvalidFields().Count().ShouldEqual(2);
-            _testViewModel.ValidationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email");
+            _testViewModel.ValidationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email_1");
             _testViewModel.ValidationResults.GetInvalidFields().Last().ShouldEqual("property => property.False_Url");
             _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().First()).Count().ShouldEqual(1);
             _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().First()).First().ShouldEqual(typeof(IsEmail<TestViewModel>));

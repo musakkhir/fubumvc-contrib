@@ -67,7 +67,15 @@ namespace FubuMVC.Validation.Tests.Rules
         [Test]
         public void Should_be_able_to_run_a_is_email_validation_rule_and_fail()
         {
-            new IsEmail<TestViewModel>(x => x.False_Email)
+            new IsEmail<TestViewModel>(x => x.False_Email_1)
+                .IsValid(_testViewModel)
+                .ShouldBeFalse();
+        }
+
+        [Test]
+        public void Should_be_able_to_run_a_is_email_validation_rule_and_fail_because_of_non_existing_domain()
+        {
+            new IsEmail<TestViewModel>(x => x.False_Email_2)
                 .IsValid(_testViewModel)
                 .ShouldBeFalse();
         }

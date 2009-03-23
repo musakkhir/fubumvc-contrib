@@ -60,7 +60,7 @@ namespace FubuMVC.Validation.Tests.Exensions
         [Test]
         public void Should_show_a_message_when_the_property_is_not_validated_correctly()
         {
-            _testView.Validate(x => x.False_Email)
+            _testView.Validate(x => x.False_Email_1)
                 .DisplayWhenInvalid("Field is invalid!")
                 .ToString()
                 .ShouldEqual("Field is invalid!");

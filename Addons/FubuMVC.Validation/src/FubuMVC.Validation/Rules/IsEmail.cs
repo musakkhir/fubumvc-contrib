@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Net;
 using System.Text.RegularExpressions;
 using FubuMVC.Validation.SemanticModel;
 
@@ -24,9 +25,25 @@ namespace FubuMVC.Validation.Rules
         public bool IsValid(TViewModel viewModel)
         {
             var value = _propToValidateExpression.Compile().Invoke(viewModel);
-            return string.IsNullOrEmpty(value) || new Regex(regexPattern).IsMatch(value);
+            return string.IsNullOrEmpty(value) || (new Regex(regexPattern).IsMatch(value) && IsValidEmailDomain(value));
         }
 
         public string PropertyFilter { get; private set; }
+
+        private static bool IsValidEmailDomain(string value)
+        {
+            if (value.IndexOf("@") == -1)
+                return false;
+
+            var emailDomain = value.Substring(value.IndexOf("@") + 1);
+            try
+            {
+                return Dns.GetHostEntry(emailDomain).AddressList.Length > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
