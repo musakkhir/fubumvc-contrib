@@ -18,9 +18,7 @@ namespace Fohjin.Core.Web.Controllers
 
         public IndexViewModel Index(IndexSetupViewModel inModel)
         {
-            var posts = _repository.Query<Post>().OrderByDescending(p => p.Published);
-            var recentPosts = _repository.Query<Post>().OrderByDescending(p => p.Published).Take(10).ToList();
-
+            var posts = _repository.Query<Post>().OrderByDescending(p => p.Published).Take(5).ToList();
             return new IndexViewModel {Posts = posts.ToList().Select(p => new PostDisplay(p))};
         }
     }

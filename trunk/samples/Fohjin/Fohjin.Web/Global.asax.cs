@@ -142,11 +142,6 @@ namespace Fohjin.Web
                     config.AddOtherUrl("2008/04/google-custom-search-engine-cse-for.html");
                     config.AddOtherUrl("2008/04/i-have-been-reading-about-design-by_12.html");
                 });
-
-                //x.OverrideConfigFor(DebugIndexAction, config =>
-                //{
-                //    config.PrimaryUrl = "__debug_controller_actions";
-                //});
             };
 
             ValidationConfig.Configure = x =>
@@ -159,6 +154,10 @@ namespace Fohjin.Web
 
                 x.ByDefault.PropertiesMatching(property => property.Name.Contains("Url"), rule =>
                     rule.WillBeValidatedBy<IsUrl<CanBeAnyViewModel>>());
+
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Answer"), rule =>
+                    rule.WillBeValidatedBy<IsValidCaptcha<CanBeAnyViewModel>>(needs =>
+                        needs.NeedsAdditionalProperty(property => property.Name.Contains("Question"))));
 
                 x.AddViewModelsFromAssembly
                     .ContainingType<ViewModel>()
