@@ -16,8 +16,8 @@ namespace FubuMVC.Validation
         public ValidationConfig()
         {
             var validatorConfiguration = new ValidationConfiguration();
-            var validationDSL = new ValidationDsl(validatorConfiguration);
-            Configure(validationDSL);
+            var validationDsl = new ValidationDsl(validatorConfiguration);
+            Configure(validationDsl);
 
             new StructureMapConfigurer(validatorConfiguration).ConfigureRegistry(this);
         }

@@ -179,5 +179,21 @@ namespace FubuMVC.Validation.Tests.Rules
                 .IsValid(_testViewModel)
                 .ShouldBeFalse();
         }
+
+        [Test]
+        public void IsValidCaptcha_should_be_able_to_validate_a_question_and_good_answer()
+        {
+            new IsValidCaptcha<CaptchaTestViewModel>(x => x.Question, x => x.Good_Answer)
+                .IsValid(new CaptchaTestViewModel())
+                .ShouldBeTrue();
+        }
+
+        [Test]
+        public void IsValidCaptcha_should_be_able_to_validate_a_question_and_bad_answer()
+        {
+            new IsValidCaptcha<CaptchaTestViewModel>(x => x.Question, x => x.Bad_Answer)
+                .IsValid(new CaptchaTestViewModel())
+                .ShouldBeFalse();
+        }
     }
 }

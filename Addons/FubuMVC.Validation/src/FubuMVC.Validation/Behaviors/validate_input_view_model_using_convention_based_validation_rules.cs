@@ -16,11 +16,10 @@ namespace FubuMVC.Validation.Behaviors
         {
             if (!(input is ICanBeValidated)) return;
 
-            var method = _validate.GetType().GetMethod("Validate"); //, new[] { typeof(ICanBeValidated) });
+            var method = _validate.GetType().GetMethod("Validate");
             var genericMethod = method.MakeGenericMethod(input.GetType());
 
             genericMethod.Invoke(_validate, new object[] { input });
-            //_validate.Validate(input as ICanBeValidated);
         }
     }
 }
