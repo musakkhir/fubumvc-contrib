@@ -10,37 +10,44 @@ namespace FubuMVC.Validation.SemanticModel
 {
     public class DefaultPropertyConvention
     {
-        private readonly IList<Type> _validationRules;
-        private readonly string _expressionString;
+        private readonly Dictionary<Type, AdditionalPropertyExpression> _validationRules;
 
         public DefaultPropertyConvention(Expression<Func<PropertyInfo, bool>> filter)
         {
-            Match = filter;
-            _validationRules = new List<Type>();
-            _expressionString = new UglyExpressionConvertor().ToString(Match);
+            Property = new Property(filter);
+            _validationRules = new Dictionary<Type, AdditionalPropertyExpression>();
         }
 
-        public Expression<Func<PropertyInfo, bool>> Match { get; private set; }
+        public Property Property { get; private set; }
 
         public override string ToString()
         {
-            return _expressionString;
+            return Property.ToString();
         }
 
         public void AddValidationRule<TValidationRule>() where TValidationRule : IValidationRule<CanBeAnyViewModel>
         {
+            AddValidationRule<TValidationRule>(new AdditionalPropertyExpression());
+        }
+
+        public void AddValidationRule<TValidationRule>(AdditionalPropertyExpression additionalProperties) where TValidationRule : IValidationRule<CanBeAnyViewModel>
+        {
             var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
 
-            //if (validationRuleType.IsGenericTypeDefinition)
-            //    validationRuleType = validationRuleType.GetGenericTypeDefinition();
-
-            if (!_validationRules.Contains(validationRuleType))
-                _validationRules.Add(validationRuleType);
+            if (!_validationRules.ContainsKey(validationRuleType))
+                _validationRules.Add(validationRuleType, additionalProperties);
         }
 
         public IEnumerable<Type> GetValidationRules()
         {
-            return _validationRules.AsEnumerable();
+            return _validationRules.Keys.AsEnumerable();
+        }
+
+        public IEnumerable<Property> GetAdditionalPropertiesForRule(Type ruleType)
+        {
+            return _validationRules.ContainsKey(ruleType)
+                ? _validationRules[ruleType].GetProperties()
+                : new List<Property>();
         }
     }
 }

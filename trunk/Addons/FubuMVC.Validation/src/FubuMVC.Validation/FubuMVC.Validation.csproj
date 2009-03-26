@@ -35,7 +35,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\FubuMVC\FubuMVC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.JScript" />
+    <Reference Include="Microsoft.JScript">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=2.5.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
@@ -58,7 +60,10 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Behaviors\validate_input_view_model_using_convention_based_validation_rules.cs" />
-    <Compile Include="Captcha\Evaluator.cs" />
+    <Compile Include="Captcha\CaptchaEvaluator.cs" />
+    <Compile Include="Captcha\CaptchaGeneator.cs" />
+    <Compile Include="Captcha\CaptchaOpperator.cs" />
+    <Compile Include="Captcha\CaptchaOpperatorExtension.cs" />
     <Compile Include="Dsl\AssemblyControllerScanningExpression.cs" />
     <Compile Include="Dsl\ByDefaultDslChain.cs" />
     <Compile Include="Dsl\CanBeAnyViewModel.cs" />
@@ -75,10 +80,15 @@
     <Compile Include="Rules\IsNumberBelow100.cs" />
     <Compile Include="Rules\IsRequired.cs" />
     <Compile Include="Rules\IsUrl.cs" />
+    <Compile Include="Rules\IsValidCaptcha.cs" />
     <Compile Include="Rules\IValidationRule.cs" />
+    <Compile Include="SemanticModel\AdditionalPropertyExpression.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConvention.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConventionComparer.cs" />
     <Compile Include="Behaviors\IValidate.cs" />
+    <Compile Include="SemanticModel\Property.cs" />
+    <Compile Include="SemanticModel\PropertyComparer.cs" />
+    <Compile Include="SemanticModel\ValidationRuleBuilder.cs" />
     <Compile Include="StructureMap\StructureMapConfigurer.cs" />
     <Compile Include="SemanticModel\UglyExpressionConvertor.cs" />
     <Compile Include="ValidationConfig.cs" />

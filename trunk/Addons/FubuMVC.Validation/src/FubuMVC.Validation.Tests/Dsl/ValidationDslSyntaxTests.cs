@@ -22,6 +22,18 @@ namespace FubuMVC.Validation.Tests.Dsl
         }
 
         [Test]
+        public void Should_be_able_to_write_configure_default_conventions_using_the_dsl_with_a_two_contructor_rule()
+        {
+            ValidationConfig.Configure = x =>
+            {
+                x.ByDefault
+                    .PropertiesMatching(p => p.Name.StartsWith("Email"), r => 
+                        r.WillBeValidatedBy<IsValidCaptcha<CanBeAnyViewModel>>(p =>
+                            p.NeedsAdditionalProperty(y => y.Name.StartsWith("Email"))));
+            };
+        }
+
+        [Test]
         public void Should_be_able_to_write_scanning_assemblies_using_the_dsl()
         {
             ValidationConfig.Configure = x =>

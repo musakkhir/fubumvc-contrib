@@ -14,11 +14,13 @@ namespace FubuMVC.Validation.SemanticModel
     {
         private readonly Dictionary<Type, object> _discoveredTypes;
         private readonly List<DefaultPropertyConvention> _defaultPropertyConventions;
+        private readonly ValidationRuleBuilder _validationRuleBuilder;
 
         public ValidationConfiguration()
         {
             _discoveredTypes = new Dictionary<Type, object>();
             _defaultPropertyConventions = new List<DefaultPropertyConvention>();
+            _validationRuleBuilder = new ValidationRuleBuilder();
         }
 
         public void Validate<TViewModel>(TViewModel viewModel) where TViewModel : ICanBeValidated
@@ -32,11 +34,7 @@ namespace FubuMVC.Validation.SemanticModel
 
         public void AddDefaultPropertyConvention(DefaultPropertyConvention defaultPropertyConvention)
         {
-            var propertyConvention = _defaultPropertyConventions
-                .Where(convention => convention.ToString() == defaultPropertyConvention.ToString())
-                .FirstOrDefault();
-
-            if (propertyConvention == null)
+            if (!_defaultPropertyConventions.Contains(defaultPropertyConvention, new DefaultPropertyConventionComparer()))
                 _defaultPropertyConventions.Add(defaultPropertyConvention);
         }
 
@@ -63,31 +61,24 @@ namespace FubuMVC.Validation.SemanticModel
 
             discoveredType.GetProperties().Each(property => _defaultPropertyConventions.Each(convention =>
             {
-                if (convention.Match.Compile().Invoke(property))
+                if (convention.Property.Match.Compile().Invoke(property))
                 {
                     convention.GetValidationRules()
-                        .Each(ruleType => ValidationRuleBuilder<TViewModel>(discoveredType, ruleType, property, rules.Add));
+                        .Each(ruleType =>
+                        {
+                            var propertyInfos = new List<PropertyInfo>();
+                            convention.GetAdditionalPropertiesForRule(ruleType).Each(additionalProperty => discoveredType.GetProperties().Each(p =>
+                            {
+                                if (!additionalProperty.Match.Compile().Invoke(p)) return;
+
+                                propertyInfos.Add(p);
+                                return;
+                            }));
+
+                            _validationRuleBuilder.Build<TViewModel>(discoveredType, ruleType, property, propertyInfos, rules.Add);
+                        });
                 }
             }));
-        }
-
-        private static void ValidationRuleBuilder<TViewModel>(Type discoveredType, Type ruleType, PropertyInfo property, Action<IValidationRule<TViewModel>> addRuleToRules) where TViewModel : ICanBeValidated
-        {
-            ParameterExpression arg = Expression.Parameter(discoveredType, "x");
-            Expression expr = arg;
-            expr = Expression.Property(expr, property);
-            LambdaExpression lambdaExpression = Expression.Lambda(expr, arg);
-
-            var genericType = ruleType.MakeGenericType(new[] { discoveredType });
-
-            var constructor = genericType.GetConstructor(new [] {lambdaExpression.GetType()});
-
-            if (constructor == null) return;
-
-            IValidationRule<TViewModel> instance = (IValidationRule<TViewModel>)constructor.Invoke(new object[] { lambdaExpression });
-
-            if (instance != null)
-                addRuleToRules(instance);
         }
 
         public IEnumerable<Type> GetDiscoveredTypes()
@@ -114,18 +105,27 @@ namespace FubuMVC.Validation.SemanticModel
             var genericValidationRuleType = validationRuleType.MakeGenericType(discoveredType);
 
             if (rules == null || rules.Where(rule => 
-                    rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
+                rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
 
             discoveredType.GetProperties().Each(property =>
             {
                 if (propertyFilter.Compile().Invoke(property))
-                        ValidationRuleBuilder<TViewModel>(discoveredType, validationRuleType, property, rules.Add);
+                {
+                    var propertyInfos = new List<PropertyInfo>();
+                    //convention.GetAdditionalPropertiesForRule(ruleType).Each(additionalProperty => discoveredType.GetProperties().Each(p =>
+                    //{
+                    //    if (!additionalProperty.Match.Compile().Invoke(p)) return;
+
+                    //    propertyInfos.Add(p);
+                    //    return;
+                    //}));
+
+                    _validationRuleBuilder.Build<TViewModel>(discoveredType, validationRuleType, property, propertyInfos, rules.Add);
+                }
             });
         }
 
-        public void RemoveRuleFrom<TViewModel, TValidationRule>() 
-            where TViewModel : ICanBeValidated 
-            where TValidationRule : IValidationRule<TViewModel>
+        public void RemoveRuleFrom<TViewModel, TValidationRule>() where TViewModel : ICanBeValidated where TValidationRule : IValidationRule<TViewModel>
         {
             Type discoveredType = typeof(TViewModel);
             if (!_discoveredTypes.ContainsKey(discoveredType)) return;

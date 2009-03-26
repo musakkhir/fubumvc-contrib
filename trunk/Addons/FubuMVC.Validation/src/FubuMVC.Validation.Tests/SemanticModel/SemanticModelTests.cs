@@ -79,6 +79,36 @@ namespace FubuMVC.Validation.Tests.SemanticModel
         }
 
         [Test]
+        public void Should_be_able_to_add_aditional_required_properties_to_validation_rule()
+        {
+            DefaultPropertyConvention defaultPropertyConvention = new DefaultPropertyConvention(x => x.Name.Contains("question"));
+
+            var expression = new AdditionalPropertyExpression();
+            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
+            expression.NeedsAdditionalProperty(p => !p.Name.Contains("question"));
+
+            defaultPropertyConvention.AddValidationRule<IsRequired<CanBeAnyViewModel>>(expression);
+
+            defaultPropertyConvention.GetValidationRules().Count().ShouldEqual(1);
+            defaultPropertyConvention.GetAdditionalPropertiesForRule(defaultPropertyConvention.GetValidationRules().First()).Count().ShouldEqual(2);
+        }
+
+        [Test]
+        public void Should_not_be_able_to_add_two_equal_aditional_required_properties_to_validation_rule()
+        {
+            DefaultPropertyConvention defaultPropertyConvention = new DefaultPropertyConvention(x => x.Name.Contains("question"));
+
+            var expression = new AdditionalPropertyExpression();
+            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
+            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
+
+            defaultPropertyConvention.AddValidationRule<IsRequired<CanBeAnyViewModel>>(expression);
+
+            defaultPropertyConvention.GetValidationRules().Count().ShouldEqual(1);
+            defaultPropertyConvention.GetAdditionalPropertiesForRule(defaultPropertyConvention.GetValidationRules().First()).Count().ShouldEqual(1);
+        }
+
+        [Test]
         public void Should_be_able_to_add_types_that_implement_ICanBeValidated()
         {
             _validationConfiguration.AddDiscoveredType<TestViewModel>();
@@ -117,7 +147,7 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             _validationConfiguration.AddDiscoveredType<TestViewModel>();
 
-            _validationConfiguration.GetRulesFor(new TestViewModel()).Count().ShouldEqual(7);
+            _validationConfiguration.GetRulesFor(new TestViewModel()).Count().ShouldEqual(9);
         }
 
         [Test]
@@ -135,7 +165,7 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             _validationConfiguration.Validate(_testViewModel);
                 
-            _testViewModel.ValidationResults.GetInvalidFields().Count().ShouldEqual(2);
+            _testViewModel.ValidationResults.GetInvalidFields().Count().ShouldEqual(3);
             _testViewModel.ValidationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email_1");
             _testViewModel.ValidationResults.GetInvalidFields().Last().ShouldEqual("property => property.False_Url");
             _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().First()).Count().ShouldEqual(1);

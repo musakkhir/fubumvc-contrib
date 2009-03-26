@@ -16,8 +16,8 @@ namespace FubuMVC.Validation.Tests.Exensions
         private ValidationConfiguration _validationConfiguration;
         private TestView _testView;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             _testViewModel = new TestViewModel();
             _validationConfiguration = new ValidationConfiguration();

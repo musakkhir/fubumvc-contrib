@@ -36,7 +36,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var defaultPropertyConventions = _validationConfiguration.GetDefaultPropertyConventions();
             defaultPropertyConventions.Count().ShouldEqual(1);
             defaultPropertyConventions.First().ToString().ShouldEqual("property => property.Name.StartsWith(\"Email\")");
-            defaultPropertyConventions.First().Match.ShouldEqual(propToValidateExpression);
+            defaultPropertyConventions.First().Property.Match.ShouldEqual(propToValidateExpression);
             defaultPropertyConventions.First().GetValidationRules().Count().ShouldEqual(1);
             defaultPropertyConventions.First().GetValidationRules().First().ShouldEqual(typeof(IsRequired<>));
         }
@@ -56,7 +56,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var defaultPropertyConventions = _validationConfiguration.GetDefaultPropertyConventions();
             defaultPropertyConventions.Count().ShouldEqual(1);
             defaultPropertyConventions.First().ToString().ShouldEqual("property => property.Name.StartsWith(\"Email\")");
-            defaultPropertyConventions.First().Match.ShouldEqual(propToValidateExpression);
+            defaultPropertyConventions.First().Property.Match.ShouldEqual(propToValidateExpression);
             defaultPropertyConventions.First().GetValidationRules().Count().ShouldEqual(2);
             defaultPropertyConventions.First().GetValidationRules().First().ShouldEqual(typeof(IsRequired<>));
             defaultPropertyConventions.First().GetValidationRules().Last().ShouldEqual(typeof(IsEmail<>));
@@ -77,11 +77,11 @@ namespace FubuMVC.Validation.Tests.Dsl
             var defaultPropertyConventions = _validationConfiguration.GetDefaultPropertyConventions();
             defaultPropertyConventions.Count().ShouldEqual(2);
             defaultPropertyConventions.First().ToString().ShouldEqual("property => property.Name.StartsWith(\"Email\")");
-            defaultPropertyConventions.First().Match.ShouldEqual(propToValidateExpression1);
+            defaultPropertyConventions.First().Property.Match.ShouldEqual(propToValidateExpression1);
             defaultPropertyConventions.First().GetValidationRules().Count().ShouldEqual(1);
             defaultPropertyConventions.First().GetValidationRules().First().ShouldEqual(typeof(IsRequired<>));
             defaultPropertyConventions.Last().ToString().ShouldEqual("property => property.Name.StartsWith(\"Url\")");
-            defaultPropertyConventions.Last().Match.ShouldEqual(propToValidateExpression2);
+            defaultPropertyConventions.Last().Property.Match.ShouldEqual(propToValidateExpression2);
             defaultPropertyConventions.Last().GetValidationRules().Count().ShouldEqual(1);
             defaultPropertyConventions.Last().GetValidationRules().First().ShouldEqual(typeof(IsRequired<>));
         }
@@ -130,7 +130,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                 .Where(t => t.Namespace.EndsWith("Tests.Helper"));
 
             var propertyConventions = _validationConfiguration.GetDiscoveredTypes();
-            propertyConventions.Count().ShouldEqual(4);
+            propertyConventions.Count().ShouldEqual(6);
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                 .Where(t => t.Namespace.EndsWith("Tests.Helper"));
 
             var defaultPropertyConventions = _validationConfiguration.GetRulesFor(new TestViewModel());
-            defaultPropertyConventions.Count().ShouldEqual(4);
+            defaultPropertyConventions.Count().ShouldEqual(6);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                 .WillNotBeValidatedBy<IsRequired<TestViewModel>>();
 
             var defaultPropertyConventions = _validationConfiguration.GetRulesFor(new TestViewModel());
-            defaultPropertyConventions.Count().ShouldEqual(2);
+            defaultPropertyConventions.Count().ShouldEqual(3);
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                     r.WillBeValidatedBy<IsRequired<TestViewModel>>());
 
             var defaultPropertyConventions = _validationConfiguration.GetRulesFor(new TestViewModel());
-            defaultPropertyConventions.Count().ShouldEqual(2);
+            defaultPropertyConventions.Count().ShouldEqual(3);
         }
     }
 }
