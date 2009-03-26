@@ -116,6 +116,8 @@ namespace Fohjin.Core.Web.Controllers
         public string OptionalUrl { get; set; }
         public bool Remember { get; set; }
         public bool Subscribed { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
 
         private readonly IValidationResults _validationResults = new ValidationResults();
         public IValidationResults ValidationResults
