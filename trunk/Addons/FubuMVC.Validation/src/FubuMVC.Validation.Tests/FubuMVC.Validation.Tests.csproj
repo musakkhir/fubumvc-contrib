@@ -80,6 +80,7 @@
     <Compile Include="Helper\TestViewModel2.cs" />
     <Compile Include="Helper\TestViewModel3.cs" />
     <Compile Include="Helper\TestViewModelNotImplementingICanBeValidated.cs" />
+    <Compile Include="Helper\TwitterTestViewModel.cs" />
     <Compile Include="Helper\ValidTestViewModel.cs" />
     <Compile Include="Rules\ValidatorRuleTests.cs" />
     <Compile Include="SemanticModel\ValidationRuleBuilderTests.cs" />

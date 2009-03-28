@@ -81,6 +81,7 @@
     <Compile Include="Rules\IsRequired.cs" />
     <Compile Include="Rules\IsUrl.cs" />
     <Compile Include="Rules\IsValidCaptcha.cs" />
+    <Compile Include="Rules\IsValidTwitterUser.cs" />
     <Compile Include="Rules\IValidationRule.cs" />
     <Compile Include="SemanticModel\AdditionalPropertyExpression.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConvention.cs" />
