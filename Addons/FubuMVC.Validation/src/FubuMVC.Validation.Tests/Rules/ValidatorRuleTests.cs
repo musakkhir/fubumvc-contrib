@@ -195,5 +195,21 @@ namespace FubuMVC.Validation.Tests.Rules
                 .IsValid(new CaptchaTestViewModel())
                 .ShouldBeFalse();
         }
+
+        [Test]
+        public void IsValidTwitterUser_should_be_able_to_validate_if_a_twitter_exists_which_does()
+        {
+            new IsValidTwitterUser<TwitterTestViewModel>(x => x.Good_TwitterUser)
+                .IsValid(new TwitterTestViewModel())
+                .ShouldBeTrue();
+        }
+
+        [Test]
+        public void IsValidTwitterUser_should_be_able_to_validate_if_a_twitter_exists_which_does_not()
+        {
+            new IsValidTwitterUser<TwitterTestViewModel>(x => x.Bad_TwitterUser)
+                .IsValid(new TwitterTestViewModel())
+                .ShouldBeFalse();
+        }
     }
 }

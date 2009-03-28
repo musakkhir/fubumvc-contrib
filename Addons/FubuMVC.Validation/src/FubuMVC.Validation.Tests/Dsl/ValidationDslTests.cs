@@ -130,7 +130,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                 .Where(t => t.Namespace.EndsWith("Tests.Helper"));
 
             var propertyConventions = _validationConfiguration.GetDiscoveredTypes();
-            propertyConventions.Count().ShouldEqual(6);
+            propertyConventions.Count().ShouldEqual(7);
         }
 
         [Test]
