@@ -133,6 +133,7 @@ namespace Fohjin.Tests.Web.Controllers
         private string GivenUserDisplayName;
         private string GivenUserEmail;
         private string GivenUserUrl;
+        private string GivenTwitterUserName;
 
         [SetUp]
         public void SetUp()
@@ -149,8 +150,9 @@ namespace Fohjin.Tests.Web.Controllers
             GivenUserDisplayName = "username";
             GivenUserEmail = "email";
             GivenUserUrl = "www";
+            GivenTwitterUserName = "name";
 
-            _curUser = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl);
+            _curUser = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl, GivenTwitterUserName);
         }
 
         public User CreatedUser
@@ -159,7 +161,7 @@ namespace Fohjin.Tests.Web.Controllers
             {
                 if( _curUser == null )
                 {
-                    _curUser = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl);
+                    _curUser = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl, GivenTwitterUserName);
                 }
                 return _curUser;
             }
@@ -201,6 +203,7 @@ namespace Fohjin.Tests.Web.Controllers
         private string GivenUserDisplayName;
         private string GivenUserEmail;
         private string GivenUserUrl;
+        private string GivenTwitterUserName;
         private User _user;
 
         [SetUp]
@@ -223,8 +226,9 @@ namespace Fohjin.Tests.Web.Controllers
             GivenUserDisplayName = "username";
             GivenUserEmail = "email";
             GivenUserUrl = "url";
+            GivenTwitterUserName = "name";
 
-            _user = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl);
+            _user = _userService.AddOrUpdateUser(GivenUserEmail, GivenUserDisplayName, GivenUserUrl, GivenTwitterUserName);
         }
 
         public BlogPostCommentViewModel Given { get; set; }

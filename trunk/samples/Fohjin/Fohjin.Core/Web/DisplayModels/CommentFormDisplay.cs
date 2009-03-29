@@ -22,6 +22,7 @@ namespace Fohjin.Core.Web.DisplayModels
                 .ToString();
 
             Answer = "";
+            OptionalTwitterUserName = comment.User.TwitterUserName;
         }
 
         public PostDisplay Post { get; private set; }
@@ -34,6 +35,7 @@ namespace Fohjin.Core.Web.DisplayModels
         public string Body { get; private set; }
         public string Question { get; private set; }
         public string Answer { get; private set; }
+        public string OptionalTwitterUserName { get; set; }
 
         private readonly IValidationResults _validationResults = new ValidationResults();
         public IValidationResults ValidationResults

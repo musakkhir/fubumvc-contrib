@@ -20,6 +20,7 @@ namespace Fohjin.Core.Domain
         public virtual bool Remember { get; set; }
         public virtual bool IsAuthenticated { get; set; }
         public virtual UserRoles UserRole { get; set; }
+        public virtual string TwitterUserName { get; set; }
 
         public virtual void AddPost(Post post)
         {

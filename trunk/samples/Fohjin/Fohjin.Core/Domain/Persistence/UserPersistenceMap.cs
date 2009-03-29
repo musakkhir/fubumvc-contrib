@@ -21,6 +21,7 @@ namespace Fohjin.Core.Domain.Persistence
             Map(u => u.Status);
             Map(u => u.UserRole);
             Map(u => u.Remember);
+            Map(u => u.TwitterUserName);
             // Map(u => u.IsAuthenticated); // Does not have to be persisted
             HasMany(u => u._posts).AsBag().Cascade.SaveUpdate().Inverse();
         }

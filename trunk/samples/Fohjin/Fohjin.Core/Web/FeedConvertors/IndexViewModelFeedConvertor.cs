@@ -14,13 +14,11 @@ namespace Fohjin.Core.Web.FeedConvertors
     {
         public ICurrentRequest CurrentRequest { get; set; }
         private readonly IUrlResolver _urlResolver;
-        private readonly ICurrentRequest _currentRequest;
 
         public IndexViewModelFeedConvertor(IUrlResolver urlResolver, ICurrentRequest currentRequest)
         {
             CurrentRequest = currentRequest;
             _urlResolver = urlResolver;
-            _currentRequest = currentRequest;
         }
 
         public bool TryConvertModel(IndexViewModel model, out SyndicationFeed syndicationFeed)
