@@ -10,12 +10,12 @@ namespace FubuMVC.Validation.SemanticModel
 {
     public class DefaultPropertyConvention
     {
-        private readonly Dictionary<Type, AdditionalPropertyExpression> _validationRules;
+        private readonly Dictionary<Type, AdditionalProperties> _validationRules;
 
         public DefaultPropertyConvention(Expression<Func<PropertyInfo, bool>> filter)
         {
             Property = new Property(filter);
-            _validationRules = new Dictionary<Type, AdditionalPropertyExpression>();
+            _validationRules = new Dictionary<Type, AdditionalProperties>();
         }
 
         public Property Property { get; private set; }
@@ -27,10 +27,10 @@ namespace FubuMVC.Validation.SemanticModel
 
         public void AddValidationRule<TValidationRule>() where TValidationRule : IValidationRule<CanBeAnyViewModel>
         {
-            AddValidationRule<TValidationRule>(new AdditionalPropertyExpression());
+            AddValidationRule<TValidationRule>(new AdditionalProperties());
         }
 
-        public void AddValidationRule<TValidationRule>(AdditionalPropertyExpression additionalProperties) where TValidationRule : IValidationRule<CanBeAnyViewModel>
+        public void AddValidationRule<TValidationRule>(AdditionalProperties additionalProperties) where TValidationRule : IValidationRule<CanBeAnyViewModel>
         {
             var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
 

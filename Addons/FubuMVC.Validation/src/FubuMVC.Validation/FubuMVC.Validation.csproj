@@ -71,6 +71,7 @@
     <Compile Include="Dsl\PropertiesMatchingExpression.cs" />
     <Compile Include="Dsl\RuleExpression.cs" />
     <Compile Include="Dsl\ValidationDsl.cs" />
+    <Compile Include="Dsl\ValidationRuleSetup.cs" />
     <Compile Include="Dsl\ViewModelTypeScanningExpression.cs" />
     <Compile Include="Extensions\ValidationExpression.cs" />
     <Compile Include="Extensions\ValidationExtensions.cs" />
@@ -83,10 +84,13 @@
     <Compile Include="Rules\IsValidCaptcha.cs" />
     <Compile Include="Rules\IsValidTwitterUser.cs" />
     <Compile Include="Rules\IValidationRule.cs" />
+    <Compile Include="SemanticModel\AdditionalProperties.cs" />
     <Compile Include="SemanticModel\AdditionalPropertyExpression.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConvention.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConventionComparer.cs" />
     <Compile Include="Behaviors\IValidate.cs" />
+    <Compile Include="SemanticModel\DefaultPropertyConventions.cs" />
+    <Compile Include="SemanticModel\DiscoveredTypes.cs" />
     <Compile Include="SemanticModel\Property.cs" />
     <Compile Include="SemanticModel\PropertyComparer.cs" />
     <Compile Include="SemanticModel\ValidationRuleBuilder.cs" />

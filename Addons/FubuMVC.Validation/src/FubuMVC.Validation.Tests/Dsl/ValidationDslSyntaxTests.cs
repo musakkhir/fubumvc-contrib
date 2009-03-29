@@ -59,6 +59,18 @@ namespace FubuMVC.Validation.Tests.Dsl
         }
 
         [Test]
+        public void Should_be_able_to_write_overriding_default_conventions_adding_validation_rules_using_the_dsl_with_a_two_contructor_rule()
+        {
+            ValidationConfig.Configure = x =>
+            {
+                x.OverrideConfigFor<TestViewModel>()
+                    .PropertiesMatching(p => p.Name.StartsWith("Email"), r => 
+                        r.WillBeValidatedBy<IsValidCaptcha<TestViewModel>>(p =>
+                            p.NeedsAdditionalProperty(y => y.Name.StartsWith("Email"))));
+            };
+        }
+
+        [Test]
         public void Should_be_able_to_write_overriding_default_conventions_removing_validation_rules_using_the_dsl()
         {
             ValidationConfig.Configure = x =>

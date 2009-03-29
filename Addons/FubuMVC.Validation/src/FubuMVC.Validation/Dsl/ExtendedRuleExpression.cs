@@ -20,13 +20,25 @@ namespace FubuMVC.Validation.Dsl
 
         public void WillBeValidatedBy<TValidationRule>() where TValidationRule : IValidationRule<TViewModel>
         {
+            var properties = new AdditionalProperties();
             var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
-            _validationConfiguration.AddRuleFor<TViewModel>(_propertyFilter, validationRuleType);
+            _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
+        }
+
+        public void WillBeValidatedBy<TValidationRule>(Action<AdditionalPropertyExpression> additionalProperties) where TValidationRule : IValidationRule<TViewModel>
+        {
+            var properties = new AdditionalProperties();
+            var additionalPropertyExpression = new AdditionalPropertyExpression(properties);
+            additionalProperties(additionalPropertyExpression);
+
+            var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
+
+            _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
         }
 
         public void WillNotBeValidated()
         {
-            _validationConfiguration.RemoveAllRulesFor<TViewModel>();
+            _validationConfiguration.DiscoveredTypes.RemoveAllRulesFor<TViewModel>();
         }
     }
 }
