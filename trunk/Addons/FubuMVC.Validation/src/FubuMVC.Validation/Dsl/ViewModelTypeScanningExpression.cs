@@ -27,7 +27,7 @@ namespace FubuMVC.Validation.Dsl
 
                 if (type.IsValueType) return;
 
-                if (evalTypeFunc(type)) _validationConfiguration.AddDiscoveredType(type);
+                if (evalTypeFunc(type)) _validationConfiguration.DiscoveredTypes.AddDiscoveredType(type);
             });
         }
     }

@@ -24,13 +24,13 @@ namespace FubuMVC.Validation.Dsl
 
         public PropertiesMatchingExpression<TViewModel> WillNotBeValidated()
         {
-            _validationConfiguration.RemoveAllRulesFor<TViewModel>();
+            _validationConfiguration.DiscoveredTypes.RemoveAllRulesFor<TViewModel>();
             return this;
         }
 
         public PropertiesMatchingExpression<TViewModel> WillNotBeValidatedBy<TValidationRule>() where TValidationRule : IValidationRule<TViewModel>
         {
-            _validationConfiguration.RemoveRuleFrom<TViewModel, TValidationRule>();
+            _validationConfiguration.DiscoveredTypes.RemoveRuleFrom<TViewModel, TValidationRule>();
             return this;
         }
     }

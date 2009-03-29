@@ -17,7 +17,7 @@ namespace FubuMVC.Validation.Dsl
 
         public ByDefaultDslChain PropertiesMatching(Expression<Func<PropertyInfo, bool>> propertyFilter, Action<RuleExpression> rules)
         {
-            var propertyConvention = _validationConfiguration.GetDefaultPropertyConventions()
+            var propertyConvention = _validationConfiguration.DefaultPropertyConventions.GetDefaultPropertyConventions()
                 .Where(convention => convention.ToString() == new UglyExpressionConvertor().ToString(propertyFilter))
                 .FirstOrDefault();
 
@@ -31,7 +31,7 @@ namespace FubuMVC.Validation.Dsl
 
             rules(new RuleExpression(defaultPropertyConvention));
 
-            _validationConfiguration.AddDefaultPropertyConvention(defaultPropertyConvention);
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(defaultPropertyConvention);
             return this;
         }
     }

@@ -21,10 +21,11 @@ namespace FubuMVC.Validation.Dsl
 
         public RuleExpression WillBeValidatedBy<TValidationRule>(Action<AdditionalPropertyExpression> additionalProperties) where TValidationRule : IValidationRule<CanBeAnyViewModel>
         {
-            var additionalPropertyExpression = new AdditionalPropertyExpression();
+            var properties = new AdditionalProperties();
+            var additionalPropertyExpression = new AdditionalPropertyExpression(properties);
             additionalProperties(additionalPropertyExpression);
 
-            _defaultPropertyConvention.AddValidationRule<TValidationRule>(additionalPropertyExpression);
+            _defaultPropertyConvention.AddValidationRule<TValidationRule>(properties);
             return this;
         }
     }

@@ -24,17 +24,17 @@ namespace FubuMVC.Validation.Tests.Exensions
 
             var convention0 = new DefaultPropertyConvention(x => !x.Name.StartsWith("Optional"));
             convention0.AddValidationRule<IsRequired<CanBeAnyViewModel>>();
-            _validationConfiguration.AddDefaultPropertyConvention(convention0);
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(convention0);
 
             var convention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));
             convention1.AddValidationRule<IsUrl<CanBeAnyViewModel>>();
-            _validationConfiguration.AddDefaultPropertyConvention(convention1);
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(convention1);
 
             var convention2 = new DefaultPropertyConvention(x => x.Name.Contains("Email"));
             convention2.AddValidationRule<IsEmail<CanBeAnyViewModel>>();
-            _validationConfiguration.AddDefaultPropertyConvention(convention2);
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(convention2);
 
-            _validationConfiguration.AddDiscoveredType<TestViewModel>();
+            _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
 
             _validationConfiguration.Validate(_testViewModel);
 
