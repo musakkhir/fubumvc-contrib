@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\TweetSharp\Dimebrain.TweetSharp.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.dll</HintPath>
@@ -140,9 +144,12 @@
     <Compile Include="Services\IBlogPostCommentService.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
+    <Compile Include="Services\ITwitterClient.cs" />
+    <Compile Include="Services\ITwitterService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\SecurityDataService.cs" />
+    <Compile Include="Services\ITinyUrlService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Web\Behaviors\access_the_database_through_a_unit_of_work.cs" />
     <Compile Include="Web\Behaviors\get_recent_blog_posts.cs" />

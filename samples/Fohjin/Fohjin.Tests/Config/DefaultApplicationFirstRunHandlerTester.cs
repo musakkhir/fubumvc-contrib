@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Fohjin.Core.Config;
 using Fohjin.Core.Domain;
 using Fohjin.Core.Persistence;
@@ -47,7 +45,7 @@ namespace Fohjin.Tests.Config
             var user = catcher.First<User>();
 
             user.Username.ShouldEqual("Admin");
-            user.Password.ShouldEqual("Atlantis");
+            user.Password.ShouldEqual("12345");
         }
 
         [Test]

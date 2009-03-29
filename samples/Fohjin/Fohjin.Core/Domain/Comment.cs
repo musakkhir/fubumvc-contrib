@@ -9,5 +9,6 @@ namespace Fohjin.Core.Domain
         public virtual Post Post { get; set; }
         public virtual DateTime? Published { get; set; }
         public virtual bool UserSubscribed { get; set; }
+        public virtual string TwitterUserName { get; set; }
     }
 }

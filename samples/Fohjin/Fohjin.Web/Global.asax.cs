@@ -159,6 +159,9 @@ namespace Fohjin.Web
                     rule.WillBeValidatedBy<IsValidCaptcha<CanBeAnyViewModel>>(needs =>
                         needs.NeedsAdditionalProperty(property => property.Name.Contains("Question"))));
 
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("TwitterUser"), rule =>
+                    rule.WillBeValidatedBy<IsValidTwitterUser<CanBeAnyViewModel>>());
+
                 x.AddViewModelsFromAssembly
                     .ContainingType<ViewModel>()
                     .Where(t => t.Namespace.EndsWith("Web.Controllers"));

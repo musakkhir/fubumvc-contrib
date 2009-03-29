@@ -110,6 +110,7 @@
     <Compile Include="Persistence\NHibernateRepositoryTester.cs" />
     <Compile Include="Security\FohjinPrincipalFactoryTester.cs" />
     <Compile Include="Services\BlogPostCommentServiceTester.cs" />
+    <Compile Include="Services\TwitterServiceTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="Web\Behaviors\SetUpCurrentSiteDetailsTester.cs" />
     <Compile Include="Web\Behaviors\SetUpCurrentUserTester.cs" />

@@ -15,7 +15,7 @@ namespace Fohjin.Core.Services
             _repository = repository;
         }
 
-        public User AddOrUpdateUser(string userEmail, string userDisplayName, string userUrl)
+        public User AddOrUpdateUser(string userEmail, string userDisplayName, string userUrl, string twitterUserName)
         {
             var user = _repository.Query(new UserByEmail(userEmail)).SingleOrDefault() 
                 ?? new User
@@ -24,7 +24,8 @@ namespace Fohjin.Core.Services
                     IsAuthenticated = false,
                     UserRole = UserRoles.NotAuthenticated,
                     Email = userEmail,
-                    HashedEmail = GenerateGravatarHash(userEmail)
+                    HashedEmail = GenerateGravatarHash(userEmail),
+                    TwitterUserName = twitterUserName,
                 };
 
             if (!user.IsAuthenticated)

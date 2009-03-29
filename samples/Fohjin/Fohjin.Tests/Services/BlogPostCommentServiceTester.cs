@@ -4,7 +4,6 @@ using Fohjin.Core.Persistence;
 using Fohjin.Core.Services;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
 
 namespace Fohjin.Tests.Services
 {
@@ -16,12 +15,14 @@ namespace Fohjin.Tests.Services
         private string GivenBody;
         private bool GivenUserSubscriberd;
         private User GivenUser;
+        private ITwitterService _twitterService;
 
         [SetUp]
         public void SetUp()
         {
             _repository = MockRepository.GenerateStub<IRepository>();
-            _blogPostCommentService = new BlogPostCommentService(_repository);
+            _twitterService = MockRepository.GenerateStub<ITwitterService>();
+            _blogPostCommentService = new BlogPostCommentService(_repository, _twitterService);
             GivenBody = "body";
             GivenUserSubscriberd = true;
             GivenUser = new User { DisplayName = "user" };
@@ -43,7 +44,7 @@ namespace Fohjin.Tests.Services
         public void should_add_comment_to_post()
         {
             var _post = new Post();
-            _blogPostCommentService.AddCommentToBlogPost(GivenBody, GivenUserSubscriberd, GivenUser, _post);
+            _blogPostCommentService.AddCommentToBlogPost(GivenBody, GivenUserSubscriberd, GivenUser, _post, "");
             _post.GetComments().ShouldHaveCount(1);
         }
 
@@ -51,7 +52,7 @@ namespace Fohjin.Tests.Services
         public void should_add_comment_to_post_using_the_correct_body_and_user_subscribed_flag()
         {
             var _post = new Post();
-            _blogPostCommentService.AddCommentToBlogPost(GivenBody, GivenUserSubscriberd, GivenUser, _post);
+            _blogPostCommentService.AddCommentToBlogPost(GivenBody, GivenUserSubscriberd, GivenUser, _post, "");
 
             var comment = _post.GetComments().First();
 

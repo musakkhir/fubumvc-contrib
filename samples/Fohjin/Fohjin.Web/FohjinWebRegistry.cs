@@ -64,8 +64,11 @@ namespace Fohjin.Web
                     new SiteConfiguration()
                     .FromAppSetting("Fohjin.blog.SiteConfiguration"));
 
-            ForRequestedType<IFeedConverterFor<IndexViewModel>>()
-                .TheDefault.Is.OfConcreteType<IndexViewModelFeedConvertor>();
+            ForRequestedType<IFeedConverterFor<IndexViewModel>>().TheDefault.Is.OfConcreteType<IndexViewModelFeedConvertor>();
+
+            ForRequestedType<ITwitterClient>().TheDefault.Is.OfConcreteType<TwitterClient>();
+            ForRequestedType<ITwitterService>().TheDefault.Is.OfConcreteType<TwitterService>();
+            ForRequestedType<ITinyUrlService>().TheDefault.Is.OfConcreteType<TinyUrlService>();
         }
     }
 }

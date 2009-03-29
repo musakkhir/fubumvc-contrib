@@ -40,12 +40,13 @@ namespace Fohjin.Core.Config
             var defaultUser = new User
             {
                 Username = "Admin",
-                Password = "Atlantis",
+                Password = "12345",
                 DisplayName = "Mark Nijhof",
                 Email = "Mark.Nijhof@Gmail.com",
                 Url = "http://blog.fohjin.com",
                 HashedEmail = "01d418308faffa0d07f34ace68b686ad",
-                UserRole = UserRoles.SiteUser
+                UserRole = UserRoles.SiteUser,
+                TwitterUserName = "MarkNijhof",
             };
 
             _repository.Save(defaultUser);
@@ -97,6 +98,7 @@ namespace Fohjin.Core.Config
                 Url = "http://blog.torresdal.net/",
                 HashedEmail = "03d8133cd5d1a519234ff01c8cd84dd6",
                 UserRole = UserRoles.Visitor
+
             };
             _repository.Save(otherUser);
 

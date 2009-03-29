@@ -75,6 +75,7 @@ namespace Fohjin.Core.Web.Controllers
                             DisplayName = inModel.DisplayName,
                             Email = inModel.Email,
                             Url = inModel.OptionalUrl,
+                            TwitterUserName = inModel.OptionalTwitterUserName,
                         }, 
                     }, postDisplay),
                     //ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay) + "#leave_comment"),
@@ -83,8 +84,8 @@ namespace Fohjin.Core.Web.Controllers
                 return bblo;
             }
 
-            var user = _userService.AddOrUpdateUser(inModel.Email, HttpUtility.HtmlEncode(inModel.DisplayName), HttpUtility.HtmlEncode(inModel.OptionalUrl));
-            _blogPostCommentService.AddCommentToBlogPost(HttpUtility.HtmlEncode(inModel.Body), inModel.Subscribed, user, post);
+            var user = _userService.AddOrUpdateUser(inModel.Email, HttpUtility.HtmlEncode(inModel.DisplayName), HttpUtility.HtmlEncode(inModel.OptionalUrl), HttpUtility.HtmlEncode(inModel.OptionalTwitterUserName));
+            _blogPostCommentService.AddCommentToBlogPost(HttpUtility.HtmlEncode(inModel.Body), inModel.Subscribed, user, post, inModel.OptionalTwitterUserName);
 
             return new BlogPostViewModel {ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay))};
         }
@@ -118,6 +119,7 @@ namespace Fohjin.Core.Web.Controllers
         public bool Subscribed { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public string OptionalTwitterUserName { get; set; }
 
         private readonly IValidationResults _validationResults = new ValidationResults();
         public IValidationResults ValidationResults

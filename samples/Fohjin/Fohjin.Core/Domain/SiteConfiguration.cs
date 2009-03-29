@@ -24,6 +24,8 @@ namespace Fohjin.Core.Domain
         public virtual string SEORobots { get; set; }
         public virtual string GravatarDefault { get; set; }
         public virtual bool TrackbacksEnabled { get; set; }
+        public string TwitterUserName { get; set; }
+        public string TwitterPassword { get; set; }
 
         public IEnumerable<Alias> GetAliases()
         {

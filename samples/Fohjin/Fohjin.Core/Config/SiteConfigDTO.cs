@@ -22,6 +22,8 @@ namespace Fohjin.Core.Config
             postEditTimeout = 24D;
             seoRobots = "index,follow";
             trackbacksEnabled = true;
+            twitterPassword = "";
+            twitterUserName = "";
         }
 
         public AliasDTO[] aliases { get; set; }
@@ -44,6 +46,8 @@ namespace Fohjin.Core.Config
         public double postEditTimeout { get; set; }
         public string seoRobots { get; set; }
         public bool trackbacksEnabled { get; set; }
+        public string twitterUserName { get; set; }
+        public string twitterPassword { get; set; }
 
         public void ToSiteConfiguration(SiteConfiguration config)
         {
@@ -65,6 +69,8 @@ namespace Fohjin.Core.Config
             config.SEORobots = seoRobots;
             config.GravatarDefault = gravatarDefault;
             config.TrackbacksEnabled = trackbacksEnabled;
+            config.TwitterUserName = twitterUserName;
+            config.TwitterPassword = twitterPassword;
 
             if (aliases != null)
             {
