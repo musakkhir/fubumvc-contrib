@@ -9,7 +9,7 @@ namespace FubuMVC.Validation.Tests.Helper
             Empty_String = "";
             Null_String = null;
             Filled_String = "Something";
-            Valid_Email = "Mark.Nijof@Gmail.com";
+            Valid_Email = "jon@torresdal.net";
             False_Email_1 = "Mark.Nijhof";
             False_Email_2 = "Mark.Nijhof@nijhof.moc";
             Valid_Url_1 = "blog.fohjin.com";
