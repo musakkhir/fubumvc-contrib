@@ -12,6 +12,11 @@ namespace AltOxite.Core.Web
             return resolver.UrlFor<HomeController>();
         }
 
+        public static string Admin(this IUrlResolver resolver)
+        {
+            return resolver.UrlFor<SiteController>(x => x.Dashboard(null));
+        }
+
         public static string Login(this IUrlResolver resolver)
         {
             return resolver.UrlFor<LoginController>();
@@ -40,6 +45,16 @@ namespace AltOxite.Core.Web
                     post.Published.Month + "/" +
                     post.Published.Day + "/" +
                     post.Slug).ToFullUrl();
+        }
+
+        public static string AddPost(this IUrlResolver resolver)
+        {
+            return resolver.UrlFor<BlogPostController>(x => x.Add(null));
+        }
+
+        public static string EditPost(this IUrlResolver resolver, string slug)
+        {
+            return ("~/BlogPost/Edit/" + slug).ToFullUrl();
         }
 
         public static string Tag(this IUrlResolver resolver, string tagName)

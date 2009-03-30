@@ -2,16 +2,13 @@
 
 /** field hinting **/
 $(document).ready(function() {
-    $("form").hintify(window.stringResources);
+    $("form").each(function() { $(this).hintify() });
 });
 $.extend(jQuery.expr[":"], {
-    textarea: "$.nodeName(a, 'textarea')"
+    textarea: function(a) { return $.nodeName(a, 'textarea'); }
 });
 $.fn.extend({
-    hintify: function(config) {
-        if (!config)
-            return this;
-
+    hintify: function() {
         this.submit(function() {
             $("[_hint]", this).each(function() { $(this).removeHint() });
         });
@@ -20,16 +17,12 @@ $.fn.extend({
             $("form [_hint]").each(function() { $(this).removeHint() });
         });
 
-        for (var key in config) {
-            var keyParts = key.split(".");
-            if (keyParts.length > 1) {
-                $("#" + keyParts[0]).filter(":enabled").hint(config[key]);
-            }
-        }
+        $(":text[title],:textarea[title]", this).filter(":enabled").each(function() { $(this).hint() });
 
         return this;
     },
-    hint: function(hintText) {
+    hint: function() {
+        var hintText = this.attr("title");
         if (!!hintText && (this.is(":text") || this.is(":textarea"))) {
             this.attr("_hint", hintText);
             this.addHint()
@@ -59,19 +52,26 @@ $.fn.extend({
 /*** gravatar fetch and alt change ***/
 $(document).ready(function() {
     $('#comment_email').blur(function() {
-        $('#comment_grav').changeGravatarTo($(this).val(), $('#comment_hashedEmail').val());
+        var email = $(this).val();
+        if (email.indexOf("@") > 0 && window._emailRegex.test(email)) {
+            $.post(window.computeHashPath, { value: email }, function(emailHash) { if (emailHash && emailHash.length < 50) { $('#comment_grav').changeGravatarSrcTo(emailHash); } });
+        } else {
+            var emailHash = $('#comment_hashedEmail') ? $('#comment_hashedEmail').val() : "";
+            $('#comment_grav').changeGravatarSrcTo(emailHash);
+        }
     });
     $('#comment_name').blur(function() {
         $('#comment_grav').changeGravatarAltTo($(this).val());
     });
 });
 $.fn.extend({
-    changeGravatarTo: function(email, hashedEmail) {
+    changeGravatarSrcTo: function(emailHash) {
         var gravatar = $(this).find("img.gravatar");
 
         var gravatarUrlParts = gravatar.attr("src").split("?");
         var gravatarPathParts = gravatarUrlParts[0].split("/");
-        gravatarPathParts[gravatarPathParts.length - 1] = email.indexOf("@") > 0 && window._emailRegex.test(email) ? hex_md5(email) : hashedEmail;
+
+        gravatarPathParts[gravatarPathParts.length - 1] = emailHash;
 
         gravatar.attr("src", gravatarPathParts.join("/") + "?" + gravatarUrlParts[1]);
     },
@@ -93,18 +93,44 @@ $(document).ready(function() {
 /** archives **/
 $(document).ready(function() {
     $('.archives ul.yearList li.previous').each(function() {
-        $(this).click(function() {
-            $(this).toggleClass("open");
-            $(this).find("h4>span").toggle();
-            $(this).children("ul").toggle();
+        $(this).click(function(ev) {
+            if (!ev || $(ev.target).not("a").size()) {
+                $(this).toggleClass("open");
+                $(this).find("h4>span").toggle();
+                $(this).children("ul").toggle();
+            }
         });
+
+        $(this).hoverClassIfy();
+    });
+});
+
+/** list item highlighting - just comma seperate additional selectors for now because we like to try to make the browser work **/
+$(document).ready(function() {
+    $("ul.small li.comment,ul.small li.post,ul.medium li.comment.pendingapproval,ul.medium li.comment.normal").each(function() {
+        $(this).hoverClassIfy();
+        $(this).clickClassIfy();
+    });
+});
+$.fn.extend({
+    hoverClassIfy: function() {
         $(this).mouseover(function() {
             $(this).addClass("hover");
         });
+
         $(this).mouseout(function() {
             $(this).removeClass("hover");
         });
-    });
+
+        return this;
+    },
+    clickClassIfy: function() {
+        $(this).click(function(ev) {
+            if (!($(ev.target).is("a"))) {
+                $(this).toggleClass("active");
+            }
+        });
+    }
 });
 
 /** flags **/
@@ -115,102 +141,49 @@ $(document).ready(function() {
     });
     $("form.flag.remove").submit(function() {
         var form = $(this);
-        var flagged = $(this).parent(".flags").next(".flagged");
-        flagged.fadeTo(350, .4);
+        var comment = $(this).offsetParent("li.comment");
+        comment.fadeTo(350, .4);
         $.ajax({
             type: "POST",
             url: this.action,
-            data: { commentId: this.commentId.value },
-            success: function() { flagged.slideUp(250, function() { var comment = flagged.parent("li.comment"); comment.animate({ marginTop: -28 }, 300, "linear", function() { comment.remove(); comment = 0; }); flagged = 0; }); form.hide(1000); form = 0; },
-            error: function() { flagged.fadeTo(350, 1); form = flagged = 0; }
+            data: { id: this.id.value, __AntiForgeryTicks: this.__AntiForgeryTicks.value },
+            success: function() {
+                comment.animate({ height: 0, opacity: 0, marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0 }, 200); form = comment = 0;
+            },
+            error: function() { comment.fadeTo(350, 1); form = comment = 0; }
         });
         return false;
     });
     /* approval */
     $("form.flag.approve").submit(function() {
         var form = $(this);
-        var flagged = $(this).parent(".flags").next(".flagged");
-        flagged.fadeTo(350, .4);
+        var markers = $(".approve,.state", $(this).offsetParent("li.comment"));
+        markers.fadeTo(350, .4);
         $.ajax({
             type: "POST",
             url: this.action,
-            data: { commentId: this.commentId.value },
-            success: function() { flagged.fadeTo(350, 1); form = flagged = 0; },
-            error: function() { flagged.fadeTo(350, .1); form = flagged = 0; }
+            data: { id: this.id.value, __AntiForgeryTicks: this.__AntiForgeryTicks.value },
+            success: function() {
+                markers.hide(200); markers = 0;
+            },
+            error: function() { markers.fadeTo(350, .1); markers = 0; }
         });
         return false;
     });
 });
-/** admins **/
+
+/** highlight anchored element **/
 $(document).ready(function() {
-    if ($("#post_publishDate").is(":enabled")) {
-        $("#post_publishDate").change(function() {
-            $("#post_statePublished").attr("checked", "checked");
-        });
-        $("#post_statePublished").focus(function() {
-            $("#post_publishDate").focus();
-            if ($.trim($("#post_publishDate").val()) === "") {
-                var date = new Date();
-                $("#post_publishDate").val(date.toShortString());
-            }
-            $("#post_publishDate").blur();
-        });
-        $("#post_publishDate").datepicker({
-            duration: "",
-            dateFormat: "yy/mm/dd '8:00 AM'",
-            showOn: "button",
-            buttonImage: skinPath + "/images/calendar.png",
-            buttonImageOnly: true,
-            closeAtTop: false,
-            isRTL: true
-        });
-    };
-
-    $("input[@name='postState']").change(function() {
-        if ($("#post_statePublished").is(":checked")) {
-            $("#post_publishDate").addClass("active");
-        } else {
-            $("#post_publishDate").removeClass("active");
-        }
-    });
-
-    $("#post_title").change(function() {
-        $("#post_slug").slugify($(this).val());
-    });
-
-    $.fn.extend({
-        slugify: function(string) {
-            if (!this.is(":enabled"))
-                return;
-
-            slug = $.trim(string);
-
-            if (slug && slug !== "") {
-                var cleanReg = new RegExp("[^A-Za-z0-9-]", "g");
-                var spaceReg = new RegExp("\\s+", "g");
-                var dashReg = new RegExp("-+", "g");
-
-                slug = slug.replace(spaceReg, '-');
-                slug = slug.replace(dashReg, "-");
-                slug = slug.replace(cleanReg, "");
-
-                if (slug.length * 2 < string.length) {
-                    return "";
-                }
-
-                if (slug.Length > 100) {
-                    slug = slug.substring(0, 100);
-                }
-            }
-
-            this.val(slug);
-        }
-    });
+    var hash = window.location.hash;
+    if (hash) {
+        $(hash).each(function() { $(this).highlight() });
+    }
 });
-
-Date.prototype.toShortString = function() {
-    var y = this.getYear();
-    var year = y % 100;
-    year += (year < 38) ? 2000 : 1900;
-    return (this.getMonth() + 1).toString() + "/" + this.getDate() + "/" + year + " " + this.toLocaleTimeString();
-};
+/* really, really simple implementation. some todos:
+    - listen to all hashed hrefs on the page so the highlight can change
+    - make some time to think of other todos :P */
+$.fn.extend({ 
+    highlight: function(highlightColor) {
+        this.addClass("highlight");
+    }
+});

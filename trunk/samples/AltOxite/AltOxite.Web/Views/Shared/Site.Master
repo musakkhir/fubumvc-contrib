@@ -28,27 +28,18 @@
     <%= this.SkinCSS("yui.reset.2.6.0.css") %>
     <%= this.SkinCSS("site.css") %>
     <!-- //TODO: CSS  Additional skin stylesheets  -->
-    <%= this.SkinScript(new[] { "jquery-1.2.6.js" }).Indent("    ")%>
+    <%= this.SkinScript(new[] { "jquery-1.3.1.js" }).Indent("    ")%>
 </head>
-<body class="dyn">
+<body>
     <!-- //TODO: append 'dyn' class to body element dynamically (for some reason, need to investigate this odd behavior in Oxite Site.Master -->
     <script type="text/javascript">/*<![CDATA[*/document.body.className += (document.body.className.length > 0 ? ' ' : '') + 'dyn'; //]]></script>
-    <div class="page">
+    <div id="page">
         <div id="header">
-            <div id="title">
-               <h1><a href="<%= this.UrlTo().Home() %>"><%= Model.SiteName %></a></h1>
-            </div>
-            <div id="logindisplay">
-                <%= this.DisplayDependingOnLoginStatus().For(Model.CurrentUser).WhenLoggedInShow<LoggedInStatus>().WhenLoggedOutShow<LoggedOutStatus>()%>
-            </div>
-            <div id="menucontainer">
-                <!-- //TODO: Menu -->
-            </div>                
+            <%= this.RenderPartial().Using<AltOxiteHeader>().For(Model) %>    
         </div>
         <div id="main"><asp:ContentPlaceHolder ID="MainContent" runat="server" />        </div>
         <div id="footer">
-            <div class="powered"><span><%= Resources.Strings.POWERED_BY %> </span><a href="http://code.google.com/p/fubumvc/">FubuMVC</a></div>
-            <div class="credits"><a href="http://www.famfamfam.com" title="Icons by Fam Fam Fam" id="famfamfam">famfamfam</a></div>
+            <%= this.RenderPartial().Using<AltOxiteFooter>().For(Model) %>
         </div>
     </div>
     <!-- //TODO: Trackback.url -->
@@ -61,6 +52,7 @@
     <!-- //TODO: ScriptVariablesPre -->
     <asp:ContentPlaceHolder ID="StringResourcesContent" runat="server"></asp:ContentPlaceHolder>
     <%= this.SkinScript(new[] { "site.js" }).Indent("    ")%>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server"></asp:ContentPlaceHolder>
     <!-- //TODO: Scripts -->
     <!-- //TODO: ScriptVariablesPost -->
 </body>

@@ -1,0 +1,38 @@
+<%@ Master Language="C#" AutoEventWireup="true"  Inherits="AdminMasterView" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><asp:ContentPlaceHolder ID="Title" runat="server"></asp:ContentPlaceHolder></title>
+    <%= this.PageTitle("Admin Title") %>
+    <%= this.MetaTag().AsContentType() %>
+    <%= this.MetaTag().Name("language").Content(Model.LanguageDefault) %>
+    <%= this.MetaTag().Name("robots").Content(Model.SEORobots)%>
+    <%= this.MetaTag().Name("description").Content("example description")%>
+      <%= this.LinkTag().Href("OpenSearch.Url").Title("OpenSearch.Title").AsOpenSearch()%>
+    <%= this.SkinCSS("yui.reset.2.6.0.css") %>
+    <%= this.SkinCSS("site.css") %>
+    <%= this.SkinCSS("admin.css") %>
+    <!-- //TODO: CSS  Additional skin stylesheets  -->
+    <%= this.SkinScript(new[] { "jquery-1.3.1.js" }).Indent("    ")%>
+    <asp:ContentPlaceHolder ID="HeadCustom" runat="server"></asp:ContentPlaceHolder><%
+    
+     %><asp:ContentPlaceHolder ID="HeadCssFiles" runat="server"></asp:ContentPlaceHolder>
+     <asp:ContentPlaceHolder ID="HeadScripts" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="admin">
+    <script type="text/javascript">/*<![CDATA[*/document.body.className += (document.body.className.length > 0 ? ' ' : '') + 'dyn';//]]></script>
+    <div id="page">
+        <div id="header">
+            <%= this.RenderPartial().Using<AltOxiteHeader>().For(Model) %>    
+        </div>
+        <div id="main"><asp:ContentPlaceHolder ID="MainContent" runat="server" />        </div>
+        <div id="footer">
+            <%= this.RenderPartial().Using<AltOxiteFooter>().For(Model) %>
+        </div>
+    </div>
+    <asp:ContentPlaceHolder ID="ScriptVariablesPre" runat="server"></asp:ContentPlaceHolder>
+     <%= this.SkinScript(new[] { "site.js" }).Indent("    ")%>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="ScriptVariablesPost" runat="server"></asp:ContentPlaceHolder>
+</body>
+</html>

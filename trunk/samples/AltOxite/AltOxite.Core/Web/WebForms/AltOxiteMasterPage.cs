@@ -1,8 +1,9 @@
 using System.Web.UI;
+using FubuMVC.Core.View;
 
 namespace AltOxite.Core.Web.WebForms
 {
-    public class AltOxiteMasterPage : MasterPage, IAltOxitePage
+    public class AltOxiteMasterPage : MasterPage, IAltOxitePage, IFubuView<ViewModel>
     {
         object IAltOxitePage.Model{ get { return ((IAltOxitePage) Page).Model; } }
 

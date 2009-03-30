@@ -18,7 +18,8 @@ namespace AltOxite.Core.Web.Controllers
 
         public IndexViewModel Index(IndexSetupViewModel inModel)
         {
-            var posts = _repository.Query<Post>();
+            // Todo: Is this what we want here to only show published posts?
+            var posts = _repository.Query<Post>().Where(post=> post.Published >= DateTime.Today).OrderBy(post => post.Published);
             return new IndexViewModel {Posts = posts.ToList().Select(p => new PostDisplay(p))};
         }
     }

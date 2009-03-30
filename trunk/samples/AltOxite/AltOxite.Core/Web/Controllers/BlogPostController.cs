@@ -21,13 +21,15 @@ namespace AltOxite.Core.Web.Controllers
         private readonly IUrlResolver _resolver;
         private readonly IBlogPostCommentService _blogPostCommentService;
         private readonly IUserService _userService;
+        private readonly ITagService _tagService;
 
-        public BlogPostController(IRepository repository, IUrlResolver resolver, IBlogPostCommentService blogPostCommentService, IUserService userService)
+        public BlogPostController(IRepository repository, IUrlResolver resolver, IBlogPostCommentService blogPostCommentService, IUserService userService, ITagService tagService)
         {
             _repository = repository;
             _resolver = resolver;
             _blogPostCommentService = blogPostCommentService;
             _userService = userService;
+            _tagService = tagService;
         }
 
         public BlogPostViewModel Index(BlogPostViewModel inModel)
@@ -48,6 +50,68 @@ namespace AltOxite.Core.Web.Controllers
                 Post = postDisplay,
                 Comment = new CommentFormDisplay(user, new Comment(), postDisplay)
             };
+        }
+
+        public BlogPostAddViewModel Add(BlogPostAddViewModel inModel)
+        {
+            return new BlogPostAddViewModel();
+        }
+
+        public BlogPostAddViewModel Edit(BlogPostEditViewModel inModel)
+        {
+            var badRedirectResult = new BlogPostAddViewModel { ResultOverride = new RedirectResult(_resolver.PageNotFoundUrl()) };
+
+            var outModel = new BlogPostAddViewModel();
+
+            if (inModel.Slug.IsEmpty()) return badRedirectResult;
+
+            var post = _repository.Query(new PostBySlug(inModel.Slug)).SingleOrDefault();
+
+            if (post == null) return badRedirectResult;
+
+            outModel.Id = post.ID.ToString();
+            outModel.Title = post.Title;
+            outModel.BodyShort = post.BodyShort;
+            outModel.Body = post.Body;
+            outModel.Slug = post.Slug;
+            outModel.Published = post.Published;
+            post.GetTags().Each(tag => outModel.Tags += tag.Name + ", ");
+
+            return outModel;
+        }
+
+        public BlogPostViewModel Save(BlogPostAddViewModel inModel)
+        {
+            var post = new Post();
+
+            if(inModel.Id.IsNotEmpty())
+            {
+                post = _repository.Load<Post>(new Guid(inModel.Id));
+            }
+
+            post.Title = inModel.Title;
+            post.BodyShort = inModel.BodyShort;
+            post.Body = inModel.Body;
+            post.Slug = inModel.Slug; // Looks like oxite is doing this in jQuery so don't need: post.Slug.IsEmpty() ? _slugService.CreateSlugFromText(inModel.Slug.IsEmpty() ? inModel.Title : inModel.Slug) : post.Slug;
+            post.User = inModel.CurrentUser;
+            post.Published = inModel.Published;
+
+            if(inModel.Tags.IsNotEmpty())
+            {
+                var tags = inModel.Tags.Split(',');
+                tags.Each(tag =>
+                              {
+                                  if (tag.Trim().IsNotEmpty())
+                                      post.AddTag(_tagService.CreateOrGetTagForItem(tag.ToLowerInvariant().Trim()));
+                              });
+            }
+
+
+            //Todo: Validation on input
+
+            _repository.Save(post);
+
+            return new BlogPostViewModel();
         }
 
         public BlogPostViewModel Comment(BlogPostCommentViewModel inModel)
@@ -88,6 +152,27 @@ namespace AltOxite.Core.Web.Controllers
             if (inModel.UserEmail.IsEmpty()) result.AddInvalidField<BlogPostCommentViewModel>(x => x.UserEmail);
             if (inModel.Body.IsEmpty()) result.AddInvalidField<BlogPostCommentViewModel>(x => x.Body);
         }
+    }
+
+    [Serializable]
+    public class BlogPostAddViewModel : ViewModel, ISupportResultOverride
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string BodyShort { get; set; }
+        public string Body { get; set; }
+        public string Slug { get; set; }
+        public DateTime? Published { get; set; }
+        public string Tags { get; set; }
+
+        public IInvocationResult ResultOverride { get; set; }
+
+    }
+
+    [Serializable]
+    public class BlogPostEditViewModel : ViewModel
+    {
+        [Required] public string Slug { get; set; }
     }
 
     [Serializable]

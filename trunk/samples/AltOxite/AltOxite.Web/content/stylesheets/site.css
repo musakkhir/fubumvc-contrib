@@ -1,6 +1,6 @@
 ﻿body {
     font-size:80%;
-    font-family:trebuchet ms, lucida sans, arial, Helvetica, verdana;
+    font-family:"trebuchet ms", "lucida sans", arial, Helvetica, verdana;
     padding:0 0 1em;
 }
 a,
@@ -36,6 +36,9 @@ ol li
     list-style-type:decimal;
     margin-left:3ex;
 }
+em {
+    font-style:italic;
+}
 textarea {
     overflow:auto;
 }
@@ -49,15 +52,13 @@ textarea.hinted {
     font-style:italic;
 }
 
-
-
-/* BUTTONS
+/* ICON BUTTONS
 ----------------------------------------------------------*/
-a.button {
+a.ibutton {
     outline:none;
 }
-input.button,
-a.button img,
+input.ibutton,
+a.ibutton img,
 img.ui-datepicker-trigger {
     background:none;
     border:none;
@@ -66,44 +67,46 @@ img.ui-datepicker-trigger {
 img.ui-datepicker-trigger {
     margin-bottom:-5px;
 }
-input:hover.button,
-a:hover.button img,
+input:hover.ibutton,
+a:hover.ibutton img,
 img:hover.ui-datepicker-trigger {
+    background:none;
     border:1px solid;
     padding:1px;
 }
-input.button.remove,
-a.button.remove img {
+input.ibutton.remove,
+a.ibutton.remove img {
     border-color:#E6554B;
 }
-input.button.edit,
-a.button.edit img {
+input.ibutton.edit,
+a.ibutton.edit img {
     border-color:#F7DF62;
 }
-input.button.add,
-a.button.add img {
+input.ibutton.add,
+a.ibutton.add img {
     border-color:#87B960;
 }
-input.button.approve,
-a.button.approve img {
+input.ibutton.approve,
+a.ibutton.approve img {
     border-color:#7CBB65;
 }
 img:hover.ui-datepicker-trigger {
     border-color:#FFBD79;
 }
-
-/* MESSAGES
-----------------------------------------------------------*/
-.message {
-    padding:8px 24px 8px 34px;
-    margin:1.8em 0;
+.admin.buttons {
+    text-align:right;
 }
-.message.info {
-    border:1px solid #96B1CE;
-    background:#E3EFF9 url(../images/information.png) no-repeat 9px 9px;
-    font-weight:bold;
-    color:#344F88;
-    text-transform:capitalize;
+.admin.manage.buttons {
+    float:right;
+}
+.admin.buttons form {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+.admin.buttons form fieldset {
+    display:inline;
+    margin:0 0 -4px;
 }
 
 
@@ -140,7 +143,7 @@ h6 span {
 }
 
 h2.title {
-    margin:0 0 .8em 5px;
+    margin:0 0 .5em 5px;
 }
 .page.post h2.title {
     margin:0 0 .8em;
@@ -152,13 +155,10 @@ h2.title {
 
 /* PRIMARY LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
-.page {
+#page {
     width:90%;
     max-width:1000px;
     margin:0 auto;
-}
-.post.page {
-    width:auto;
 }
 #header {
     height:7.6em;
@@ -208,7 +208,7 @@ h2.title {
     float:left;
 }
 #footer .powered span {
-    margin: 3px 0 0;
+    margin:6px 0 0;
 }
 #footer .powered a {
     background:url(../images/FubuMVC_Logo_Small_Double.jpg) no-repeat 0 0;
@@ -221,6 +221,8 @@ h2.title {
 }
 #footer .powered a:hover {
     background-position:0 -20px;
+    border:none;
+    color:#fff;
 }
 
 /* SECTIONS
@@ -239,67 +241,208 @@ h2.title {
 
 /* TAB MENU   
 ----------------------------------------------------------*/
-ul#menu {
+ul.menu {
     float:right;
     margin-left:0;    
 }
-ul#menu li 
+ul.menu li 
 {
     margin:0px;
     list-style-type:none;
     display:inline;    
 }
-ul#menu li a {
+ul.menu li a {
     padding:.9em .55ex;
     text-transform:lowercase;
     outline:none;
 }
-ul#menu li.selected a,
-ul#menu li.selected a:link {
+ul.menu li.selected a,
+ul.menu li.selected a:link {
     font-weight:bold;
 }
 
-/* POST LIST
+ul.menu.admin {
+    clear:right;
+    margin:0;
+}
+ul.menu.admin li.selected a {
+    font-weight:bold;
+}
+
+/* POST LIST(S)
 ----------------------------------------------------------*/
 ul.posts  
 {
     margin:0;    
 }
-ul.posts li {
+ul.posts.medium li {
     margin:.1em 0 2.8em;
+    padding:0;
     list-style-type:none;
 }
-ul.posts li.last {
+ul.posts.medium li.last {
     margin-bottom:0;
 }
-.posts p {
+ul.posts.small li {
+    padding-top:.2em;
+    padding-bottom:.3em;
+    list-style-type:none;
+}
+ul.posts p {
     margin:.9em 0;
 }
-.posts h2.title {
+ul.posts h2.title {
     width:74%;
     margin:0 0 .15em 5px;
     line-height:1.2em;
 }
+ul.posts.small span.title {
+    font-weight:bold;
+}
 
-.posts .posted,
-.posts .more {
+ul.posts .posted,
+ul.posts .more,
+ul.posts.small .comments {
     font-size:88%;
 }
-.posts .posted {
+ul.posts.small .comments {
+    font-style:italic;
+}
+ul.posts.medium .posted,
+ul.posts.small .info {
     margin:.3em 3px 0 0;
-    border-bottom:3px solid;
     text-align:right;
+}
+ul.posts.medium .posted {
+    border-bottom:3px solid;
     margin-top:-2em;
 }
-.posts .more {
+ul.posts.small .info {
+    margin:0;
+}
+ul.posts .more {
     margin:1em 0 0 5px;
     white-space:nowrap;
 }
-.posts .content {
+ul.posts .content {
     clear:both;
     padding:1.1em 0 0 5px;
     margin-top:0;
 }
+
+/* COMMENT LIST(S)
+----------------------------------------------------------*/
+ul.comments.small
+{
+    margin:0;    
+}
+ul.comments.small li {
+    padding:.2em 5px .3em;
+    list-style-type:none;
+}
+ul.comments.small p {
+    margin:.9em 0;
+}
+ul.comments.small span.name {
+    font-weight:bold;
+    font-size:90%;
+}
+
+ul.comments.small .when {
+    font-size:88%;
+    font-style:italic;
+}
+ul.comments.small .post {
+    font-weight:bold;
+    font-style:italic;
+    margin:.4em 0 0;
+}
+ul.comments.small .post,
+ul.comments.small .text {
+    padding:0;
+}
+body.dyn ul.comments.small .post,
+body.dyn ul.comments.small .text {
+    display:none;
+}
+body.dyn ul.comments.small .active .post,
+body.dyn ul.comments.small .active .text {
+    display:block;
+}
+
+body.dyn ul.comments.small li {
+    cursor:pointer;
+    padding:.1em .2ex .2em 2ex;
+    background-image:url(../images/bullet_toggle_plus_onoff.png);
+    background-repeat:no-repeat;
+    background-position:-2px -26px;
+    margin:0 -2ex;
+}
+body.dyn ul.comments.small li.hover {
+    background-position:-2px 5px;
+}
+body.dyn ul.comments.small li.active {
+    background-image:url(../images/bullet_toggle_minus_onoff.png);
+    background-position:-691px 5px;
+}
+body.dyn ul.comments.small li.active.hover {
+    background-position:-2px 5px;
+}
+
+ul.comments.medium {
+    margin:0;
+    color:#555;
+    overflow:hidden;
+}
+ul.comments.medium li 
+{
+    list-style-type:none;
+    margin:0 -1.2em .8em;
+    padding:1.2em 1.2em .4em;
+    overflow:hidden;
+    position:relative;
+}
+ul.comments.medium li.first {
+    margin-top:.25em;
+}
+ul.comments.medium li.last {
+    margin-bottom:0;
+}
+ul.comments.medium .contents {
+    overflow:hidden;
+}
+ul.comments.medium li .name {
+    width:100ex;
+    margin:0 0 .25em;
+}
+ul.comments.medium li .name,
+ul.comments.medium li .name .gravatar {
+    float:left;
+}
+ul.comments.medium li .name p {
+    padding:0 0 0 2ex;
+    margin:0;
+    overflow:hidden;
+    white-space:nowrap;
+}
+ul.comments.medium li .text {
+    clear:both;
+    overflow:hidden;
+    margin-left:70px;
+}
+
+/* COMMENT STATE
+----------------------------------------------------------*/
+ul.comments .comment.pendingapproval .state {
+    float:right;
+    display:block;
+    text-indent:-9999px;
+    width:16px;
+    overflow:hidden;
+    background:url(../images/asterisk_yellow.png) no-repeat 0 50%;
+    margin-right:5px;
+}
+
 
 /* ENTRY
 ----------------------------------------------------------*/
@@ -321,6 +464,7 @@ body.dyn form.search.main input.button {
 }
 .post h2 {
     overflow:hidden;
+    line-height:48px;
 }
 .post .metadata {
     padding:2px 5px 2px 0;
@@ -333,8 +477,8 @@ body.dyn form.search.main input.button {
     margin:0;
     float:right;
 }
-form.search.main input.button,
-form.login input.button,
+form input.button,
+form button,
 .post input.submit.button,
 .post button {
     border:1px solid;
@@ -342,172 +486,15 @@ form.login input.button,
     margin:0;
     outline:none;
 }
+form input:hover.button {
+    padding:0 5px 1px;
+}
 .post input.submit.button {
     font-weight:bold;
     padding:0 5px 1px;
 }
 .post button a {
     text-decoration:none;
-}
-
-/* ENTRY EDIT
-----------------------------------------------------------*/
-body.dyn .post .title label,
-body.dyn .post .content label,
-body.dyn .post li.input.type label,
-body.dyn .post li.input.publish label {
-    display:none;
-}
-body.dyn .post li.input.publish label.radio {
-    display:inline;
-}
-.post label.radio {
-    background-color:#f0f0f0;
-    color:#426075;
-}
-.post .metadata.admin {
-    background-color:#f0f0f0;
-    color:#000;
-    margin-bottom:10px;
-    padding:5px 7px;
-}
-.post .metadata.admin label {
-    background-color:#f0f0f0;
-    color:#426075;
-}
-.post .metadata.admin .admin.buttons {
-    float:right;
-    margin:0;
-}
-.admin.buttons {
-    text-align:right;
-}
-.admin.manage.buttons {
-    float:right;
-}
-.admin.buttons form {
-    display:inline;
-    margin:0;
-    padding:0;
-}
-.admin.buttons form fieldset {
-    display:inline;
-    margin:0 0 -4px;
-}
-.post .admin.buttons .button,
-.post .admin.buttons button {
-    margin:0 0 0 5px;
-}
-.post .admin.buttons input.submit {
-    width:12ex;
-    font-size:110%;
-}
-.post .admin.buttons input.submit,
-.post .admin.buttons button {
-    height:27px;
-}
-.post .admin.buttons button.cancel,
-body.dyn .post .admin.buttons a.cancel {
-    display:none;
-}
-body.dyn .post .admin.buttons button.cancel,
-.post .admin.buttons a.cancel {
-    display:inline;
-}
-.post .metadata.admin a:hover {
-    text-decoration:none;
-}
-.post .metadata.admin fieldset {
-    display:inline;
-    border:1px solid #9cadbf;
-    margin:0 0 -7px;
-    padding:0 5px 4px;
-}
-body.dyn .post .metadata.admin fieldset {
-    margin-bottom:-7px;
-    padding:1px 0 0;
-    border:none;
-}
-body.dyn .post .metadata.admin .publish fieldset {
-    margin-bottom:-6px;
-}
-.post .metadata.admin legend {
-    color:#9cadbf;
-    font-weight:bold;
-}
-body.dyn .post .metadata.admin legend,
-body.dyn .post .metadata.admin .tags label,
-body.dyn .post .metadata.admin .slug label {
-    display:none;
-}
-body.dyn .post .metadata.admin input.date {
-    background-color:#f0f0f0;
-    color:#9CADBF;
-    border:none;
-}
-body.dyn .post .metadata.admin input.date.active {
-    color:#42607f;
-}
-.post .metadata.admin ul {
-    float:left;
-    margin:2px 0 0;
-}
-.post .metadata.admin ul li {
-    list-style-type:none;
-    display:inline;
-    margin:0;
-}
-.post.editPage .gravatar {
-    display:none;
-}
-.post.editPost #post_title {
-    width:99.1%;
-}
-.post.editPage #post_title {
-    width:99.2%;
-    height:1.2em;
-}
-.post.editPost #post_tags,
-.post.editPage #post_tags {
-   margin:0 0 0 2ex;
-}
-.post.editPost #post_tags,
-.post.editPage #post_tags {
-    width:52ex;
-}
-.post.editPost #post_area,
-.post.editPage #post_parent {
-    width:24ex;
-}
-.post.editPost #post_slug,
-.post.editPage #post_slug {
-    width:42ex;
-}
-body.dyn .post  li.input.slug {
-    margin:0 5ex 0 0;
-}
-body.dyn .post  li.input.draft {
-    margin:0 2ex 0 0;
-}
-body.dyn .post.editPost .input.page {
-    display:none;
-}
-body.dyn .post.editPage .input.area {
-    display:none;
-}
-.post #post_body,
-.post #post_bodyShort {
-    width:99.3%;
-    margin:0 0 5px;
-}
-.post #post_body {
-    height:35em;
-}
-.post #post_bodyShort {
-    height:10em;
-}
-.post.editPage #post_bodyShort {
-    display:none;
 }
 
 /* TAGS
@@ -534,8 +521,14 @@ ul.tags li.first {
 
 /* PAGER
 ----------------------------------------------------------*/
+.pageState {
+    margin:0 0 0.6em;
+    font-style:italic;
+    text-align:right;
+}
 .pager {
     height:2.2em;
+    margin-top:1.6em;
 }
 .pager a {
     padding:.4em 1ex;
@@ -549,153 +542,120 @@ ul.tags li.first {
     background-color:#F5F7F8;
 }
 
-/* COMMENTS
+/* POST COMMENTS
 ----------------------------------------------------------*/
-.comments,
-.comments form {
+#comments,
+#comments form#comment {
     margin:1.6em 0 0;
     padding:1.6em 0 0;
     border-top:1px solid #F0F0F0;
+    position:relative;
 }
-.comments .status {
-    float:right;
+#comments .status {
+    position:absolute;
+    top:2.5em;
+    right:5px;
     text-align:right;
-    margin:0 5px 1.6em;
+    z-index:42;
 }
-.comments .status h3 {
+#comments .status.empty {
+    position:static;
+}
+#comments .status h3 {
     margin-top:0;
 }
-.comments ul.commented {
-    margin:0;
-    color:#555;
-}
-.comments ul.commented li 
-{
-    list-style-type:none;
-    margin:0 -1.2em .8em;
-    padding:1.2em 1.2em .4em;
-}
-.comments ul.commented li.first {
-    margin-top:.25em;
-}
-.comments ul.commented li.last {
-    margin-bottom:0;
-}
-.comments ul.commented li.author {
-    /*background-color:#FFFEEF;*/
-}
-.comments ul.commented li .name {
-    width:100ex;
-    margin:0 0 .25em;
-}
-.comments ul.commented li .name,
-.comments ul.commented li .name .gravatar {
-    float:left;
-}
-.comments ul.commented li .name p {
-    padding:0 0 0 2ex;
-    margin:0;
-    overflow:hidden;
-    white-space:nowrap;
-}
-.comments ul.commented li .text {
-    clear:both;
-    overflow:hidden;
-    margin:0 0 0 56px;
-    padding:0 0 0 2ex;
-}
-.comments form {
+#comments form#comment {
     clear:both;
     overflow:hidden;
 }
-.comments form.user fieldset {
+#comments form.user fieldset {
     float:none;
 }
-.comments fieldset {
+#comments form.user .gravatar {
+    margin:0 23px 8px 30px;
+}
+#comments fieldset {
     float:left;
 }
-.comments fieldset legend,
-body.dyn .post .comments fieldset legend,
-body.dyn .comments form fieldset .name label,
-body.dyn .comments form fieldset .email label,
-body.dyn .comments form fieldset .url label,
-body.dyn .comments form fieldset.comment label {
+#comments fieldset legend,
+body.dyn .post #comments fieldset legend,
+body.dyn #comments form fieldset .name label,
+body.dyn #comments form fieldset .email label,
+body.dyn #comments form fieldset .url label,
+body.dyn #comments form fieldset.comment label {
     display:none;
 }
-body.dyn .comments form .comment .subscribe label {
+body.dyn #comments form .comment .subscribe label {
     display:inline;
 }
-.comments fieldset label,
-.comments fieldset .help,
-body.dyn .post .comments fieldset label,
-body.dyn .post .comments fieldset .help {
+#comments fieldset label,
+#comments fieldset .help,
+body.dyn .post #comments fieldset label,
+body.dyn .post #comments fieldset .help {
     display:block;
 }
-.comments fieldset .remember,
-.comments fieldset .subscribe {
+#comments fieldset .remember,
+#comments fieldset .subscribe {
     padding:0 2ex 0 0;
 }
-.comments fieldset .remember,
-.comments fieldset .subscribe,
-.comments fieldset .remember label,
-.comments fieldset .subscribe label,
-body.dyn .comments fieldset .remember label,
-body.dyn .comments fieldset .subscribe label {
+#comments fieldset .remember,
+#comments fieldset .subscribe,
+#comments fieldset .remember label,
+#comments fieldset .subscribe label,
+body.dyn #comments fieldset .remember label,
+body.dyn #comments fieldset .subscribe label {
     display:inline;
 }
-.comments fieldset label span {
-    font-size:80%;
+#comments fieldset span {
+    font-size:82%;
+    font-style:italic;
+    display:block;
+    padding:.2em 0 0 .7ex;    
 }
-.comments fieldset input.text {
+#comments fieldset input.text {
     width:90%;
 }
-.comments fieldset textarea {
+#comments fieldset textarea {
     width:99%;
+    height:22em;
     margin:0 0 .5em;
 }
-.comments fieldset textarea.authed {
+#comments fieldset textarea.authed {
     width:99.3%;
 }
-.comments fieldset.info {
+#comments fieldset.info {
     width:40%;
 }
-.comments fieldset.comment {
+#comments fieldset.comment {
     width:60%;
 }
-.comments form.user fieldset.comment {
+#comments form.user fieldset.comment {
     width:auto;
 }
-.comments fieldset.info div {
+#comments fieldset.info div {
     margin:0 0 1em;
 }
-.comments fieldset.info div.submit {
+#comments fieldset.info div.submit {
     margin-top:1em;
 }
-.comments form.user fieldset div.submit {
+#comments form.user fieldset div.submit {
     margin:.5em 0 0;
 }
-.comments fieldset.info #comment_grav {
+#comments fieldset.info #comment_grav {
     margin:0 0 .2em;
     overflow:hidden;
     float:left;
 }
-.comments fieldset.info .gravatarhelp {
+#comments fieldset.info .gravatarhelp {
     overflow:hidden;
     padding:0 0 0 1.5ex;
 }
-.comments fieldset.info .name {
+#comments fieldset.info .name {
     clear:left;
 }
-.comments fieldset .help,
-body.dyn .post .comments fieldset .help {
+#comments fieldset .help,
+body.dyn .post #comments fieldset .help {
     display:none;
-}
-.comments fieldset .help,
-.comments fieldset .field-validation-error {
-    color:#AD5454;
-}
-.comments fieldset .field-validation-error {
-    display:block;
 }
 
 /* ARCHIVES
@@ -747,23 +707,13 @@ body.dyn .archives ul.yearList li.previous.hover {
     background-position:0 6px;
 }
 body.dyn .archives ul.yearList li.previous.open {
-    background:url(../images/bullet_toggle_minus_onoff.png) no-repeat -209px 6px;
+    background:url(../images/bullet_toggle_minus_onoff.png) no-repeat -689px 6px;
 }
 body.dyn .archives ul.yearList li.previous.open.hover {
     background-position:0 6px;
 }
 body.dyn .archives ul.yearList li.previous ul {
     display:none;
-}
-
-/* SOME ADMIN STUFF
-----------------------------------------------------------*/
-.sub.admin.manage ul {
-    margin:0;
-}
-.sub.admin.manage ul li {
-    list-style-type:none;
-    margin:.2em 0;
 }
 
 /* LOGIN FORM
@@ -774,14 +724,14 @@ form.login div {
 form.login div.submit {
     margin-bottom:0;
 }
-body.dyn form.login label {
+form.login label {
     display:block;
 }
-body.dyn form.login .remember label {
+form.login .remember label {
     display:inline;
 }
-body.dyn form.login input.text {
-    width:42ex
+form.login input.text {
+    width:42ex;
 }
 
 /* SEARCH FORM
@@ -803,6 +753,15 @@ form#search input.button {
     text-transform:uppercase;
     margin:0 0 0 .2ex;
     width:10ex;
+}
+div#windowsSearch {
+    position:relative;
+}
+.windowsSearch {
+    background:url(../images/windows_search.png) no-repeat 0 0;
+    padding:0 0 0 20px;
+    position:absolute;
+    right:8px;
 }
 
 /* SEARCH
@@ -958,8 +917,44 @@ form#search input.button {
 	font-size:1.9em;
 }
 
+/* VALIDATION MESSAGES
+----------------------------------------------------------*/
+.field-validation-error {
+    display:block;
+}
 
-
+/* MESSAGES
+----------------------------------------------------------*/
+.message,
+.validation-summary-errors {
+    padding:8px 24px 8px 34px;
+    margin:1.8em 0;
+}
+#main .primary .message {
+    margin:.4em 0;
+}
+.message {
+    border:1px solid #EAEAEA;
+    background:#F4F4F4 url(../images/newspaper.png) no-repeat 9px 9px;
+    font-weight:bold;
+    color:#B7B7B7;
+    text-transform:capitalize;
+}
+.message.info {
+    border:1px solid #96B1CE;
+    background:#E3EFF9 url(../images/information.png) no-repeat 9px 9px;
+    font-weight:bold;
+    color:#344F88;
+    text-transform:capitalize;
+}
+.message.error,
+.validation-summary-errors {
+    border:1px solid #E76757;
+    background:#FAD9D3 url(../images/exclamation.png) no-repeat 9px 9px;
+    font-weight:bold;
+    color:#BF4329;
+    text-transform:capitalize;
+}
 
 /* COLORS
 ----------------------------------------------------------*/
@@ -969,23 +964,29 @@ html {
 }
 a,
 a:link,
-ul#menu li a:hover,
+ul.menu.admin li a,
+ul.menu li a:hover,
 #logindisplay a:hover,
 #logindisplay .logout a:hover {
     color:#dc2525;
 }
-ul#menu li a,
-body.dyn form.login label {
+ul.menu li a,
+#comments fieldset span,
+form.login label,
+.pageState {
     color:#727272;
 }
-#logindisplay a {
+#logindisplay a,
+#footer .powered {
     color:#b8b8b8;
 }
 #header h1 a,
 #header h1 a:hover,
-ul#menu li.selected a,
-ul#menu li.selected a:hover,
-body.dyn form.login .remember label {
+ul.menu li.selected a,
+ul.menu li.selected a:hover,
+form.login .remember label,
+form.plugin label,
+form#siteSettings {
     color:#373737;
 }
 h2 span,
@@ -1003,12 +1004,9 @@ textarea.hinted,
 .post .metadata {
     color:#777;
 }
-#footer .powered {
-    color:#b8b8b8;
-}
 
 #main,
-.posts .posted {
+ul.posts.medium .posted {
     border-color:#f0f0f0;
 }
 
@@ -1034,21 +1032,17 @@ textarea.hinted {
     background-color:#fdfdfd;
     color:#727272;
 }
-.post .metadata.admin input.text.hinted,
-.post .metadata.admin input.text.active {
-    border-color:#fff;
-}
 
-form.search.main input.button,
-form.login input.button,
+form input.button,
+form button,
 .post input.submit.button,
 .post button {
     border-color:#e0e0e0;
     color:#373737;
     background-color:#ebebeb;
 }
-form.search.main input:hover.button,
-form.login input:hover.button,
+form input:hover.button,
+form button:hover,
 .post input:hover.submit.button,
 .post button:hover {
     color:#373737;
@@ -1056,63 +1050,28 @@ form.login input:hover.button,
     border-color:#d3d3d3;
 }
 
+body.dyn ul.comments.medium img.gravatar {
+    border-color:#FFF;
+    color:#FFF;
+}
+body.dyn ul.comments.medium li.comment.hover img.gravatar {
+    border-color:#F7F7F7;
+    color:#F7F7F7;
+}
+
+.highlight {
+    /*todo: (nheskew) - or anyone. make use of this class. this is set on an element with an id that matches an fragment id in the URI (e.g. #someElement) */
+}
+
+li.hover {
+    background-color:#F7F7F7;
+}
+
+#comments fieldset .help {
+    color:#AD5454;
+}
+
+#comments fieldset .field-validation-error,
 .field-validation-error {
-    color:#ff0000;
-}
-.input-validation-error {
-    border-color:#ff0000;
-    background-color:#ffeeee;
-}
-.validation-summary-errors {
-    color:#ff0000;
-}
-
-/* For Debug View */
-ul.controlleraction  
-{
-    margin:0;    
-}
-ul.controlleraction li 
-{
-    margin:0;    
-    list-style-type:none;
-}
-.controlleraction .posted
-{
-    font-size:88%;
-}
-.controlleraction .posted 
-{
-    margin:.3em 3px 0 0;
-    border-bottom:3px solid;
-    text-align:right;
-    margin-top:-2em;
-}
-.controlleraction .more 
-{
-    margin:1em 0 0 5px;
-    white-space:nowrap;
-}
-.controlleraction .content 
-{
-    clear:both;
-    padding:1.1em 0 0 5px;
-    margin-top:0;
-}
-.controlleraction .posted
-{
-    border-color:#f0f0f0;
-}
-
-ol.behavior  
-{
-    margin: 0;
-    margin-left: 20;
-    padding: 0px;
-    padding-left: 25px;
-}
-ol.behavior li 
-{
-    margin: 0;
-    list-style-type: decimal;
+    color:#BF4329;
 }
