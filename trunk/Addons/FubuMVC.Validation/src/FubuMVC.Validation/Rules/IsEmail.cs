@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text.RegularExpressions;
+using FubuMVC.Core;
 using FubuMVC.Validation.SemanticModel;
 
 namespace FubuMVC.Validation.Rules
@@ -38,11 +39,18 @@ namespace FubuMVC.Validation.Rules
             var emailDomain = value.Substring(value.IndexOf("@") + 1);
             try
             {
-                return Dns.GetHostEntry(emailDomain).AddressList.Length > 0;
+                return Dns.GetHostEntry("www.{0}".ToFormat(emailDomain)).AddressList.Length > 0;
             }
             catch (Exception)
             {
-                return false;
+                try
+                {
+                    return Dns.GetHostEntry(emailDomain).AddressList.Length > 0;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
         }
     }
