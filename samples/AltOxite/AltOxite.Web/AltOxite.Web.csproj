@@ -193,13 +193,30 @@
       <LastGenOutput>Strings.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="content\scripts\jquery-1.2.6.js" />
     <Content Include="content\scripts\site.js" />
     <Content Include="Views\Debug\Index.aspx" />
     <Content Include="Views\PageNotFound\Index.aspx" />
     <Content Include="Views\Shared\ControllerAction.ascx" />
     <Content Include="Views\Shared\DebugSingleLine.ascx" />
+    <Content Include="Views\Site\Dashboard.aspx" />
     <Content Include="Views\Tag\AllTags.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\scripts\admin.js" />
+    <Content Include="content\stylesheets\admin.css" />
+    <Content Include="Views\BlogPost\Add.aspx" />
+    <Content Include="Views\BlogPost\Edit.aspx" />
+    <Content Include="Views\BlogPost\Save.aspx" />
+    <Content Include="Views\Shared\Admin.Master" />
+    <Content Include="Views\Shared\AltOxiteHeader.ascx" />
+    <Content Include="Views\Shared\AltOxiteFooter.ascx" />
+    <Content Include="Views\Shared\AdminMenu.ascx" />
+    <Content Include="Views\Shared\BlogPostEditControl.ascx" />
+    <Content Include="Views\Shared\PostEditSecondaryMetadata.ascx" />
+    <Content Include="Views\Shared\PostEditPrimaryMetadata.ascx" />
+    <Content Include="Views\Shared\PostEditButtons.ascx" />
+    <Content Include="Views\Shared\EmptyControl.ascx" />
+    <Content Include="Views\Shared\PostListSmall.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

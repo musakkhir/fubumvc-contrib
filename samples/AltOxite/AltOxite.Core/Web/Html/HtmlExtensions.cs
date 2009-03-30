@@ -37,5 +37,14 @@ namespace AltOxite.Core.Web.Html
             var conventions = ServiceLocator.Current.GetInstance<FubuConventions>();
             return new LoginStatusExpression(viewPage, renderer, conventions);
         }
+
+        public static EXPRESSION WithHint<EXPRESSION>(this EXPRESSION expression, string hintText)
+            where EXPRESSION : HtmlExpressionBase
+        {
+            expression.Attr("title", hintText);
+            expression.Attr("_hint", hintText);
+
+            return expression;
+        }
     }
 }

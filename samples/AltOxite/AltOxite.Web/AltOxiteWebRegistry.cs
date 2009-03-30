@@ -45,6 +45,8 @@ namespace AltOxite.Web
             ForRequestedType<IPrincipalFactory>().TheDefault.Is.OfConcreteType<AltOxitePrincipalFactory>();
             ForRequestedType<IBlogPostCommentService>().TheDefault.Is.OfConcreteType<BlogPostCommentService>();
             ForRequestedType<IUserService>().TheDefault.Is.OfConcreteType<UserService>();
+            ForRequestedType<IPostService>().TheDefault.Is.OfConcreteType<PostService>();
+            ForRequestedType<ITagService>().TheDefault.Is.OfConcreteType<TagService>();
 
             ForRequestedType<IApplicationFirstRunHandler>()
                 .TheDefault.Is.OfConcreteType<DefaultApplicationFirstRunHandler>();

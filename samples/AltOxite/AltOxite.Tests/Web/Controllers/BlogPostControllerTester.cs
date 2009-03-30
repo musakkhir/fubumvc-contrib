@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AltOxite.Core.Domain;
@@ -5,9 +6,11 @@ using AltOxite.Core.Persistence;
 using AltOxite.Core.Services;
 using AltOxite.Core.Web.Controllers;
 using FubuMVC.Core.Controller.Config;
+using FubuMVC.Core.Controller.Results;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
+using FubuMVC.Core;
 
 namespace AltOxite.Tests.Web.Controllers
 {
@@ -22,6 +25,7 @@ namespace AltOxite.Tests.Web.Controllers
         private IUrlResolver _resolver;
         private Post _post;
         private string _testSlug;
+        private ITagService _tagService;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +35,8 @@ namespace AltOxite.Tests.Web.Controllers
             _resolver = MockRepository.GenerateStub<IUrlResolver>();
             _blogPostCommentService = MockRepository.GenerateStub<IBlogPostCommentService>();
             _userService = MockRepository.GenerateStub<IUserService>();
-            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService);
+            _tagService = MockRepository.GenerateStub<ITagService>();
+            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService, _tagService);
 
             _testSlug = "TESTSLUG";
 
@@ -73,6 +78,7 @@ namespace AltOxite.Tests.Web.Controllers
         private IList<User> _users;
         private IUrlResolver _resolver;
         private Post _post;
+        private ITagService _tagService;
 
         [SetUp]
         public void SetUp()
@@ -83,7 +89,8 @@ namespace AltOxite.Tests.Web.Controllers
             _resolver = MockRepository.GenerateStub<IUrlResolver>();
             _blogPostCommentService = MockRepository.GenerateStub<IBlogPostCommentService>();
             _userService = MockRepository.GenerateStub<IUserService>();
-            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService);
+            _tagService = MockRepository.GenerateStub<ITagService>();
+            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService, _tagService);
             
             _post = new Post { Slug = _testSlug };
             _posts.Add(_post);
@@ -255,6 +262,140 @@ namespace AltOxite.Tests.Web.Controllers
         public void the_url_should_have_been_updated()
         {
             _user.Url.ShouldContain(GivenUserUrl);
+        }
+    }
+
+    [TestFixture]
+    public class BlogPostController_when_adding_a_new_post
+    {
+        private BlogPostController _controller;
+        private IRepository _repository;
+        private IUrlResolver _resolver;
+        private IBlogPostCommentService _blogPostCommentService;
+        private IUserService _userService;
+        private ITagService _tagService;
+
+        [SetUp]
+        public void Setup()
+        {
+            _repository = MockRepository.GenerateStub<IRepository>();
+            _resolver = MockRepository.GenerateStub<IUrlResolver>();
+            _blogPostCommentService = MockRepository.GenerateStub<IBlogPostCommentService>();
+            _userService = MockRepository.GenerateStub<IUserService>();
+            _tagService = MockRepository.GenerateStub<ITagService>();
+            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService, _tagService);
+            
+        }
+
+        [Test]
+        public void Should_render_the_view_when_nothing_is_supplied()
+        {
+            var outModel = _controller.Add(new BlogPostAddViewModel());
+
+            outModel.ShouldBeOfType<BlogPostAddViewModel>();
+            
+        }
+    }
+
+    [TestFixture]
+    public class BlogPostController_when_Editing_an_existing_post
+    {
+        private BlogPostController _controller;
+        private IRepository _repository;
+        private IUrlResolver _resolver;
+        private IBlogPostCommentService _blogPostCommentService;
+        private IUserService _userService;
+        private ITagService _tagService;
+
+        [SetUp]
+        public void Setup()
+        {
+            _repository = MockRepository.GenerateMock<IRepository>();
+            _resolver = MockRepository.GenerateStub<IUrlResolver>();
+            _blogPostCommentService = MockRepository.GenerateStub<IBlogPostCommentService>();
+            _userService = MockRepository.GenerateStub<IUserService>();
+            _tagService = MockRepository.GenerateStub<ITagService>();
+            _controller = new BlogPostController(_repository, _resolver, _blogPostCommentService, _userService, _tagService);
+
+        }
+
+        [Test]
+        public void Should_return_a_bad_redirect_result_when_nothing_is_supplied()
+        {
+            var outModel = _controller.Edit(new BlogPostEditViewModel());
+
+            outModel.ShouldBeOfType<BlogPostAddViewModel>();
+
+            var actualResult = outModel as BlogPostAddViewModel;
+
+            actualResult.ShouldNotBeNull();
+            actualResult.ResultOverride.ShouldBeOfType<RedirectResult>();
+
+        }
+
+        [Test]
+        [Ignore("Can't get this working right now - RK")]
+        public void Should_return_a_bad_redirect_result_if_nothing_is_returned_from_Repository()
+        {
+            var testSlug = "My-Test-Slug";
+            var postList = new List<Post> {new Post {ID = Guid.NewGuid(), Title = "My Title"}}.AsQueryable();
+            
+            // Problem is with this somewhere
+            //_repository.Stub(call => call.Query(new PostBySlug(testSlug))).IgnoreArguments().Return(postList);
+            _repository.Expect(call => call.Query(new PostBySlug(testSlug))).IgnoreArguments().Return(postList);
+            _repository.Expect(call => call.Query(new PostBySlug(testSlug)).SingleOrDefault()).IgnoreArguments().Return(null);
+            
+            var outModel = _controller.Edit(new BlogPostEditViewModel { Slug = testSlug});
+
+            outModel.ShouldBeOfType<BlogPostAddViewModel>();
+
+            var actualResult = outModel as BlogPostAddViewModel;
+
+            actualResult.ShouldNotBeNull();
+            actualResult.ResultOverride.ShouldBeOfType<RedirectResult>();
+        }
+
+        [Test]
+        public void Should_render_the_view_and_have_valid_data_when_Valid_Slug_is_passed_in()
+        {
+            var testSlug = "My-Test-Slug";
+            var id = Guid.NewGuid();
+            var title = "My BlogPost Title";
+            var bodyShort = "Body Short Text";
+            var body = "This is the main body of a blogpost";
+            var published = DateTime.Today;
+            var modelTags = "help, test, sample, ";
+            var objectTags = new List<Tag> {new Tag {Name = "help"}, new Tag {Name = "test"}, new Tag {Name = "sample"}};
+
+            var post = new Post
+                           {
+                               ID = id,
+                               Title = title,
+                               BodyShort = bodyShort,
+                               Body = body,
+                               Published = published
+                           };
+            objectTags.Each(post.AddTag);
+
+            var postList = new List<Post> { post }.AsQueryable();
+
+            _repository.Expect(call => call.Query(new PostBySlug(testSlug))).IgnoreArguments().Return(postList);
+
+            var outModel = _controller.Edit(new BlogPostEditViewModel { Slug = testSlug });
+
+            outModel.ShouldBeOfType<BlogPostAddViewModel>();
+
+            var actualResult = outModel as BlogPostAddViewModel;
+
+            actualResult.ShouldNotBeNull();
+
+            actualResult.Id.ShouldEqual(id.ToString());
+            actualResult.Title.ShouldEqual(title);
+            actualResult.BodyShort.ShouldEqual(bodyShort);
+            actualResult.Body.ShouldEqual(body);
+            actualResult.Published.ShouldEqual(published);
+            actualResult.Tags.ShouldEqual(modelTags);
+            
         }
     }
 }

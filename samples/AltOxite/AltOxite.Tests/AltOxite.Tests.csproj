@@ -111,6 +111,7 @@
     <Compile Include="Web\Behaviors\SetUpCurrentUserTester.cs" />
     <Compile Include="Web\Behaviors\UnitOfWorkBehaviorTester.cs" />
     <Compile Include="Web\Controllers\BlogPostControllerTester.cs" />
+    <Compile Include="Web\Controllers\SiteControllerTester.cs" />
     <Compile Include="Web\TestViewModel.cs" />
     <Compile Include="Web\Controllers\LoginControllerTester.cs" />
     <Compile Include="Web\Html\LoginStatusExpressionTester.cs" />

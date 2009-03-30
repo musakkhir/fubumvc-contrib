@@ -82,6 +82,11 @@ namespace AltOxite.Web
                     config.PrimaryUrl = "blog{0}".ToFormat(x.Conventions.UrlRouteParametersForAction(config));
                 });
 
+                x.OverrideConfigFor(BlogPostEditAction, config =>
+                {
+                    config.PrimaryUrl = "BlogPost/Edit{0}".ToFormat(x.Conventions.UrlRouteParametersForAction(config));
+                });
+
                 x.OverrideConfigFor(BlogPostCommentAction, config =>
                 {
                     //TODO: This stinks, there should be a way to do the "blog" part without having to deal with the URL parameters
@@ -103,6 +108,8 @@ namespace AltOxite.Web
                                                            config.AddBehavior<access_the_database_through_a_unit_of_work>();
                                                            config.AddBehavior<OutputAsJson>();
                                                        });
+
+                x.OverrideConfigFor(AdminDashboardAction, config => { config.PrimaryUrl = "_Admin"; });
             };
 
             Bootstrapper.Bootstrap();
@@ -155,8 +162,10 @@ namespace AltOxite.Web
 
         private readonly Expression<Func<LoginController, object>> LogoutAction = c => c.Logout(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostIndexAction = c => c.Index(null);
+        private readonly Expression<Func<BlogPostController, object>> BlogPostEditAction = c => c.Edit(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
         private readonly Expression<Func<TagController, object>> AllTagsAction = c => c.AllTags(null);
+        private readonly Expression<Func<SiteController, object>> AdminDashboardAction = c => c.Dashboard(null);
     }
 }
