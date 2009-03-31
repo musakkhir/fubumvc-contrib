@@ -17,6 +17,9 @@ namespace Fohjin.Core.Services
 
         public void AddCommentToBlogPost(string body, bool userSubscribed, User user, Post post, string twitterUserName)
         {
+            if (string.IsNullOrEmpty(twitterUserName))
+                twitterUserName = string.Empty;
+
             var comment = new Comment
             {
                 Body = body,
