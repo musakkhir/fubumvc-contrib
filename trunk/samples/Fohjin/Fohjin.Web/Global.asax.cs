@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using Fohjin.Core.Web;
 using Fohjin.Core.Web.Behaviors;
@@ -30,6 +32,16 @@ namespace Fohjin.Web
                     conventions.PartialForEachOfBeforeEachItem = FohjinDefaultPartialBeforeEachItem;
                     conventions.PartialForEachOfAfterEachItem = FohjinDefaultPartialAfterEachItem;
                     conventions.PartialForEachOfFooter = FohjinDefaultPartialFooter;
+
+                    conventions.DefaultPathToPartialView = (parentView, partialViewType) =>
+                    {
+                        //var controllerName = conventions.CanonicalControllerName(parentView.GetType());
+                        //var path = "{0}/{1}/{2}.ascx".ToFormat(conventions.ViewFileBasePath, controllerName, partialViewType.Name);
+                        //return File.Exists(Path.Combine(Request.ApplicationPath, VirtualPathUtility.ToAbsolute(path)))
+                        //    ? path
+                        //    : "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+                        return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+                    };
                 });
 
                 x.ActionConventions(custom =>
@@ -62,16 +74,23 @@ namespace Fohjin.Web
                 
                 // Automatic controller registration
                 /////////////////////////////////////////////////
-                x.AddControllersFromAssembly.ContainingType<ViewModel>(c =>
-                {
-                    // All objects in Web.Controllers whose name ends with "*Controller"
-                    // All public OMIOMO methods are actions, so no need to filter the methods
-                    c.Where(t => 
-                        t.Namespace.EndsWith("Web.Controllers") 
-                        && t.Name.EndsWith("Controller"));
+                //x.AddControllerActions(a => 
+                //    a.UsingTypesInTheSameAssemblyAs<ViewModel>(t => 
+                //        t.SelectTypes(type => 
+                //             type.Namespace.EndsWith("Web.Controllers") && 
+                //             type.Name.EndsWith("Controller"))
+                //         .SelectMethods(method => 
+                //             method.Name.EndsWith("Action"))));
 
-                    c.MapActionsWhere((m,i,o) => true);
-                });
+                const BindingFlags publicDeclaredOnly = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+                x.AddControllerActions(a => 
+                    a.UsingTypesInTheSameAssemblyAs<ViewModel>(types =>
+                        from type in types 
+                        where type.Namespace.EndsWith("Web.Controllers") && 
+                              type.Name.EndsWith("Controller")
+                        from method in type.GetMethods(publicDeclaredOnly)
+                        select method
+                ));
 
                 //-- Make the primary URL for logout be "/logout" instead of "login/logout"
                 x.OverrideConfigFor(LogoutAction, config =>
@@ -237,6 +256,5 @@ namespace Fohjin.Web
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);
         private readonly Expression<Func<TagController, object>> TagIndexAction = c => c.Index(null);
         private readonly Expression<Func<RedirectToOldBlogController, object>> RedirectToOldBlogIndexAction = c => c.Index(null);
-        //private readonly Expression<Func<DebugController, object>> DebugIndexAction = c => c.Index(null);
     }
 }

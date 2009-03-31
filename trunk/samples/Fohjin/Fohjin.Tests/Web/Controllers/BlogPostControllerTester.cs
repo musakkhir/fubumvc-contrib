@@ -54,7 +54,7 @@ namespace Fohjin.Tests.Web.Controllers
             _repository.Stub(r => r.Query<Post>(null)).IgnoreArguments().Return(new Post[0].AsQueryable());
 
             var output = _controller.Index(new BlogPostViewModel {Slug = "badslug"});
-
+    
             output.Post.ShouldBeNull();
         }
     }

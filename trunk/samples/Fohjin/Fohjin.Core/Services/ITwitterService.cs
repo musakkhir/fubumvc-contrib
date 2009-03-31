@@ -39,14 +39,12 @@ namespace Fohjin.Core.Services
 
             List<string> twitterUserNames = post.GetComments()
                 .Where(comment => (!string.IsNullOrEmpty(comment.TwitterUserName) && comment.TwitterUserName != twitterUserName))
-                .Distinct()
                 .Select(x => x.TwitterUserName)
                 .ToList();
 
-            if (!twitterUserNames.Contains(post.User.TwitterUserName))
-                twitterUserNames.Add(post.User.TwitterUserName);
+            twitterUserNames.Add(post.User.TwitterUserName);
 
-            twitterUserNames.Each(userName =>
+            twitterUserNames.Distinct().Each(userName =>
                 _twitterClient.SendReply(_siteConfiguration.TwitterUserName, _siteConfiguration.TwitterPassword, userName, message));
 
             return true;
