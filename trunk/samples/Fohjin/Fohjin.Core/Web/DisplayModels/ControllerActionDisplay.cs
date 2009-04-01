@@ -10,13 +10,15 @@ namespace Fohjin.Core.Web.DisplayModels
         {
             PrimaryUrl = controllerActionConfig.PrimaryUrl;
             ControllerType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ControllerType.ToString());
-            //ActionFunc = controllerActionConfig.ActionFunc.ToString();
-            //InputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.InputType.ToString());
-            //OutputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.OutputType.ToString());
+            ActionFunc = controllerActionConfig.ActionMethod.Name.ToString();
+            InputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ActionMethod.ToString());
+            InputType = InputType.Substring(0, InputType.IndexOf(")"));
+            OutputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ActionMethod.ReturnType.ToString());
 
             var actionName = StripAllUpToAndIncludingTheLastDot(ActionFunc);
-            actionName = actionName.Substring(0, actionName.IndexOf("("));
-            MethodSignature = "public {0} {1}({0} object);".ToFormat(OutputType, actionName, InputType);
+            //actionName = actionName.Substring(0, actionName.IndexOf(")"));
+            MethodSignature = "public {0} {1}({2} object);".ToFormat(OutputType, actionName, InputType);
+
 
             var behaviors = new List<DebugSingleLineDisplay>();
             controllerActionConfig.GetBehaviors().Each(b => behaviors.Add(new DebugSingleLineDisplay(b.ToString())));
