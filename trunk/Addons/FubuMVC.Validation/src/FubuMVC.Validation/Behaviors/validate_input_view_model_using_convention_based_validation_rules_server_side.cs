@@ -3,11 +3,11 @@ using FubuMVC.Validation.Results;
 
 namespace FubuMVC.Validation.Behaviors
 {
-    public class validate_input_view_model_using_convention_based_validation_rules : behavior_base_for_convenience
+    public class validate_input_view_model_using_convention_based_validation_rules_server_side : behavior_base_for_convenience
     {
         private readonly IValidate _validate;
 
-        public validate_input_view_model_using_convention_based_validation_rules(IValidate validate)
+        public validate_input_view_model_using_convention_based_validation_rules_server_side(IValidate validate)
         {
             _validate = validate;
         }

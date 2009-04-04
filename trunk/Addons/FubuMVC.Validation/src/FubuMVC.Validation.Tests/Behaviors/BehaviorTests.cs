@@ -15,7 +15,7 @@ namespace FubuMVC.Validation.Tests.Behaviors
 
             var mock = MockRepository.GenerateStub<IValidate>();
             mock.Expect(x => x.Validate(testViewModel));
-            var sut = new validate_input_view_model_using_convention_based_validation_rules(mock);
+            var sut = new validate_input_view_model_using_convention_based_validation_rules_server_side(mock);
 
             sut.PrepareInput(testViewModel);
 
@@ -28,7 +28,7 @@ namespace FubuMVC.Validation.Tests.Behaviors
             var testViewModel = new TestViewModelNotImplementingICanBeValidated();
 
             var mock = MockRepository.GenerateStub<IValidate>();
-            var sut = new validate_input_view_model_using_convention_based_validation_rules(mock);
+            var sut = new validate_input_view_model_using_convention_based_validation_rules_server_side(mock);
 
             sut.PrepareInput(testViewModel);
 
