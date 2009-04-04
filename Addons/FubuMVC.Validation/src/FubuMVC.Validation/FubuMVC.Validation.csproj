@@ -59,7 +59,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Behaviors\validate_input_view_model_using_convention_based_validation_rules.cs" />
+    <Compile Include="Behaviors\setup_output_view_model_with_the_convention_based_validation_rules_for_client_side_validation.cs" />
+    <Compile Include="Behaviors\validate_input_view_model_using_convention_based_validation_rules_server_side.cs" />
     <Compile Include="Captcha\CaptchaEvaluator.cs" />
     <Compile Include="Captcha\CaptchaGeneator.cs" />
     <Compile Include="Captcha\CaptchaOpperator.cs" />
@@ -67,8 +68,10 @@
     <Compile Include="Dsl\AssemblyControllerScanningExpression.cs" />
     <Compile Include="Dsl\ByDefaultDslChain.cs" />
     <Compile Include="Dsl\CanBeAnyViewModel.cs" />
+    <Compile Include="Dsl\ConfigurationExtensions.cs" />
     <Compile Include="Dsl\ExtendedRuleExpression.cs" />
     <Compile Include="Dsl\PropertiesMatchingExpression.cs" />
+    <Compile Include="Dsl\PropertyInfoComparer.cs" />
     <Compile Include="Dsl\RuleExpression.cs" />
     <Compile Include="Dsl\ValidationDsl.cs" />
     <Compile Include="Dsl\ValidationRuleSetup.cs" />
