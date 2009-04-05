@@ -15,13 +15,16 @@ namespace FubuMVC.Validation.SemanticModel
         public DefaultPropertyConventions DefaultPropertyConventions { get; private set; }
         public DiscoveredTypes DiscoveredTypes { get; private set; }
 
-        public void Validate<TViewModel>(TViewModel viewModel) where TViewModel : ICanBeValidated
+        public IValidationResults Validate<TViewModel>(TViewModel viewModel) where TViewModel : class
         {
+            IValidationResults validationResults = new ValidationResults();
             DiscoveredTypes.GetRulesFor(viewModel).Each(rule =>
             {
                 if (!rule.IsValid(viewModel))
-                    viewModel.ValidationResults.AddInvalidField(rule.PropertyFilter, rule.GetType());
+                    validationResults.AddInvalidField(rule.PropertyFilter, rule.GetType());
             });
+
+            return validationResults;
         }
     }
 }

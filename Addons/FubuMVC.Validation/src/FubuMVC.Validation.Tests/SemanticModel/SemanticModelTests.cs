@@ -1,6 +1,7 @@
 using System.Linq;
 using FubuMVC.Tests;
 using FubuMVC.Validation.Dsl;
+using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 using FubuMVC.Validation.Tests.Helper;
@@ -24,7 +25,8 @@ namespace FubuMVC.Validation.Tests.SemanticModel
         [Test]
         public void Should_be_able_to_validate_a_view_model_that_implements_ICanBeValidated()
         {
-            _validationConfiguration.Validate(_testViewModel);
+            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
+            validationResults.ShouldNotBeNull();
         }
 
         [Test]
@@ -165,15 +167,16 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
 
-            _validationConfiguration.Validate(_testViewModel);
+            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
                 
-            _testViewModel.ValidationResults.GetInvalidFields().Count().ShouldEqual(3);
-            _testViewModel.ValidationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email_1");
-            _testViewModel.ValidationResults.GetInvalidFields().Last().ShouldEqual("property => property.False_Url");
-            _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().First()).Count().ShouldEqual(1);
-            _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().First()).First().ShouldEqual(typeof(IsEmail<TestViewModel>));
-            _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().Last()).Count().ShouldEqual(1);
-            _testViewModel.ValidationResults.GetBrokenRulesFor(_testViewModel.ValidationResults.GetInvalidFields().Last()).First().ShouldEqual(typeof(IsUrl<TestViewModel>));
+            validationResults.ShouldNotBeNull();
+            validationResults.GetInvalidFields().Count().ShouldEqual(3);
+            validationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email_1");
+            validationResults.GetInvalidFields().Last().ShouldEqual("property => property.False_Url");
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().First()).Count().ShouldEqual(1);
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().First()).First().ShouldEqual(typeof(IsEmail<TestViewModel>));
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().Last()).Count().ShouldEqual(1);
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().Last()).First().ShouldEqual(typeof(IsUrl<TestViewModel>));
         }
 
         [Test]

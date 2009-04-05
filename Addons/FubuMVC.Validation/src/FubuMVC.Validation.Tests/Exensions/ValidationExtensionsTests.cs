@@ -1,6 +1,7 @@
 using FubuMVC.Tests;
 using FubuMVC.Validation.Dsl;
 using FubuMVC.Validation.Extensions;
+using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 using FubuMVC.Validation.Tests.Helper;
@@ -36,7 +37,8 @@ namespace FubuMVC.Validation.Tests.Exensions
 
             _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
 
-            _validationConfiguration.Validate(_testViewModel);
+            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
+            _testViewModel.ValidationResults.CloneFrom(validationResults);
 
             _testView = new TestView();
             _testView.SetModel(_testViewModel);

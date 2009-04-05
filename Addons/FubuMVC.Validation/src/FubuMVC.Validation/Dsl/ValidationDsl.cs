@@ -1,4 +1,3 @@
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.SemanticModel;
 
 namespace FubuMVC.Validation.Dsl
@@ -22,7 +21,7 @@ namespace FubuMVC.Validation.Dsl
             get { return new AssemblyControllerScanningExpression(_validationConfiguration); }
         }
 
-        public PropertiesMatchingExpression<TViewModel> OverrideConfigFor<TViewModel>() where TViewModel : ICanBeValidated
+        public PropertiesMatchingExpression<TViewModel> OverrideConfigFor<TViewModel>() where TViewModel : class
         {
             return new PropertiesMatchingExpression<TViewModel>(_validationConfiguration);
         }

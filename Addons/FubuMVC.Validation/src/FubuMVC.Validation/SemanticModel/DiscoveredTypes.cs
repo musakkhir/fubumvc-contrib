@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Validation.Dsl;
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 
 namespace FubuMVC.Validation.SemanticModel
@@ -30,7 +29,7 @@ namespace FubuMVC.Validation.SemanticModel
                 method.MakeGenericMethod(new[] { viewModelType }).Invoke(this, new object[] { });
         }
 
-        public void AddDiscoveredType<TViewModel>() where TViewModel : ICanBeValidated
+        public void AddDiscoveredType<TViewModel>() where TViewModel : class
         {
             var discoveredType = typeof(TViewModel);
 
@@ -66,7 +65,7 @@ namespace FubuMVC.Validation.SemanticModel
             return _discoveredTypes.Keys.AsEnumerable();
         }
 
-        public IEnumerable<IValidationRule<TViewModel>> GetRulesFor<TViewModel>(TViewModel viewModel) where TViewModel : ICanBeValidated
+        public IEnumerable<IValidationRule<TViewModel>> GetRulesFor<TViewModel>(TViewModel viewModel) where TViewModel : class
         {
             var validatorRules = new List<IValidationRule<TViewModel>>();
 
@@ -76,7 +75,7 @@ namespace FubuMVC.Validation.SemanticModel
             return _discoveredTypes[viewModel.GetType()] as IList<IValidationRule<TViewModel>>;
         }
 
-        public void AddRuleFor<TViewModel>(Expression<Func<PropertyInfo, bool>> propertyFilter, ValidationRuleSetup validationRuleSetup) where TViewModel : ICanBeValidated
+        public void AddRuleFor<TViewModel>(Expression<Func<PropertyInfo, bool>> propertyFilter, ValidationRuleSetup validationRuleSetup) where TViewModel : class
         {
             var discoveredType = typeof(TViewModel);
             if (!_discoveredTypes.ContainsKey(discoveredType)) return;
@@ -105,7 +104,7 @@ namespace FubuMVC.Validation.SemanticModel
         }
 
         public void RemoveRuleFrom<TViewModel, TValidationRule>()
-            where TViewModel : ICanBeValidated
+            where TViewModel : class
             where TValidationRule : IValidationRule<TViewModel>
         {
             Type discoveredType = typeof(TViewModel);
@@ -124,7 +123,7 @@ namespace FubuMVC.Validation.SemanticModel
             rules.Each(rule => validationRules.Remove(rule));
         }
 
-        public void RemoveAllRulesFor<TViewModel>() where TViewModel : ICanBeValidated
+        public void RemoveAllRulesFor<TViewModel>() where TViewModel : class
         {
             if (!_discoveredTypes.ContainsKey(typeof(TViewModel))) return;
 

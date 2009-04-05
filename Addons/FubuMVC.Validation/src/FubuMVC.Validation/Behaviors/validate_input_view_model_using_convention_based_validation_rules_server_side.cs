@@ -19,7 +19,9 @@ namespace FubuMVC.Validation.Behaviors
             var method = _validate.GetType().GetMethod("Validate");
             var genericMethod = method.MakeGenericMethod(input.GetType());
 
-            genericMethod.Invoke(_validate, new object[] { input });
+            IValidationResults validationResults = (IValidationResults)genericMethod.Invoke(_validate, new object[] { input });
+
+            ((ICanBeValidated)input).ValidationResults.CloneFrom(validationResults);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace FubuMVC.Validation.Results
         public void CloneFrom(IValidationResults validationResults)
         {
             validationResults.GetInvalidFields()
-                .Each(x => _invalidFields.Add(x, validationResults.GetBrokenRulesFor(x).ToList()));
+                .Each(propertyString => _invalidFields.Add(propertyString, validationResults.GetBrokenRulesFor(propertyString).ToList()));
         }
     }
 }

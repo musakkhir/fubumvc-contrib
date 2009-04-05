@@ -1,13 +1,12 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 
 namespace FubuMVC.Validation.Dsl
 {
-    public class PropertiesMatchingExpression<TViewModel> where TViewModel : ICanBeValidated
+    public class PropertiesMatchingExpression<TViewModel> where TViewModel : class
     {
         private readonly ValidationConfiguration _validationConfiguration;
 
