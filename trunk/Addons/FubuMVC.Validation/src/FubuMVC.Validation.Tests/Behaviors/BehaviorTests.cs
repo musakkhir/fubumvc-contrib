@@ -1,4 +1,5 @@
 using FubuMVC.Validation.Behaviors;
+using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Tests.Helper;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -14,7 +15,7 @@ namespace FubuMVC.Validation.Tests.Behaviors
             var testViewModel = new TestViewModel();
 
             var mock = MockRepository.GenerateStub<IValidate>();
-            mock.Expect(x => x.Validate(testViewModel));
+            mock.Expect(x => x.Validate(testViewModel)).Return(new ValidationResults());
             var sut = new validate_input_view_model_using_convention_based_validation_rules_server_side(mock);
 
             sut.PrepareInput(testViewModel);
@@ -28,6 +29,7 @@ namespace FubuMVC.Validation.Tests.Behaviors
             var testViewModel = new TestViewModelNotImplementingICanBeValidated();
 
             var mock = MockRepository.GenerateStub<IValidate>();
+            mock.Expect(x => x.Validate(testViewModel)).Return(new ValidationResults());
             var sut = new validate_input_view_model_using_convention_based_validation_rules_server_side(mock);
 
             sut.PrepareInput(testViewModel);

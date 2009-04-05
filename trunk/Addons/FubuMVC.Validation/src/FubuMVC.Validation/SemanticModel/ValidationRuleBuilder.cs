@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 
 namespace FubuMVC.Validation.SemanticModel
 {
     public class ValidationRuleBuilder
     {
-        public void Build<TViewModel>(Type discoveredType, Type ruleType, PropertyInfo property, IList<PropertyInfo> aditionalProperties, Action<IValidationRule<TViewModel>> addRuleToRules) where TViewModel : ICanBeValidated
+        public void Build<TViewModel>(Type discoveredType, Type ruleType, PropertyInfo property, IList<PropertyInfo> aditionalProperties, Action<IValidationRule<TViewModel>> addRuleToRules) where TViewModel : class
         {
             LambdaExpression lambdaExpression = LambdaExpressionCreator(discoveredType, property);
 
@@ -40,16 +39,10 @@ namespace FubuMVC.Validation.SemanticModel
 
         private static LambdaExpression LambdaExpressionCreator(Type discoveredType, PropertyInfo property)
         {
-            ParameterExpression arg = Expression.Parameter(discoveredType, "x");
-            Expression expr = arg;
-            expr = Expression.Property(expr, property);
-            return Expression.Lambda(expr, arg);
+            ParameterExpression parameterExpression = Expression.Parameter(discoveredType, "x");
+            Expression expression = parameterExpression;
+            expression = Expression.Property(expression, property);
+            return Expression.Lambda(expression, parameterExpression);
         }
-
-        //private static Expression GetPropertyExpression(Type mockType, PropertyInfo property)
-        //{
-        //    ParameterExpression expression = Expression.Parameter(mockType, "m");
-        //    return Expression.Lambda(Expression.MakeMemberAccess(expression, property), new[] { expression });
-        //}
     }
 }
