@@ -10,7 +10,7 @@ namespace Fohjin.Core.Web.DisplayModels
         {
             PrimaryUrl = controllerActionConfig.PrimaryUrl;
             ControllerType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ControllerType.ToString());
-            ActionFunc = controllerActionConfig.ActionMethod.Name.ToString();
+            ActionFunc = controllerActionConfig.ActionMethod.Name;
             InputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ActionMethod.ToString());
             InputType = InputType.Substring(0, InputType.IndexOf(")"));
             OutputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ActionMethod.ReturnType.ToString());

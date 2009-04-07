@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -19,6 +20,7 @@ namespace FubuMVC.Validation.Rules
 
         public IsEmail(Expression<Func<TViewModel, string>> propToValidateExpression)
         {
+            ConstructorArguments = new List<object>{ propToValidateExpression };
             _propToValidateExpression = propToValidateExpression;
             PropertyFilter = new UglyExpressionConvertor().ToString(_propToValidateExpression);
         }
@@ -30,6 +32,7 @@ namespace FubuMVC.Validation.Rules
         }
 
         public string PropertyFilter { get; private set; }
+        public IList<object> ConstructorArguments { get; private set; }
 
         private static bool IsValidEmailDomain(string value)
         {

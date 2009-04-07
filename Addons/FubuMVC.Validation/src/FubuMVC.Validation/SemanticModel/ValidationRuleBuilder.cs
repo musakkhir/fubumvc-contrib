@@ -44,5 +44,11 @@ namespace FubuMVC.Validation.SemanticModel
             expression = Expression.Property(expression, property);
             return Expression.Lambda(expression, parameterExpression);
         }
+
+        //private static Expression GetPropertyExpression(Type mockType, PropertyInfo property)
+        //{
+        //    ParameterExpression expression = Expression.Parameter(mockType, "m");
+        //    return Expression.Lambda(Expression.MakeMemberAccess(expression, property), new[] { expression });
+        //}
     }
 }

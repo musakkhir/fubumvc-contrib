@@ -25,7 +25,7 @@ namespace FubuMVC.Validation.Tests.SemanticModel
         [Test]
         public void Should_be_able_to_validate_a_view_model_that_implements_ICanBeValidated()
         {
-            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
+            IValidationResults<TestViewModel> validationResults = _validationConfiguration.Validate(_testViewModel);
             validationResults.ShouldNotBeNull();
         }
 
@@ -167,16 +167,16 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
 
-            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
+            IValidationResults<TestViewModel> validationResults = _validationConfiguration.Validate(_testViewModel);
                 
             validationResults.ShouldNotBeNull();
             validationResults.GetInvalidFields().Count().ShouldEqual(3);
             validationResults.GetInvalidFields().First().ShouldEqual("property => property.False_Email_1");
             validationResults.GetInvalidFields().Last().ShouldEqual("property => property.False_Url");
             validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().First()).Count().ShouldEqual(1);
-            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().First()).First().ShouldEqual(typeof(IsEmail<TestViewModel>));
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().First()).First().ShouldBeOfType<IsEmail<TestViewModel>>();
             validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().Last()).Count().ShouldEqual(1);
-            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().Last()).First().ShouldEqual(typeof(IsUrl<TestViewModel>));
+            validationResults.GetBrokenRulesFor(validationResults.GetInvalidFields().Last()).First().ShouldBeOfType<IsUrl<TestViewModel>>();
         }
 
         [Test]

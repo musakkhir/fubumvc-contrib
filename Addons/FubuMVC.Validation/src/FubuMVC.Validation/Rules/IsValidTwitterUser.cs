@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using FubuMVC.Core;
@@ -12,9 +13,10 @@ namespace FubuMVC.Validation.Rules
 
         private readonly Expression<Func<TViewModel, string>> _propertyExpression;
 
-        public IsValidTwitterUser(Expression<Func<TViewModel, string>> propertyExpression)
+        public IsValidTwitterUser(Expression<Func<TViewModel, string>> propToValidateExpression)
         {
-            _propertyExpression = propertyExpression;
+            ConstructorArguments = new List<object> { propToValidateExpression };
+            _propertyExpression = propToValidateExpression;
             PropertyFilter = new UglyExpressionConvertor().ToString(_propertyExpression);
         }
 
@@ -45,5 +47,6 @@ namespace FubuMVC.Validation.Rules
         }
 
         public string PropertyFilter { get; private set; }
+        public IList<object> ConstructorArguments { get; private set; }
     }
 }

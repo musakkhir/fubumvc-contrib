@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Validation.Captcha;
@@ -14,6 +15,7 @@ namespace FubuMVC.Validation.Rules
 
         public IsValidCaptcha(Expression<Func<TViewModel, string>> questionPropertyExpression, Expression<Func<TViewModel, string>> answerPropertyExpression)
         {
+            ConstructorArguments = new List<object> { questionPropertyExpression, answerPropertyExpression };
             _questionPropertyExpression = questionPropertyExpression;
             _answerPropertyExpression = answerPropertyExpression;
             PropertyFilter = new UglyExpressionConvertor().ToString(_questionPropertyExpression);
@@ -29,5 +31,6 @@ namespace FubuMVC.Validation.Rules
         }
 
         public string PropertyFilter { get; private set; }
+        public IList<object> ConstructorArguments { get; private set; }
     }
 }

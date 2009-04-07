@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Tests;
 using FubuMVC.Validation.Dsl;
+using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 using FubuMVC.Validation.Tests.Helper;
@@ -127,7 +128,10 @@ namespace FubuMVC.Validation.Tests.Dsl
         {
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t =>
+                    t.Namespace.EndsWith("Tests.Helper") &&
+                    t.ImplementsICanBeValidated()
+                );
 
             var propertyConventions = _validationConfiguration.DiscoveredTypes.GetDiscoveredTypes();
             propertyConventions.Count().ShouldEqual(7);
@@ -147,7 +151,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             var defaultPropertyConventions = _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel());
             defaultPropertyConventions.Count().ShouldEqual(6);
@@ -167,7 +172,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
                 .WillNotBeValidatedBy<IsRequired<TestViewModel>>();
@@ -190,7 +196,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
                 .PropertiesMatching(propToValidateExpression1, r =>
@@ -214,7 +221,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
                 .PropertiesMatching(propToValidateExpression1, r =>
@@ -238,7 +246,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
                 .WillNotBeValidated();
@@ -254,7 +263,8 @@ namespace FubuMVC.Validation.Tests.Dsl
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
-                .Where(t => t.Namespace.EndsWith("Tests.Helper"));
+                .Where(t => t.Namespace.EndsWith("Tests.Helper") &&
+                            t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
                 .PropertiesMatching(propToValidateExpression1, r =>

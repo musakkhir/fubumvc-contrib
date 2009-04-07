@@ -80,6 +80,7 @@
     <Compile Include="Extensions\ValidationExtensions.cs" />
     <Compile Include="Results\ICanBeValidated.cs" />
     <Compile Include="Results\IValidationResults.cs" />
+    <Compile Include="Results\ValidationRuleConvertor.cs" />
     <Compile Include="Rules\IsEmail.cs" />
     <Compile Include="Rules\IsNumberBelow100.cs" />
     <Compile Include="Rules\IsRequired.cs" />

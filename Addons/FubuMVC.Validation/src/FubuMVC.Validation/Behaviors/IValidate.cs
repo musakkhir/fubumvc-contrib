@@ -4,6 +4,6 @@ namespace FubuMVC.Validation.Behaviors
 {
     public interface IValidate
     {
-        IValidationResults Validate<TViewModel>(TViewModel viewModel) where TViewModel : class;
+        IValidationResults<TViewModel> Validate<TViewModel>(TViewModel viewModel) where TViewModel : class;
     }
 }

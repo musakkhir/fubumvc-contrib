@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuMVC.Validation.SemanticModel;
 
@@ -11,12 +12,14 @@ namespace FubuMVC.Validation.Rules
 
         public IsRequired(Expression<Func<TViewModel, string>> propToValidateExpression)
         {
+            ConstructorArguments = new List<object> { propToValidateExpression };
             _propToValidateStringExpression = propToValidateExpression;
             PropertyFilter = new UglyExpressionConvertor().ToString(_propToValidateStringExpression);
         }
 
         public IsRequired(Expression<Func<TViewModel, int>> propToValidateExpression)
         {
+            ConstructorArguments = new List<object> { propToValidateExpression };
             _propToValidateIntExpression = propToValidateExpression;
             PropertyFilter = new UglyExpressionConvertor().ToString(_propToValidateIntExpression);
         }
@@ -40,5 +43,6 @@ namespace FubuMVC.Validation.Rules
         }
 
         public string PropertyFilter { get; private set; }
+        public IList<object> ConstructorArguments { get; private set; }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.SemanticModel;
 
 namespace FubuMVC.Validation.Dsl
@@ -21,8 +20,6 @@ namespace FubuMVC.Validation.Dsl
         {
             _assembly.GetExportedTypes().Each(type =>
             {
-                if (!typeof(ICanBeValidated).IsAssignableFrom(type)) return;
-
                 if (type.IsAbstract) return;
 
                 if (type.IsValueType) return;

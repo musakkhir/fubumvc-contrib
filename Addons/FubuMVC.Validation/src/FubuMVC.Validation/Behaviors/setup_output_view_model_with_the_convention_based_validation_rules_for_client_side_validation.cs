@@ -14,7 +14,7 @@ namespace FubuMVC.Validation.Behaviors
 
         public override void ModifyOutput<OUTPUT>(OUTPUT output)
         {
-            if (!(output is ICanBeValidated)) return;
+            if (!(output is ICanBeValidated<OUTPUT>)) return;
 
             var method = _validate.GetType().GetMethod("SetupViewModel");
             var genericMethod = method.MakeGenericMethod(output.GetType());

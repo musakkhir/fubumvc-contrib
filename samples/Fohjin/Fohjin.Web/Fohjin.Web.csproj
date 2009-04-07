@@ -115,8 +115,8 @@
     <Content Include="Views\BlogPost\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\BlogPost.ascx" />
-    <Content Include="Views\Shared\BlogPostComment.ascx" />
-    <Content Include="Views\Shared\LoggedOutCommentForm.ascx" />
+    <Content Include="Views\BlogPost\BlogPostComment.ascx" />
+    <Content Include="Views\BlogPost\LoggedOutCommentForm.ascx" />
     <Content Include="Views\Shared\TagLink.ascx" />
     <Content Include="Views\Shared\LoggedOutMenu.ascx" />
     <Content Include="Views\Login\Index.aspx" />

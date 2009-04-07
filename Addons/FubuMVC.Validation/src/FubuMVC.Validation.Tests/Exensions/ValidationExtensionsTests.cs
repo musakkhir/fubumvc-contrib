@@ -37,7 +37,7 @@ namespace FubuMVC.Validation.Tests.Exensions
 
             _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
 
-            IValidationResults validationResults = _validationConfiguration.Validate(_testViewModel);
+            IValidationResults<TestViewModel> validationResults = _validationConfiguration.Validate(_testViewModel);
             _testViewModel.ValidationResults.CloneFrom(validationResults);
 
             _testView = new TestView();

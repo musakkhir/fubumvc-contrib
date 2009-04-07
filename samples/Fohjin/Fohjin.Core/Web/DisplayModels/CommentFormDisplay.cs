@@ -4,7 +4,7 @@ using FubuMVC.Validation.Results;
 
 namespace Fohjin.Core.Web.DisplayModels
 {
-    public class CommentFormDisplay : ICanBeValidated
+    public class CommentFormDisplay : ICanBeValidated<CommentFormDisplay>
     {
         public CommentFormDisplay(Comment comment, PostDisplay postDisplay)
         {
@@ -37,8 +37,8 @@ namespace Fohjin.Core.Web.DisplayModels
         public string Answer { get; private set; }
         public string OptionalTwitterUserName { get; set; }
 
-        private readonly IValidationResults _validationResults = new ValidationResults();
-        public IValidationResults ValidationResults
+        private readonly IValidationResults<CommentFormDisplay> _validationResults = new ValidationResults<CommentFormDisplay>();
+        public IValidationResults<CommentFormDisplay> ValidationResults
         {
             get { return _validationResults; }
         }

@@ -1,7 +1,7 @@
 namespace FubuMVC.Validation.Results
 {
-    public interface ICanBeValidated
+    public interface ICanBeValidated<TViewModel> where TViewModel : class
     {
-        IValidationResults ValidationResults { get; }
+        IValidationResults<TViewModel> ValidationResults { get; }
     }
 }
