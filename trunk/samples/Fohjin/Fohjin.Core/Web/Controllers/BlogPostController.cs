@@ -105,7 +105,7 @@ namespace Fohjin.Core.Web.Controllers
     }
 
     [Serializable]
-    public class BlogPostCommentViewModel : ICanBeValidated
+    public class BlogPostCommentViewModel : ICanBeValidated<BlogPostCommentViewModel>
     {
         [Required]public int PostYear { get; set; }
         [Required]public int PostMonth { get; set; }
@@ -121,8 +121,8 @@ namespace Fohjin.Core.Web.Controllers
         public string Answer { get; set; }
         public string OptionalTwitterUserName { get; set; }
 
-        private readonly IValidationResults _validationResults = new ValidationResults();
-        public IValidationResults ValidationResults
+        private readonly IValidationResults<BlogPostCommentViewModel> _validationResults = new ValidationResults<BlogPostCommentViewModel>();
+        public IValidationResults<BlogPostCommentViewModel> ValidationResults
         {
             get { return _validationResults; }
         }

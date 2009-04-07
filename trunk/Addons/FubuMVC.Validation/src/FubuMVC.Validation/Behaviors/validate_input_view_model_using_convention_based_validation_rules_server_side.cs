@@ -14,14 +14,14 @@ namespace FubuMVC.Validation.Behaviors
 
         public override void PrepareInput<INPUT>(INPUT input)
         {
-            if (!(input is ICanBeValidated)) return;
+            if (!(input is ICanBeValidated<INPUT>)) return;
 
             var method = _validate.GetType().GetMethod("Validate");
             var genericMethod = method.MakeGenericMethod(input.GetType());
 
-            IValidationResults validationResults = (IValidationResults)genericMethod.Invoke(_validate, new object[] { input });
+            IValidationResults<INPUT> validationResults = (IValidationResults<INPUT>)genericMethod.Invoke(_validate, new object[] { input });
 
-            ((ICanBeValidated)input).ValidationResults.CloneFrom(validationResults);
+            ((ICanBeValidated<INPUT>)input).ValidationResults.CloneFrom(validationResults);
         }
     }
 }

@@ -83,8 +83,7 @@ namespace FubuMVC.Validation.SemanticModel
             var rules = _discoveredTypes[discoveredType] as IList<IValidationRule<TViewModel>>;
             var genericValidationRuleType = validationRuleSetup.ValidationRuleType.MakeGenericType(discoveredType);
 
-            if (rules == null || rules.Where(rule =>
-                                             rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
+            if (rules == null || rules.Where(rule => rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
 
             discoveredType.GetProperties().Each(property =>
             {

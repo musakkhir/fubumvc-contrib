@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -35,12 +36,17 @@ namespace Fohjin.Web
 
                     conventions.DefaultPathToPartialView = (parentView, partialViewType) =>
                     {
-                        //var controllerName = conventions.CanonicalControllerName(parentView.GetType());
-                        //var path = "{0}/{1}/{2}.ascx".ToFormat(conventions.ViewFileBasePath, controllerName, partialViewType.Name);
-                        //return File.Exists(Path.Combine(Request.ApplicationPath, VirtualPathUtility.ToAbsolute(path)))
-                        //    ? path
-                        //    : "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
-                        return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+                        string[] controllerNameParts = parentView.GetType().ToString().Split(new[] {'_'});
+                        if (controllerNameParts.Length <= 3)
+                            return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+
+                        var controllerName = controllerNameParts[controllerNameParts.Length - 3];
+                        var path = "{0}/{1}/{2}.ascx".ToFormat(conventions.ViewFileBasePath, controllerName, partialViewType.Name);
+                        var virtualPath = VirtualPathUtility.ToAbsolute(path).StartsWith("/") ? VirtualPathUtility.ToAbsolute(path).Substring(1) : VirtualPathUtility.ToAbsolute(path);
+                        var absolutePath = Path.Combine(@"C:\Projects\Fohjin.MVC.BlogEngine\FubuMVC-Contrib\samples\Fohjin\Fohjin.Web", virtualPath);
+                        return File.Exists(absolutePath)
+                            ? path
+                            : "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
                     };
                 });
 
@@ -64,7 +70,7 @@ namespace Fohjin.Web
                     .Will<set_user_from_http_cookie_if_current_user_is_not_authenticated>()
 
                     .Will<get_recent_blog_posts>()
-                    .Will<validate_input_view_model_using_convention_based_validation_rules>()
+                    .Will<validate_input_view_model_using_convention_based_validation_rules_server_side>()
 
                     .Will<execute_the_result>()
                     .Will<OutputAsRssOrAtomFeed>()
@@ -165,25 +171,28 @@ namespace Fohjin.Web
 
             ValidationConfig.Configure = x =>
             {
-                x.ByDefault.PropertiesMatching(property => !property.Name.StartsWith("Optional"), rule => 
+                x.ByDefault.PropertiesMatching(property => !property.NameStartsWith("Optional") && 
+                                                           !property.IsDeclaredIn<ViewModel>(), rule => 
                     rule.WillBeValidatedBy<IsRequired<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Email"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.NameContains("Email"), rule =>
                     rule.WillBeValidatedBy<IsEmail<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Url"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.NameContains("Url"), rule =>
                     rule.WillBeValidatedBy<IsUrl<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Answer"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.NameContains("Answer"), rule =>
                     rule.WillBeValidatedBy<IsValidCaptcha<CanBeAnyViewModel>>(needs =>
-                        needs.NeedsAdditionalProperty(property => property.Name.Contains("Question"))));
+                        needs.NeedsAdditionalProperty(property => property.NameContains("Question"))));
 
-                x.ByDefault.PropertiesMatching(property => property.Name.Contains("TwitterUser"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.NameContains("TwitterUser"), rule =>
                     rule.WillBeValidatedBy<IsValidTwitterUser<CanBeAnyViewModel>>());
 
                 x.AddViewModelsFromAssembly
                     .ContainingType<ViewModel>()
-                    .Where(t => t.Namespace.EndsWith("Web.Controllers"));
+                    .Where(t => t.Namespace.EndsWith("Web.Controllers") &&
+                                t.ImplementsICanBeValidated()
+                    );
             };
 
             Bootstrapper.Bootstrap();

@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Validation.Results;
 
 namespace FubuMVC.Validation.Dsl
 {
@@ -28,6 +30,18 @@ namespace FubuMVC.Validation.Dsl
         public static bool NameContains(this PropertyInfo property, string filter)
         {
             return property.Name.Contains(filter);
+        }
+
+        public static bool ImplementsICanBeValidated(this Type type)
+        {
+            var interfaces = type.GetInterfaces();
+            var firstOrDefault = interfaces
+                .Where(t => t.IsGenericType && 
+                            t.GetGenericTypeDefinition() == typeof (ICanBeValidated<>))
+                .FirstOrDefault();
+            return firstOrDefault == null 
+                    ? false 
+                    : true;
         }
     }
 }

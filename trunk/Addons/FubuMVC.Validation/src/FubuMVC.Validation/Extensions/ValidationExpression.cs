@@ -35,7 +35,7 @@ namespace FubuMVC.Validation.Extensions
 
         public override string ToString()
         {
-            var iCanBeValidatedViewModel = _viewModel.Model as ICanBeValidated;
+            var iCanBeValidatedViewModel = _viewModel.Model as ICanBeValidated<TViewModel>;
 
             if (iCanBeValidatedViewModel != null )
                 return iCanBeValidatedViewModel.ValidationResults.IsValid(_propertySelectorString)

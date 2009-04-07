@@ -1,25 +1,28 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Validation.Rules;
+using StructureMap.Pipeline;
 
 namespace FubuMVC.Validation.Results
 {
-    public class ValidationResults : IValidationResults
+    public class ValidationResults<TViewModel> : IValidationResults<TViewModel> where TViewModel : class
     {
-        private readonly IDictionary<string, IList<Type>> _invalidFields;
+        private readonly IDictionary<string, IList<IValidationRule<TViewModel>>> _invalidFields;
+        private readonly ValidationRuleConvertor _validationRuleConvertor;
 
         public ValidationResults()
         {
-            _invalidFields = new Dictionary<string, IList<Type>>();
+            _invalidFields = new Dictionary<string, IList<IValidationRule<TViewModel>>>();
+            _validationRuleConvertor = new ValidationRuleConvertor();
         }
 
-        public void AddInvalidField(string propertyString, Type validationRule)
+        public void AddInvalidField(string propertyString, IValidationRule<TViewModel> validationRule)
         {
             if (_invalidFields.ContainsKey(propertyString))
                 _invalidFields[propertyString].Add(validationRule);
             else
-                _invalidFields[propertyString] = new List<Type> { validationRule };
+                _invalidFields[propertyString] = new List<IValidationRule<TViewModel>> { validationRule };
         }
 
         public IEnumerable<string> GetInvalidFields()
@@ -27,11 +30,11 @@ namespace FubuMVC.Validation.Results
             return _invalidFields.Keys.Distinct().AsEnumerable();
         }
 
-        public IEnumerable<Type> GetBrokenRulesFor(string propertyString)
+        public IEnumerable<IValidationRule<TViewModel>> GetBrokenRulesFor(string propertyString)
         {
             return _invalidFields.ContainsKey(propertyString)
                        ? _invalidFields[propertyString].Distinct().AsEnumerable()
-                       : new List<Type>();
+                       : new List<IValidationRule<TViewModel>>();
         }
 
         public bool IsValid()
@@ -44,10 +47,18 @@ namespace FubuMVC.Validation.Results
             return !_invalidFields.ContainsKey(propertyString);
         }
 
-        public void CloneFrom(IValidationResults validationResults)
+        public void CloneFrom<TOtherViewModel>(IValidationResults<TOtherViewModel> validationResults) where TOtherViewModel : class
         {
             validationResults.GetInvalidFields()
-                .Each(propertyString => _invalidFields.Add(propertyString, validationResults.GetBrokenRulesFor(propertyString).ToList()));
+                .Each(propertyString =>
+                {
+                    var rules = new List<IValidationRule<TViewModel>>();
+
+                    validationResults.GetBrokenRulesFor(propertyString).Each(rule => 
+                        rules.Add(_validationRuleConvertor.ConvertValidationRuleModelTo<TViewModel, TOtherViewModel>(rule)));
+
+                    _invalidFields.Add(propertyString, rules);
+                });
         }
     }
 }

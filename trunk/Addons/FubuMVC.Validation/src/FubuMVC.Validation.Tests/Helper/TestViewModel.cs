@@ -2,7 +2,7 @@ using FubuMVC.Validation.Results;
 
 namespace FubuMVC.Validation.Tests.Helper
 {
-    public class TestViewModel : ICanBeValidated
+    public class TestViewModel : ICanBeValidated<TestViewModel>
     {
         public TestViewModel()
         {
@@ -19,7 +19,7 @@ namespace FubuMVC.Validation.Tests.Helper
             False_Int = 100;
             MinValue_Int = int.MinValue;
 
-            ValidationResults = new ValidationResults();
+            ValidationResults = new ValidationResults<TestViewModel>();
         }
 
         public string Valid_Email { get; set; }
@@ -35,6 +35,6 @@ namespace FubuMVC.Validation.Tests.Helper
         public int False_Int { get; set; }
         public int MinValue_Int { get; set; }
 
-        public IValidationResults ValidationResults { get; private set; }
+        public IValidationResults<TestViewModel> ValidationResults { get; private set; }
     }
 }

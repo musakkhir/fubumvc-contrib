@@ -2,7 +2,7 @@ using FubuMVC.Validation.Results;
 
 namespace FubuMVC.Validation.Tests.Helper
 {
-    public class ValidTestViewModel : ICanBeValidated
+    public class ValidTestViewModel : ICanBeValidated<ValidTestViewModel>
     {
         public ValidTestViewModel()
         {
@@ -11,7 +11,7 @@ namespace FubuMVC.Validation.Tests.Helper
             Valid_Url_1 = "blog.fohjin.com";
             Valid_Url_2 = "http://blog.fohjin.com";
 
-            ValidationResults = new ValidationResults();
+            ValidationResults = new ValidationResults<ValidTestViewModel>();
         }
 
         public string Valid_Email { get; set; }
@@ -19,6 +19,6 @@ namespace FubuMVC.Validation.Tests.Helper
         public string Valid_Url_1 { get; set; }
         public string Valid_Url_2 { get; set; }
 
-        public IValidationResults ValidationResults { get; private set; }
+        public IValidationResults<ValidTestViewModel> ValidationResults { get; private set; }
     }
 }
