@@ -16,7 +16,11 @@ namespace Fohjin.Core.Web.DisplayModels
             OutputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ActionMethod.ReturnType.ToString());
 
             var actionName = StripAllUpToAndIncludingTheLastDot(ActionFunc);
-            //actionName = actionName.Substring(0, actionName.IndexOf(")"));
+            var parenLoc = actionName.IndexOf("(");
+            if (parenLoc >= 0)
+            {
+                actionName = actionName.Substring(0, parenLoc);
+            }
             MethodSignature = "public {0} {1}({2} object);".ToFormat(OutputType, actionName, InputType);
 
 
