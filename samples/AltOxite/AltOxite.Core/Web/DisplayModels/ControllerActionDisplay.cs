@@ -10,12 +10,16 @@ namespace AltOxite.Core.Web.DisplayModels
         {
             PrimaryUrl = controllerActionConfig.PrimaryUrl;
             ControllerType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.ControllerType.ToString());
-            ActionFunc = controllerActionConfig.ActionFunc.ToString();
-            InputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.InputType.ToString());
-            OutputType = StripAllUpToAndIncludingTheLastDot(controllerActionConfig.OutputType.ToString());
+            ActionFunc = controllerActionConfig.ActionDelegate.ToString();
+            InputType = ""; // StripAllUpToAndIncludingTheLastDot(controllerActionConfig.InputType.ToString());
+            OutputType = "";  //StripAllUpToAndIncludingTheLastDot(controllerActionConfig.OutputType.ToString());
 
             var actionName = StripAllUpToAndIncludingTheLastDot(ActionFunc);
-            actionName = actionName.Substring(0, actionName.IndexOf("("));
+            var parenLoc = actionName.IndexOf("(");
+            if( parenLoc >= 0 )
+            {
+                actionName = actionName.Substring(0, parenLoc );
+            }
             MethodSignature = "public {0} {1}({0} object);".ToFormat(OutputType, actionName, InputType);
 
             var behaviors = new List<DebugSingleLineDisplay>();

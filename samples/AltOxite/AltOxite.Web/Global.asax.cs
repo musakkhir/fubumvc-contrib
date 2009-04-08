@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using AltOxite.Core.Web;
 using AltOxite.Core.Web.Behaviors;
@@ -54,20 +56,18 @@ namespace AltOxite.Web
                 
                 // Automatic controller registration
                 /////////////////////////////////////////////////
-                x.AddControllersFromAssembly.ContainingType<ViewModel>(c =>
-                {
-                    // All objects in Web.Controllers whose name ends with "*Controller"
-                    // All public OMIOMO methods are actions, so no need to filter the methods
-                    c.Where(t => 
-                        t.Namespace.EndsWith("Web.Controllers") 
-                        && t.Name.EndsWith("Controller"));
-
-                    c.MapActionsWhere((m,i,o) => true);
-                });
+                x.AddControllerActions(a => a.UsingTypesInTheSameAssemblyAs<ViewModel>(types =>
+                   from t in types
+                   where t.Namespace.EndsWith("Web.Controllers")
+                         && t.Name.EndsWith("Controller")
+                   from m in t.GetMethods(BindingFlags.Public |
+                                    BindingFlags.Instance |
+                                    BindingFlags.DeclaredOnly)
+                   select m));
 
                 // Manual overrides
                 /////////////////////////////////////////////////
-
+                
                 //-- Make the primary URL for logout be "/logout" instead of "login/logout"
                 x.OverrideConfigFor(LogoutAction, config =>
                 {
