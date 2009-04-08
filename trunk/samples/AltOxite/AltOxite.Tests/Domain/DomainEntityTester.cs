@@ -8,6 +8,27 @@ namespace AltOxite.Tests.Domain
     public class DomainEntityTester
     {
         [Test]
+        public void two_transient_entities_should_not_be_equal()
+        {
+            new EqualityTesterEntity().ShouldNotEqual(new EqualityTesterEntity());
+        }
+
+        [Test]
+        public void a_transient_entity_should_have_a_consistent_hashcode()
+        {
+            var entity = new EntityTypeA();
+            var oldHashCode = entity.GetHashCode();
+            entity.Name = "bob";
+            oldHashCode.ShouldEqual(entity.GetHashCode());
+        }
+
+        [Test]
+        public void a_transient_entity_should_have_a_different_hashcode_from_another_transient_entity()
+        {
+            new EntityTypeA().GetHashCode().ShouldNotEqual(new EntityTypeA().GetHashCode());
+        }
+
+        [Test]
         public void two_entities_with_the_same_ID_should_be_equal()
         {
             var testID = Guid.NewGuid();
@@ -75,7 +96,10 @@ namespace AltOxite.Tests.Domain
         }
 
 
-        public class EntityTypeA : DomainEntity { }
+        public class EntityTypeA : DomainEntity
+        {
+            public string Name { get; set; }
+        }
         public class EntityTypeB : DomainEntity { }
 
         public class EqualityTesterEntity : DomainEntity, IEquatable<EqualityTesterEntity>
