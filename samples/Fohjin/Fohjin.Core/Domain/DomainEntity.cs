@@ -17,6 +17,13 @@ namespace Fohjin.Core.Domain
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
+
+            var otherIsTransient = Equals(other.ID, default(Guid));
+            var thisIsTransient = Equals(ID, default(Guid));
+
+            if (otherIsTransient && thisIsTransient)
+                return ReferenceEquals(this, other);
+
             return other.ID.Equals(ID);
         }
 
@@ -45,7 +52,9 @@ namespace Fohjin.Core.Domain
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return ID.GetHashCode();
+            return Equals(ID, default(Guid))
+                ? base.GetHashCode()
+                : ID.GetHashCode();
         }
 
         public static bool operator ==(DomainEntity left, DomainEntity right)
