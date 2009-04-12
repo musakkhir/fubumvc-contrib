@@ -9,7 +9,7 @@ namespace Fohjin.Core.Web.DisplayModels
             LocalPublishedDate = comment.Published.Value.ToString("MMMM dd, yyyy");
             PermalinkHash = comment.Published.Value.ToString("yyyyMMddhhmmssf");
             User = comment.User;
-            Body = comment.Body;
+            Body = comment.Body.Replace("\n", "<br />");
             Post = comment.Post;
             Date = comment.Published.HasValue ? comment.Published.Value.ToLongDateString() : "";
             Time = comment.Published.HasValue ? comment.Published.Value.ToShortTimeString() : "";
