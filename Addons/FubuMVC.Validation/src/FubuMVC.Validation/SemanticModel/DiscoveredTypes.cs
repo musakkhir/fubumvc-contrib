@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Util;
 using FubuMVC.Validation.Dsl;
 using FubuMVC.Validation.Rules;
 
@@ -100,6 +101,29 @@ namespace FubuMVC.Validation.SemanticModel
 
                 _validationRuleBuilder.Build<TViewModel>(discoveredType, validationRuleSetup.ValidationRuleType, property, propertyInfos, rules.Add);
             });
+        }
+
+        public void AddRuleFor<TViewModel>(Expression<Func<TViewModel, object>> property, ValidationRuleSetup validationRuleSetup) where TViewModel : class
+        {
+            var discoveredType = typeof(TViewModel);
+            if (!_discoveredTypes.ContainsKey(discoveredType)) return;
+
+            var rules = _discoveredTypes[discoveredType] as IList<IValidationRule<TViewModel>>;
+            var genericValidationRuleType = validationRuleSetup.ValidationRuleType.MakeGenericType(discoveredType);
+
+            if (rules == null || rules.Where(rule => rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
+
+            var propertyInfos = new List<PropertyInfo>();
+            validationRuleSetup.AdditionalProperties.GetProperties().Each(additionalProperty => discoveredType.GetProperties().Each(p =>
+            {
+                if (!additionalProperty.Match.Compile().Invoke(p)) return;
+
+                propertyInfos.Add(p);
+                return;
+            }));
+
+            var propertyInfo = ReflectionHelper.GetProperty(property);
+            _validationRuleBuilder.Build<TViewModel>(discoveredType, validationRuleSetup.ValidationRuleType, propertyInfo, propertyInfos, rules.Add);
         }
 
         public void RemoveRuleFrom<TViewModel, TValidationRule>()

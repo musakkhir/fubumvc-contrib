@@ -87,8 +87,8 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             var properties = new AdditionalProperties();
             var expression = new AdditionalPropertyExpression(properties);
-            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
-            expression.NeedsAdditionalProperty(p => !p.Name.Contains("question"));
+            expression.NeedsAdditionalPropertyMatching(p => p.Name.Contains("answer"));
+            expression.NeedsAdditionalPropertyMatching(p => !p.Name.Contains("question"));
 
             defaultPropertyConvention.AddValidationRule<IsRequired<CanBeAnyViewModel>>(properties);
 
@@ -103,8 +103,8 @@ namespace FubuMVC.Validation.Tests.SemanticModel
 
             var properties = new AdditionalProperties();
             var expression = new AdditionalPropertyExpression(properties);
-            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
-            expression.NeedsAdditionalProperty(p => p.Name.Contains("answer"));
+            expression.NeedsAdditionalPropertyMatching(p => p.Name.Contains("answer"));
+            expression.NeedsAdditionalPropertyMatching(p => p.Name.Contains("answer"));
 
             defaultPropertyConvention.AddValidationRule<IsRequired<CanBeAnyViewModel>>(properties);
 
@@ -207,6 +207,38 @@ namespace FubuMVC.Validation.Tests.SemanticModel
             _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
 
             _validationConfiguration.DiscoveredTypes.AddRuleFor<TestViewModel>(x => x.Name.Contains("Url"), new ValidationRuleSetup(typeof(IsUrl<>), new AdditionalProperties()));
+
+            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
+        }
+
+        [Test]
+        public void Should_add_a_validation_rule_to_a_scanned_ICanBeValidated_implementation_on_a_specific_property()
+        {
+            DefaultPropertyConvention defaultPropertyConvention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));
+            defaultPropertyConvention1.AddValidationRule<IsUrl<CanBeAnyViewModel>>();
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(defaultPropertyConvention1);
+
+            _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
+
+            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
+
+            _validationConfiguration.DiscoveredTypes.AddRuleFor<TestViewModel>(x => x.Valid_Email, new ValidationRuleSetup(typeof(IsRequired<>), new AdditionalProperties()));
+
+            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(4);
+        }
+
+        [Test]
+        public void Should_not_add_duplicate_validation_rules_to_a_scanned_ICanBeValidated_implementation_on_a_specific_property()
+        {
+            DefaultPropertyConvention defaultPropertyConvention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));
+            defaultPropertyConvention1.AddValidationRule<IsUrl<CanBeAnyViewModel>>();
+            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(defaultPropertyConvention1);
+
+            _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
+
+            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
+
+            _validationConfiguration.DiscoveredTypes.AddRuleFor<TestViewModel>(x => x.Valid_Url_1, new ValidationRuleSetup(typeof(IsUrl<>), new AdditionalProperties()));
 
             _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
         }

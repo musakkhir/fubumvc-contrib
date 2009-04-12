@@ -74,6 +74,7 @@
     <Compile Include="Dsl\PropertyInfoComparer.cs" />
     <Compile Include="Dsl\RuleExpression.cs" />
     <Compile Include="Dsl\ValidationDsl.cs" />
+    <Compile Include="Dsl\ValidationMap.cs" />
     <Compile Include="Dsl\ValidationRuleSetup.cs" />
     <Compile Include="Dsl\ViewModelTypeScanningExpression.cs" />
     <Compile Include="Extensions\ValidationExpression.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Behaviors\IValidate.cs" />
     <Compile Include="SemanticModel\DefaultPropertyConventions.cs" />
     <Compile Include="SemanticModel\DiscoveredTypes.cs" />
+    <Compile Include="SemanticModel\ExtendedAdditionalPropertyExpression.cs" />
     <Compile Include="SemanticModel\Property.cs" />
     <Compile Include="SemanticModel\PropertyComparer.cs" />
     <Compile Include="SemanticModel\ValidationRuleBuilder.cs" />

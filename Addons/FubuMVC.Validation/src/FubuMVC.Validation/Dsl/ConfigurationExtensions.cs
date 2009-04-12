@@ -9,12 +9,7 @@ namespace FubuMVC.Validation.Dsl
     {
         public static bool IsDeclaredIn<TViewModel>(this PropertyInfo property)
         {
-            var viewModelType = typeof (TViewModel);
-
-            var inActualClass = viewModelType.GetProperties().Contains(property, new PropertyInfoComparer());
-            var notInBaseClass = !viewModelType.BaseType.GetProperties().Contains(property, new PropertyInfoComparer());
-
-            return inActualClass && notInBaseClass;
+            return property.DeclaringType == typeof(TViewModel);
         }
 
         public static bool NameStartsWith(this PropertyInfo property, string filter)
@@ -34,14 +29,7 @@ namespace FubuMVC.Validation.Dsl
 
         public static bool ImplementsICanBeValidated(this Type type)
         {
-            var interfaces = type.GetInterfaces();
-            var firstOrDefault = interfaces
-                .Where(t => t.IsGenericType && 
-                            t.GetGenericTypeDefinition() == typeof (ICanBeValidated<>))
-                .FirstOrDefault();
-            return firstOrDefault == null 
-                    ? false 
-                    : true;
+            return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (ICanBeValidated<>));
         }
     }
 }

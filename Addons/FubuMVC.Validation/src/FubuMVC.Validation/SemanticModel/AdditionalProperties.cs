@@ -17,14 +17,10 @@ namespace FubuMVC.Validation.SemanticModel
             return _properties.AsEnumerable();
         }
 
-        public bool Contains(Property property, PropertyComparer propertyComparer)
-        {
-            return _properties.Contains(property, propertyComparer);
-        }
-
         public void AddProperty(Property property)
         {
-            _properties.Add(property);
+            if (!_properties.Contains(property, new PropertyComparer()))
+                _properties.Add(property);
         }
     }
 }

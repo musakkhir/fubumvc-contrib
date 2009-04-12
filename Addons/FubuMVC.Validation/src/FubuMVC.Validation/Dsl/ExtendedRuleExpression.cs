@@ -10,6 +10,7 @@ namespace FubuMVC.Validation.Dsl
     {
         private readonly ValidationConfiguration _validationConfiguration;
         private readonly Expression<Func<PropertyInfo, bool>> _propertyFilter;
+        private readonly Expression<Func<TViewModel, object>> _property;
 
         public ExtendedRuleExpression(ValidationConfiguration validationConfiguration, Expression<Func<PropertyInfo, bool>> propertyFilter)
         {
@@ -17,22 +18,37 @@ namespace FubuMVC.Validation.Dsl
             _propertyFilter = propertyFilter;
         }
 
+        public ExtendedRuleExpression(ValidationConfiguration validationConfiguration, Expression<Func<TViewModel, object>> property)
+        {
+            _validationConfiguration = validationConfiguration;
+            _property = property;
+        }
+
         public void WillBeValidatedBy<TValidationRule>() where TValidationRule : IValidationRule<TViewModel>
         {
             var properties = new AdditionalProperties();
             var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
-            _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
+
+            if (_propertyFilter != null)
+                _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
+
+            if (_property != null)
+                _validationConfiguration.DiscoveredTypes.AddRuleFor(_property, new ValidationRuleSetup(validationRuleType, properties));
         }
 
-        public void WillBeValidatedBy<TValidationRule>(Action<AdditionalPropertyExpression> additionalProperties) where TValidationRule : IValidationRule<TViewModel>
+        public void WillBeValidatedBy<TValidationRule>(Action<ExtendedAdditionalPropertyExpression<TViewModel>> additionalProperties) where TValidationRule : IValidationRule<TViewModel>
         {
             var properties = new AdditionalProperties();
-            var additionalPropertyExpression = new AdditionalPropertyExpression(properties);
+            var additionalPropertyExpression = new ExtendedAdditionalPropertyExpression<TViewModel>(properties);
             additionalProperties(additionalPropertyExpression);
 
             var validationRuleType = typeof(TValidationRule).GetGenericTypeDefinition();
 
-            _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
+            if (_propertyFilter != null)
+                _validationConfiguration.DiscoveredTypes.AddRuleFor<TViewModel>(_propertyFilter, new ValidationRuleSetup(validationRuleType, properties));
+
+            if (_property != null)
+                _validationConfiguration.DiscoveredTypes.AddRuleFor(_property, new ValidationRuleSetup(validationRuleType, properties));
         }
 
         public void WillNotBeValidated()
