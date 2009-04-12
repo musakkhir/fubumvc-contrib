@@ -21,8 +21,9 @@ namespace FubuMVC.Validation.SemanticModel
 
             aditionalProperties.Each(p =>
             {
-                constructorParameters.Add(LambdaExpressionCreator(discoveredType, p));
-                constructorParametersTypes.Add(lambdaExpression.GetType());
+                LambdaExpression expression = LambdaExpressionCreator(discoveredType, p);
+                constructorParameters.Add(expression);
+                constructorParametersTypes.Add(expression.GetType());
             });
 
             var genericType = ruleType.MakeGenericType(new[] { discoveredType });

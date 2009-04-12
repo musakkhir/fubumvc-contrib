@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Validation.Dsl;
 using FubuMVC.Validation.Tests.Helper;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace FubuMVC.Validation.Tests.StructureMap
             {
                 x.AddViewModelsFromAssembly
                     .ContainingType<TestViewModel>()
-                    .Where(w => true);
+                    .Where(w => w.ImplementsICanBeValidated());
             };
 
             new ValidationConfig();

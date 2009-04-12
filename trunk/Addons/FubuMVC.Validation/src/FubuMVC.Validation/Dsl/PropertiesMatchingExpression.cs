@@ -21,6 +21,12 @@ namespace FubuMVC.Validation.Dsl
             return this;
         }
 
+        public PropertiesMatchingExpression<TViewModel> Property(Expression<Func<TViewModel, object>> propertySelector, Action<ExtendedRuleExpression<TViewModel>> rules)
+        {
+            rules(new ExtendedRuleExpression<TViewModel>(_validationConfiguration, propertySelector));
+            return this;
+        }
+
         public PropertiesMatchingExpression<TViewModel> WillNotBeValidated()
         {
             _validationConfiguration.DiscoveredTypes.RemoveAllRulesFor<TViewModel>();

@@ -14,7 +14,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
 
-            propertyInfo.IsDeclaredIn<TestViewModel>().ShouldEqual(true);
+            propertyInfo.IsDeclaredIn<TestViewModel>().ShouldBeTrue();
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel1();
             var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
 
-            propertyInfo.IsDeclaredIn<TestViewModel1>().ShouldEqual(false);
+            propertyInfo.IsDeclaredIn<TestViewModel1>().ShouldBeFalse();
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
 
-            propertyInfo.NameStartsWith("Valid").ShouldEqual(true);
+            propertyInfo.NameStartsWith("Valid").ShouldBeTrue();
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
 
-            propertyInfo.NameStartsWith("Valid").ShouldEqual(false);
+            propertyInfo.NameStartsWith("Valid").ShouldBeFalse();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
 
-            propertyInfo.NameEndsWith("Email").ShouldEqual(true);
+            propertyInfo.NameEndsWith("Email").ShouldBeTrue();
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
 
-            propertyInfo.NameEndsWith("Valid").ShouldEqual(false);
+            propertyInfo.NameEndsWith("Valid").ShouldBeFalse();
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
 
-            propertyInfo.NameContains("Valid").ShouldEqual(true);
+            propertyInfo.NameContains("Valid").ShouldBeTrue();
         }
 
         [Test]
@@ -77,7 +77,19 @@ namespace FubuMVC.Validation.Tests.Dsl
             var testViewModel = new TestViewModel();
             var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
 
-            propertyInfo.NameContains("Url").ShouldEqual(false);
+            propertyInfo.NameContains("Url").ShouldBeFalse();
+        }
+
+        [Test]
+        public void Should_return_true_because_the_view_model_implements_ICanBeValidated()
+        {
+            typeof(TestViewModel).ImplementsICanBeValidated().ShouldBeTrue();
+        }
+
+        [Test]
+        public void Should_return_false_because_the_view_model_does_not_implement_ICanBeValidated()
+        {
+            typeof(TestViewModelNotImplementingICanBeValidated).ImplementsICanBeValidated().ShouldBeFalse();
         }
     }
 }
