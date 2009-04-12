@@ -36,17 +36,19 @@ namespace Fohjin.Web
 
                     conventions.DefaultPathToPartialView = (parentView, partialViewType) =>
                     {
-                        string[] controllerNameParts = parentView.GetType().ToString().Split(new[] {'_'});
-                        if (controllerNameParts.Length <= 3)
-                            return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+                        return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
 
-                        var controllerName = controllerNameParts[controllerNameParts.Length - 3];
-                        var path = "{0}/{1}/{2}.ascx".ToFormat(conventions.ViewFileBasePath, controllerName, partialViewType.Name);
-                        var virtualPath = VirtualPathUtility.ToAbsolute(path).StartsWith("/") ? VirtualPathUtility.ToAbsolute(path).Substring(1) : VirtualPathUtility.ToAbsolute(path);
-                        var absolutePath = Path.Combine(@"C:\Projects\Fohjin.MVC.BlogEngine\FubuMVC-Contrib\samples\Fohjin\Fohjin.Web", virtualPath);
-                        return File.Exists(absolutePath)
-                            ? path
-                            : "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+                        //string[] controllerNameParts = parentView.GetType().ToString().Split(new[] { '_' });
+                        //if (controllerNameParts.Length <= 3)
+                        //    return "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
+
+                        //var controllerName = controllerNameParts[controllerNameParts.Length - 3];
+                        //var path = "{0}/{1}/{2}.ascx".ToFormat(conventions.ViewFileBasePath, controllerName, partialViewType.Name);
+                        //var virtualPath = VirtualPathUtility.ToAbsolute(path).StartsWith("/") ? VirtualPathUtility.ToAbsolute(path).Substring(1) : VirtualPathUtility.ToAbsolute(path);
+                        //var absolutePath = Path.Combine(@"C:\Projects\Fohjin.MVC.BlogEngine\FubuMVC-Contrib\samples\Fohjin\Fohjin.Web", virtualPath);
+                        //return File.Exists(absolutePath)
+                        //    ? path
+                        //    : "{0}/{1}.ascx".ToFormat(conventions.SharedViewFileBasePath, partialViewType.Name);
                     };
                 });
 
