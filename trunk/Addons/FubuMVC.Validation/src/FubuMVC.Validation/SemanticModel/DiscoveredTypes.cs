@@ -76,33 +76,6 @@ namespace FubuMVC.Validation.SemanticModel
             return _discoveredTypes[viewModel.GetType()] as IList<IValidationRule<TViewModel>>;
         }
 
-        public void AddRuleFor<TViewModel>(Expression<Func<PropertyInfo, bool>> propertyFilter, ValidationRuleSetup validationRuleSetup) where TViewModel : class
-        {
-            var discoveredType = typeof(TViewModel);
-            if (!_discoveredTypes.ContainsKey(discoveredType)) return;
-
-            var rules = _discoveredTypes[discoveredType] as IList<IValidationRule<TViewModel>>;
-            var genericValidationRuleType = validationRuleSetup.ValidationRuleType.MakeGenericType(discoveredType);
-
-            if (rules == null || rules.Where(rule => rule.GetType() == genericValidationRuleType).FirstOrDefault() != null) return;
-
-            discoveredType.GetProperties().Each(property =>
-            {
-                if (!propertyFilter.Compile().Invoke(property)) return;
-
-                var propertyInfos = new List<PropertyInfo>();
-                validationRuleSetup.AdditionalProperties.GetProperties().Each(additionalProperty => discoveredType.GetProperties().Each(p =>
-                {
-                    if (!additionalProperty.Match.Compile().Invoke(p)) return;
-
-                    propertyInfos.Add(p);
-                    return;
-                }));
-
-                _validationRuleBuilder.Build<TViewModel>(discoveredType, validationRuleSetup.ValidationRuleType, property, propertyInfos, rules.Add);
-            });
-        }
-
         public void AddRuleFor<TViewModel>(Expression<Func<TViewModel, object>> property, ValidationRuleSetup validationRuleSetup) where TViewModel : class
         {
             var discoveredType = typeof(TViewModel);
@@ -126,9 +99,7 @@ namespace FubuMVC.Validation.SemanticModel
             _validationRuleBuilder.Build<TViewModel>(discoveredType, validationRuleSetup.ValidationRuleType, propertyInfo, propertyInfos, rules.Add);
         }
 
-        public void RemoveRuleFrom<TViewModel, TValidationRule>()
-            where TViewModel : class
-            where TValidationRule : IValidationRule<TViewModel>
+        public void RemoveRuleFrom<TViewModel, TValidationRule>() where TViewModel : class where TValidationRule : IValidationRule<TViewModel>
         {
             Type discoveredType = typeof(TViewModel);
             if (!_discoveredTypes.ContainsKey(discoveredType)) return;

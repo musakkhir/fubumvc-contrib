@@ -1,6 +1,5 @@
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 
@@ -13,12 +12,6 @@ namespace FubuMVC.Validation.Dsl
         public PropertiesMatchingExpression(ValidationConfiguration validationConfiguration)
         {
             _validationConfiguration = validationConfiguration;
-        }
-
-        public PropertiesMatchingExpression<TViewModel> PropertiesMatching(Expression<Func<PropertyInfo, bool>> propertyFilter, Action<ExtendedRuleExpression<TViewModel>> rules)
-        {
-            rules(new ExtendedRuleExpression<TViewModel>(_validationConfiguration, propertyFilter));
-            return this;
         }
 
         public PropertiesMatchingExpression<TViewModel> Property(Expression<Func<TViewModel, object>> propertySelector, Action<ExtendedRuleExpression<TViewModel>> rules)

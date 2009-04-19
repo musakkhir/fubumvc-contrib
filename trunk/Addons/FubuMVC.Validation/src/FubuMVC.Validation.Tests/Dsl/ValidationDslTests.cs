@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Tests;
 using FubuMVC.Validation.Dsl;
-using FubuMVC.Validation.Results;
 using FubuMVC.Validation.Rules;
 using FubuMVC.Validation.SemanticModel;
 using FubuMVC.Validation.Tests.Helper;
@@ -186,6 +185,7 @@ namespace FubuMVC.Validation.Tests.Dsl
         public void Should_be_able_to_remove_all_rules_from_a_property_convention_in_ValidationConfiguration_when_using_the_ValidationDsl()
         {
             Expression<Func<PropertyInfo, bool>> propToValidateExpression1 = p => p.Name.StartsWith("Email");
+            Expression<Func<TestViewModel, object>> propToValidateExpression2 = p => p.Valid_Email;
 
             _validationDsl.ByDefault
                 .PropertiesMatching(propToValidateExpression1, r =>
@@ -200,8 +200,8 @@ namespace FubuMVC.Validation.Tests.Dsl
                             t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
-                .PropertiesMatching(propToValidateExpression1, r =>
-                    r.WillNotBeValidated());
+                .Property(propToValidateExpression2, r =>
+                    r.ClearValidationRules());
 
             var defaultPropertyConventions = _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel());
             defaultPropertyConventions.Count().ShouldEqual(0);
@@ -225,8 +225,7 @@ namespace FubuMVC.Validation.Tests.Dsl
                             t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
-                .PropertiesMatching(propToValidateExpression1, r =>
-                    r.WillNotBeValidated());
+                .WillNotBeValidated();
 
             var defaultPropertyConventions = _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel());
             defaultPropertyConventions.Count().ShouldEqual(0);
@@ -259,7 +258,7 @@ namespace FubuMVC.Validation.Tests.Dsl
         [Test]
         public void Should_be_able_to_add_a_rule_in_ValidationConfiguration_when_using_the_ValidationDsl()
         {
-            Expression<Func<PropertyInfo, bool>> propToValidateExpression1 = p => p.Name.Contains("Email");
+            Expression<Func<TestViewModel, object>> propToValidateExpression1 = p => p.Valid_Email;
 
             _validationDsl.AddViewModelsFromAssembly
                 .ContainingType<TestViewModel>()
@@ -267,11 +266,11 @@ namespace FubuMVC.Validation.Tests.Dsl
                             t.ImplementsICanBeValidated());
 
             _validationDsl.OverrideConfigFor<TestViewModel>()
-                .PropertiesMatching(propToValidateExpression1, r =>
+                .Property(propToValidateExpression1, r =>
                     r.WillBeValidatedBy<IsRequired<TestViewModel>>());
 
             var defaultPropertyConventions = _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel());
-            defaultPropertyConventions.Count().ShouldEqual(3);
+            defaultPropertyConventions.Count().ShouldEqual(1);
         }
     }
 }
