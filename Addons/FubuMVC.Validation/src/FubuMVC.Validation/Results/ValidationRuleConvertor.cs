@@ -8,9 +8,7 @@ namespace FubuMVC.Validation.Results
 {
     public class ValidationRuleConvertor
     {
-        public IValidationRule<TViewModel> ConvertValidationRuleModelTo<TViewModel, TOtherViewModel>(IValidationRule<TOtherViewModel> rule)
-            where TViewModel : class
-            where TOtherViewModel : class
+        public IValidationRule<TViewModel> ConvertValidationRuleModelTo<TViewModel, TOtherViewModel>(IValidationRule<TOtherViewModel> rule) where TViewModel : class where TOtherViewModel : class
         {
             if (typeof(TViewModel) == typeof(TOtherViewModel))
                 return rule as IValidationRule<TViewModel>;
@@ -30,8 +28,7 @@ namespace FubuMVC.Validation.Results
             return (IValidationRule<TViewModel>)constructor.Invoke(convertedExpressions.ToArray());
         }
 
-        private static object ConvertExpressionTo<TViewModel>(object sourceExpression)
-            where TViewModel : class
+        private static object ConvertExpressionTo<TViewModel>(object sourceExpression) where TViewModel : class
         {
             LambdaExpression lambdaExpression = (LambdaExpression)sourceExpression;
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TViewModel), "x");

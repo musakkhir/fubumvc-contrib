@@ -180,38 +180,6 @@ namespace FubuMVC.Validation.Tests.SemanticModel
         }
 
         [Test]
-        public void Should_add_a_validation_rule_to_a_scanned_ICanBeValidated_implementation()
-        {
-            DefaultPropertyConvention defaultPropertyConvention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));
-            defaultPropertyConvention1.AddValidationRule<IsUrl<CanBeAnyViewModel>>();
-            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(defaultPropertyConvention1);
-
-            _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
-
-            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
-
-            _validationConfiguration.DiscoveredTypes.AddRuleFor<TestViewModel>(x => x.Name.Contains("Url"), new ValidationRuleSetup(typeof(IsRequired<>), new AdditionalProperties()));
-
-            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(6);
-        }
-
-        [Test]
-        public void Should_not_add_duplicate_validation_rules_to_a_scanned_ICanBeValidated_implementation()
-        {
-            DefaultPropertyConvention defaultPropertyConvention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));
-            defaultPropertyConvention1.AddValidationRule<IsUrl<CanBeAnyViewModel>>();
-            _validationConfiguration.DefaultPropertyConventions.AddDefaultPropertyConvention(defaultPropertyConvention1);
-
-            _validationConfiguration.DiscoveredTypes.AddDiscoveredType<TestViewModel>();
-
-            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
-
-            _validationConfiguration.DiscoveredTypes.AddRuleFor<TestViewModel>(x => x.Name.Contains("Url"), new ValidationRuleSetup(typeof(IsUrl<>), new AdditionalProperties()));
-
-            _validationConfiguration.DiscoveredTypes.GetRulesFor(new TestViewModel()).Count().ShouldEqual(3);
-        }
-
-        [Test]
         public void Should_add_a_validation_rule_to_a_scanned_ICanBeValidated_implementation_on_a_specific_property()
         {
             DefaultPropertyConvention defaultPropertyConvention1 = new DefaultPropertyConvention(x => x.Name.Contains("Url"));

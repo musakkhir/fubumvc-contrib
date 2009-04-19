@@ -1,6 +1,5 @@
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.Validation.SemanticModel
@@ -12,11 +11,6 @@ namespace FubuMVC.Validation.SemanticModel
         public ExtendedAdditionalPropertyExpression(AdditionalProperties additionalProperties)
         {
             _additionalProperties = additionalProperties;
-        }
-
-        public void NeedsAdditionalPropertyMatching(Expression<Func<PropertyInfo, bool>> filter)
-        {
-            _additionalProperties.AddProperty(new Property(filter));
         }
 
         public void NeedsAdditionalProperty(Expression<Func<TViewModel, object>> property)

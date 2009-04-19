@@ -71,6 +71,7 @@
     <Compile Include="Behaviors\BehaviorTests.cs" />
     <Compile Include="Captcha\CaptchaTests.cs" />
     <Compile Include="Dsl\ConfigurationExtensionsTests.cs" />
+    <Compile Include="Dsl\ValidationDslSyntaxExample.cs" />
     <Compile Include="Dsl\ValidationDslSyntaxTests.cs" />
     <Compile Include="Dsl\ValidationDslTests.cs" />
     <Compile Include="Dsl\ValidationMapTests.cs" />

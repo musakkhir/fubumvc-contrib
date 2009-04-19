@@ -27,60 +27,6 @@ namespace FubuMVC.Validation.Tests.Dsl
         }
 
         [Test]
-        public void Should_return_true_when_the_property_name_starts_with_Valid()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
-
-            propertyInfo.NameStartsWith("Valid").ShouldBeTrue();
-        }
-
-        [Test]
-        public void Should_return_false_when_the_property_name_does_not_start_with_Valid()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
-
-            propertyInfo.NameStartsWith("Valid").ShouldBeFalse();
-        }
-
-        [Test]
-        public void Should_return_true_when_the_property_name_ends_with_Email()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
-
-            propertyInfo.NameEndsWith("Email").ShouldBeTrue();
-        }
-
-        [Test]
-        public void Should_return_false_when_the_property_name_does_not_end_with_Email()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
-
-            propertyInfo.NameEndsWith("Valid").ShouldBeFalse();
-        }
-
-        [Test]
-        public void Should_return_true_when_the_property_name_contains_Email()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("Valid_Email");
-
-            propertyInfo.NameContains("Valid").ShouldBeTrue();
-        }
-
-        [Test]
-        public void Should_return_false_when_the_property_name_does_not_contain_url()
-        {
-            var testViewModel = new TestViewModel();
-            var propertyInfo = testViewModel.GetType().GetProperty("False_Email_1");
-
-            propertyInfo.NameContains("Url").ShouldBeFalse();
-        }
-
-        [Test]
         public void Should_return_true_because_the_view_model_implements_ICanBeValidated()
         {
             typeof(TestViewModel).ImplementsICanBeValidated().ShouldBeTrue();

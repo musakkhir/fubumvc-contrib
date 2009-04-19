@@ -38,18 +38,15 @@ namespace FubuMVC.Validation.SemanticModel
                 addRuleToRules(instance);
         }
 
-        private static LambdaExpression LambdaExpressionCreator(Type discoveredType, PropertyInfo property)
+        private static LambdaExpression LambdaExpressionCreator(Type discoveredType, MemberInfo property)
         {
-            ParameterExpression parameterExpression = Expression.Parameter(discoveredType, "x");
-            Expression expression = parameterExpression;
-            expression = Expression.Property(expression, property);
-            return Expression.Lambda(expression, parameterExpression);
-        }
+            ParameterExpression expression = Expression.Parameter(discoveredType, "x");
+            return Expression.Lambda(Expression.MakeMemberAccess(expression, property), new[] { expression });
 
-        //private static Expression GetPropertyExpression(Type mockType, PropertyInfo property)
-        //{
-        //    ParameterExpression expression = Expression.Parameter(mockType, "m");
-        //    return Expression.Lambda(Expression.MakeMemberAccess(expression, property), new[] { expression });
-        //}
+            //ParameterExpression parameterExpression = Expression.Parameter(discoveredType, "x");
+            //Expression expression = parameterExpression;
+            //expression = Expression.Property(expression, property);
+            //return Expression.Lambda(expression, parameterExpression);
+        }
     }
 }
