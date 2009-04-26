@@ -52,6 +52,7 @@ namespace AltOxite.Web
                     .Will<OutputAsRssOrAtomFeed>()
                     .Will<set_the_current_site_details_on_the_output_viewmodel>()
                     .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
+                    .Will<OutputDebugInformation>()
                 );
                 
                 // Automatic controller registration
@@ -97,7 +98,7 @@ namespace AltOxite.Web
 
                 x.OverrideConfigFor(TagIndexAction, config =>
                 {
-                    config.PrimaryUrl = "tag/{Tag}";
+                    config.PrimaryUrl =     "tag/{Tag}";
                 });
 
                 x.OverrideConfigFor(AllTagsAction, config =>
