@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using FluentNHibernate.Framework;
+using Fohjin.Core.Config;
 using FubuMVC.Core;
 using Fohjin.Core.Persistence;
 using NHibernate;
@@ -16,19 +16,19 @@ namespace Fohjin.Tests.Persistence
         protected ISession _session;
         protected NHibernateUnitOfWork _uow;
         protected ITransaction _transaction;
-        protected ISessionSource _sessionSource;
+        protected INHibernateSessionFactory _nHibernateSessionFactory;
 
         [SetUp]
         public void SetUp()
         {
-            _sessionSource = MockRepository.GenerateStub<ISessionSource>();
+            _nHibernateSessionFactory = MockRepository.GenerateStub<INHibernateSessionFactory>();
             _session = MockRepository.GenerateMock<ISession>();
             _transaction = MockRepository.GenerateStub<ITransaction>();
 
-            _sessionSource.Stub(s => s.CreateSession()).Return(_session);
+            _nHibernateSessionFactory.Stub(s => s.CreateSession()).Return(_session);
             _session.Stub(s => s.BeginTransaction()).Return(_transaction);
 
-            _uow = new NHibernateUnitOfWork(_sessionSource);
+            _uow = new NHibernateUnitOfWork(_nHibernateSessionFactory);
             _uow.Initialize();
         }
 
@@ -118,7 +118,7 @@ namespace Fohjin.Tests.Persistence
         [Test]
         public void all_other_methods_should_throw_if_not_initialized()
         {
-            _uow = new NHibernateUnitOfWork(_sessionSource);
+            _uow = new NHibernateUnitOfWork(_nHibernateSessionFactory);
 
             var flags = BindingFlags.Public | BindingFlags.DeclaredOnly;
             var exception = typeof(InvalidOperationException);

@@ -27,7 +27,7 @@ namespace Fohjin.Web
 
             setup_service_locator();
 
-            apply_action_conventions();
+            //apply_action_conventions();
 
             initialize_routes();
         }
@@ -42,15 +42,15 @@ namespace Fohjin.Web
             ObjectFactory.GetInstance<IRouteConfigurer>().LoadRoutes(RouteTable.Routes);
         }
 
-        private static void apply_action_conventions()
-        {
-            var fubuConfiguration = ObjectFactory.GetInstance<FubuConfiguration>();
-            var actionConventions = ObjectFactory.GetAllInstances<IFubuConvention<ControllerActionConfig>>();
+        //private static void apply_action_conventions()
+        //{
+        //    var fubuConfiguration = ObjectFactory.GetInstance<FubuConfiguration>();
+        //    var actionConventions = ObjectFactory.GetAllInstances<IFubuConvention<ControllerActionConfig>>();
 
-            fubuConfiguration.GetControllerActionConfigs().Each(actionConfig =>
-                actionConventions.Each(conv =>
-                    conv.Apply(actionConfig)));
-        }
+        //    fubuConfiguration.GetControllerActionConfigs().Each(actionConfig =>
+        //        actionConventions.Each(conv =>
+        //            conv.Apply(actionConfig)));
+        //}
 
         public static void Restart()
         {

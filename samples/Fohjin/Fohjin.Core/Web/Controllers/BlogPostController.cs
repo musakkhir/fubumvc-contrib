@@ -54,7 +54,10 @@ namespace Fohjin.Core.Web.Controllers
             var badRedirectResult = new BlogPostViewModel{ResultOverride = new RedirectResult(_resolver.PageNotFound())};
 
             // Trying to reduce spam comments
-            if (!string.IsNullOrEmpty(inModel.OptionalUrl) && inModel.OptionalUrl.Contains("geocities.com")) return badRedirectResult;
+            if (!string.IsNullOrEmpty(inModel.OptionalUrl) && (
+                    inModel.OptionalUrl.Contains("geocities.com") ||
+                    inModel.OptionalUrl.Contains("tripod.com"))) 
+                return badRedirectResult;
 
             if (inModel.Slug.IsEmpty()) return badRedirectResult;
 

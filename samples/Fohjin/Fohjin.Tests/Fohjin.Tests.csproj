@@ -36,10 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate.Framework, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Container.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\FubuMVC\FubuMVC.Container.StructureMap.dll</HintPath>
@@ -101,7 +97,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Config\DefaultApplicationFirstRunHandlerTester.cs" />
     <Compile Include="Config\SiteConfigDTOTester.cs" />
     <Compile Include="Domain\DomainEntityTester.cs" />
     <Compile Include="Domain\PostBySlugQueryTester.cs" />
