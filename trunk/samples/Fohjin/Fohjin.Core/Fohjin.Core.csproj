@@ -40,10 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate.Framework, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Container.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\FubuMVC\FubuMVC.Container.StructureMap.dll</HintPath>
@@ -103,37 +99,42 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Config\ServerBasedSessionSourceConfiguration.cs" />
-    <Compile Include="Config\SQLServerSessionSourceConfiguration.cs" />
+    <Compile Include="Config\NHibernatePersistenceModel.cs" />
+    <Compile Include="Config\NHibernateSessionFactory.cs" />
+    <Compile Include="Config\SQLServerPersistenceConfiguration.cs" />
+    <Compile Include="Persistence\ConventionOverrides\AutoMappingAlteration.cs" />
+    <Compile Include="Persistence\ConventionOverrides\TagMappingOverride.cs" />
+    <Compile Include="Persistence\Conventions\ClassConvention.cs" />
+    <Compile Include="Persistence\Conventions\DefaultBodyStringLengthConvention.cs" />
+    <Compile Include="Persistence\Conventions\DefaultStringLengthConvention.cs" />
+    <Compile Include="Persistence\Conventions\ForeignKeyConvention.cs" />
+    <Compile Include="Persistence\Conventions\HasManyConvention.cs" />
+    <Compile Include="Persistence\Conventions\HasManyToManyConvention.cs" />
+    <Compile Include="Persistence\Conventions\IdentityColumnConvention.cs" />
     <Compile Include="FohjinPrincipal.cs" />
     <Compile Include="Config\AliasDTO.cs" />
     <Compile Include="Config\ConfigExtensions.cs" />
     <Compile Include="Config\CookieHandler.cs" />
-    <Compile Include="Config\DefaultApplicationFirstRunHandler.cs" />
-    <Compile Include="Config\FileBasedSessionSourceConfiguration.cs" />
-    <Compile Include="Config\IApplicationFirstRunHandler.cs" />
     <Compile Include="Config\ICookieHandler.cs" />
-    <Compile Include="Config\ISessionSourceConfiguration.cs" />
+    <Compile Include="Config\IPersistenceConfiguration.cs" />
     <Compile Include="Config\SiteConfigDTO.cs" />
     <Compile Include="Domain\Alias.cs" />
     <Compile Include="Domain\Comment.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\IDomainQuery.cs" />
-    <Compile Include="Domain\Persistence\FohjinPersistenceModel.cs" />
-    <Compile Include="Domain\Persistence\CommentPersistenceMap.cs" />
-    <Compile Include="Domain\Persistence\PostPersistenceMap.cs" />
-    <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
-    <Compile Include="Domain\Persistence\TagPersistenceMap.cs" />
     <Compile Include="Domain\Tag.cs" />
+    <Compile Include="Persistence\Conventions\ReferenceConvention.cs" />
     <Compile Include="Persistence\INHibernateUnitOfWork.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\IUnitOfWork.cs" />
-    <Compile Include="Domain\Persistence\UserPersistenceMap.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\Validation\RequiredAttribute.cs" />
     <Compile Include="Persistence\NHibernateUnitOfWork.cs" />
+    <Compile Include="Persistence\ConventionOverrides\CommentMappingOverride.cs" />
+    <Compile Include="Persistence\ConventionOverrides\PostMappingOverride.cs" />
+    <Compile Include="Persistence\ConventionOverrides\UserMappingOverride.cs" />
     <Compile Include="Properties\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,7 +158,6 @@
     <Compile Include="Web\Behaviors\set_empty_default_user_on_the_output_viewmodel_to_make_sure_one_exists.cs" />
     <Compile Include="Web\Behaviors\set_the_current_logged_in_user_on_the_output_viewmodel.cs" />
     <Compile Include="Web\Behaviors\set_the_current_site_details_on_the_output_viewmodel.cs" />
-    <Compile Include="Web\Behaviors\set_up_default_data_the_first_time_this_app_is_run.cs" />
     <Compile Include="Web\Controllers\BlogPostController.cs" />
     <Compile Include="Web\Controllers\AboutController.cs" />
     <Compile Include="Web\Controllers\DebugController.cs" />
@@ -179,7 +179,7 @@
     <Compile Include="Web\Html\BlogPostHtmlExtension.cs" />
     <Compile Include="Web\Html\HtmlExtensions.cs" />
     <Compile Include="Web\Html\LoginStatusExpression.cs" />
-    <Compile Include="Config\SQLiteSessionSourceConfiguration.cs" />
+    <Compile Include="Config\SQLitePersistenceConfiguration.cs" />
     <Compile Include="Web\UrlToExtensions.cs" />
     <Compile Include="Web\ViewModel.cs" />
     <Compile Include="Web\WebForms\FohjinMasterPage.cs">

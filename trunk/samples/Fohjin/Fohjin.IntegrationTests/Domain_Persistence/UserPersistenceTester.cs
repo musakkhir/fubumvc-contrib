@@ -1,19 +1,11 @@
 using Fohjin.Core.Domain;
-using Fohjin.Core.Domain.Persistence;
 using NUnit.Framework;
 
 namespace Fohjin.IntegrationTests.Domain_Persistence
 {
     [TestFixture]
-    public class UserPersistenceTester : PersistenceTesterContext<UserPersistenceMap, User>
+    public class UserPersistenceTester : PersistenceTesterContext<User>
     {
-        public override void ReferencesAdditionalMaps(TestPersistenceModel<UserPersistenceMap, User> model)
-        {
-            model.IncludeMapping<CommentPersistenceMap, Comment>();
-            model.IncludeMapping<TagPersistenceMap, Tag>();
-            model.IncludeMapping<PostPersistenceMap, Post>();
-        }
-
         [Test]
         public void should_load_and_save_a_user()
         {

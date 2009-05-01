@@ -1,17 +1,15 @@
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Testing;
+using Fohjin.Core.Config;
 using Fohjin.Core.Domain;
-using Fohjin.Core.Domain.Persistence;
-using FluentNHibernate.Framework;
 using NUnit.Framework;
 
 namespace Fohjin.IntegrationTests.Domain_Persistence
 {
-    public class PersistenceTesterContext<MAPTYPE, ENTITY>
-        where MAPTYPE : DomainEntityMap<ENTITY>, new()
+    public class PersistenceTesterContext<ENTITY>
         where ENTITY : DomainEntity, new()
     {
         private SingleConnectionSessionSourceForSQLiteInMemoryTesting _source;
-        private TestPersistenceModel<MAPTYPE, ENTITY> _persistenceModel;
 
         [SetUp]
         public void SetUp()
@@ -22,16 +20,10 @@ namespace Fohjin.IntegrationTests.Domain_Persistence
                 .InMemory()
                 .ToProperties();
 
-            _persistenceModel = new TestPersistenceModel<MAPTYPE, ENTITY>();
-
-            ReferencesAdditionalMaps(_persistenceModel);
-            
-            _source = new SingleConnectionSessionSourceForSQLiteInMemoryTesting(properties, _persistenceModel);
+            var autoPersistenceModel = new NHibernatePersistenceModel().GetPersistenceModel();
+                
+            _source = new SingleConnectionSessionSourceForSQLiteInMemoryTesting(properties, autoPersistenceModel);
             _source.BuildSchema();
-        }
-
-        public virtual void ReferencesAdditionalMaps(TestPersistenceModel<MAPTYPE, ENTITY> model)
-        {
         }
 
         public PersistenceSpecification<ENTITY> Specification { get { return new PersistenceSpecification<ENTITY>(_source); } }

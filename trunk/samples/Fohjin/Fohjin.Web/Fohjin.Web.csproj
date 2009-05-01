@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate.Framework, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Fluent NHibernate\FluentNHibernate.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Container.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\FubuMVC\FubuMVC.Container.StructureMap.dll</HintPath>
@@ -200,13 +196,10 @@
     <Content Include="content\stylesheets\text.css" />
     <Content Include="content\stylesheets\yui.reset.2.6.0.css" />
     <Content Include="Views\About\Index.aspx" />
-    <Content Include="Views\Debug\Index.aspx" />
     <Content Include="Views\PageNotFound\Index.aspx" />
-    <Content Include="Views\Shared\ControllerAction.ascx" />
     <Content Include="Views\Shared\BlogPostLink.ascx" />
     <Content Include="Views\Shared\IsReading.ascx" />
     <Content Include="Views\Shared\RecentBlogPosts.ascx" />
-    <Content Include="Views\Shared\DebugSingleLine.ascx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="content\images\nda\puzzle.pdf" />

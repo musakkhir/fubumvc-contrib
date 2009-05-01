@@ -1,5 +1,5 @@
 using System;
-using FluentNHibernate.Framework;
+using Fohjin.Core.Config;
 using NHibernate;
 
 namespace Fohjin.Core.Persistence
@@ -8,19 +8,19 @@ namespace Fohjin.Core.Persistence
     {
         private ITransaction _transaction;
         private bool _isDisposed;
-        private readonly ISessionSource _source;
         private bool _isInitialized;
+        private readonly INHibernateSessionFactory _nHibernateSessionFactory;
 
-        public NHibernateUnitOfWork(ISessionSource source)
+        public NHibernateUnitOfWork(INHibernateSessionFactory nHibernateSessionFactory)
         {
-            _source = source;
+            _nHibernateSessionFactory = nHibernateSessionFactory;
         }
 
         public void Initialize()
         {
             should_not_currently_be_disposed();
-            
-            CurrentSession = _source.CreateSession();
+
+            CurrentSession = _nHibernateSessionFactory.CreateSession();
             begin_new_transaction();
 
             _isInitialized = true;

@@ -7,7 +7,7 @@ namespace Fohjin.Core.Domain
 {
     public class User : DomainEntity
     {
-        public virtual IList<Post> _posts { get; set; } // TODO: Make private
+        private IList<Post> _posts;
 
         public virtual string Username { get; set; }
         public virtual string DisplayName { get; set; }
@@ -34,9 +34,6 @@ namespace Fohjin.Core.Domain
         {
             return _posts.AsEnumerable();
         }
-
-        // public virtual Language LanguageDefault{ get; set; }
-        // public IEnumerable<Language> GetLanguages();
     }
 
     public class UserByEmail : IDomainQuery<User>

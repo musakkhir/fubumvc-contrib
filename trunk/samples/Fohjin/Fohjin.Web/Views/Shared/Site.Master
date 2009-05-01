@@ -70,7 +70,7 @@
 <body>
     <div id="header">
 	    <div class="container_16" id="header">
-		    <a href="<%= this.UrlTo().Home() %>"><%= this.Image("logo2.gif").ElementId("logo").Alt("")%></a>
+		    <a href="<%= this.UrlTo().Home() %>"><%= this.Image("logo3.gif").ElementId("logo").Alt("")%></a>
 		    <div id="search">
 			    <form>
 				    <input id="search_field" type="text" name="search"  onfocus="this.value=''" value="Search" />

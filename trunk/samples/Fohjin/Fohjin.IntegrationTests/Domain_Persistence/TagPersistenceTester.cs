@@ -1,12 +1,11 @@
 using System;
 using Fohjin.Core.Domain;
-using Fohjin.Core.Domain.Persistence;
 using NUnit.Framework;
 
 namespace Fohjin.IntegrationTests.Domain_Persistence
 {
     [TestFixture]
-    public class TagPersistenceTester : PersistenceTesterContext<TagPersistenceMap, Tag>
+    public class TagPersistenceTester : PersistenceTesterContext<Tag>
     {
         [Test]
         public void should_load_and_save_a_tag()
