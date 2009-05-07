@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework Tests", "Framewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.NHibernate", "Framework.NHibernate\Framework.NHibernate.csproj", "{03CD7135-27FA-4D37-A22F-ECB7BDF79982}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Spark", "Framework.Spark\Framework.Spark.csproj", "{A79F3665-6297-404D-A642-E454BA23FCBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{03CD7135-27FA-4D37-A22F-ECB7BDF79982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03CD7135-27FA-4D37-A22F-ECB7BDF79982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03CD7135-27FA-4D37-A22F-ECB7BDF79982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A79F3665-6297-404D-A642-E454BA23FCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79F3665-6297-404D-A642-E454BA23FCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A79F3665-6297-404D-A642-E454BA23FCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A79F3665-6297-404D-A642-E454BA23FCBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +53,6 @@ Global
 		{904A338A-5815-4D0B-A67C-267EDBF2C426} = {C1D449E7-8095-4DBF-BEC9-7AAFDE530FEF}
 		{BE5EDEE7-069D-4D06-BE38-30DD466C5F8D} = {C1D449E7-8095-4DBF-BEC9-7AAFDE530FEF}
 		{03CD7135-27FA-4D37-A22F-ECB7BDF79982} = {C1D449E7-8095-4DBF-BEC9-7AAFDE530FEF}
+		{A79F3665-6297-404D-A642-E454BA23FCBC} = {C1D449E7-8095-4DBF-BEC9-7AAFDE530FEF}
 	EndGlobalSection
 EndGlobal
