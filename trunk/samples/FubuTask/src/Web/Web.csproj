@@ -130,6 +130,7 @@
     <Compile Include="Config\PersistenceRegistry.cs" />
     <Compile Include="Core\Domain\Entity.cs" />
     <Compile Include="Config\WebRegistry.cs" />
+    <Compile Include="Core\Domain\Task.cs" />
     <Compile Include="Core\Domain\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -21,14 +21,7 @@ namespace FubuTask.Config
                         var actionName = config.ActionName;
                         return "{0}/{1}/{2}.spark".ToFormat(conv.ViewFileBasePath, controllerName, actionName);
                     };
-                });
 
-                x.ActionConventions(custom =>
-                {
-                    custom.Add<wire_up_JSON_URL_if_required>();
-                    custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
-                    custom.Add<wire_up_404_handler_URL>();
-                    custom.Add<wire_up_debug_handler_URL>();
                 });
 
                 // Default Behaviors for all actions -- ordered as they're executed
@@ -38,9 +31,19 @@ namespace FubuTask.Config
                     .Will<load_the_current_principal>()
                     .Will<execute_the_result>()
                     .Will<OutputAsRssOrAtomFeed>()
+                    .Will<output_as_json_if_requested>()
                     .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
                     .Will<OutputDebugInformation>()
                 );
+
+                x.ActionConventions(custom =>
+                {
+                    custom.Add<wire_up_JSON_URL>();
+                    custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
+                    custom.Add<wire_up_404_handler_URL>();
+                    custom.Add<wire_up_debug_handler_URL>();
+                });
+
 
                 x.AddControllerActions(a => a
                     .UsingTypesInTheSameAssemblyAs<ViewModel>(s =>
