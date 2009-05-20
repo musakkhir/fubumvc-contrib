@@ -23,6 +23,7 @@ namespace FubuMVC.Framework.NHibernate
             CurrentSession = _source.CreateSession();
             begin_new_transaction();
 
+            _isDisposed = false;
             _isInitialized = true;
         }
 
