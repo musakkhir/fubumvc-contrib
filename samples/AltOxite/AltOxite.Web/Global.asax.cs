@@ -31,10 +31,9 @@ namespace AltOxite.Web
 
                 x.ActionConventions( custom =>
                 {
-                    custom.Add<wire_up_JSON_URL_if_required>();
+                    custom.Add<wire_up_JSON_URL>();
                     custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
                     custom.Add<wire_up_404_handler_URL>();
-                    custom.Add<wire_up_debug_handler_URL>();
                 });
 
                 // Default Behaviors for all actions -- ordered as they're executed
@@ -50,21 +49,21 @@ namespace AltOxite.Web
 
                     .Will<execute_the_result>()
                     .Will<OutputAsRssOrAtomFeed>()
+                    .Will<output_as_json_if_requested>()
                     .Will<set_the_current_site_details_on_the_output_viewmodel>()
                     .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
-                    .Will<OutputDebugInformation>()
                 );
                 
                 // Automatic controller registration
                 /////////////////////////////////////////////////
-                x.AddControllerActions(a => a.UsingTypesInTheSameAssemblyAs<ViewModel>(types =>
-                   from t in types
-                   where t.Namespace.EndsWith("Web.Controllers")
-                         && t.Name.EndsWith("Controller")
-                   from m in t.GetMethods(BindingFlags.Public |
-                                    BindingFlags.Instance |
-                                    BindingFlags.DeclaredOnly)
-                   select m));
+                x.AddControllerActions(a => a
+                    .UsingTypesInTheSameAssemblyAs<ViewModel>(s =>
+                        s.SelectTypes(t =>
+                            t.Namespace.EndsWith("Web.Controllers") &&
+                            t.Name.EndsWith("Controller")
+                        )
+                    )
+                );
 
                 // Manual overrides
                 /////////////////////////////////////////////////
