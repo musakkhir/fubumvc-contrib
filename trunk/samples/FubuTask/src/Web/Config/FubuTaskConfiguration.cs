@@ -33,7 +33,6 @@ namespace FubuTask.Config
                     .Will<OutputAsRssOrAtomFeed>()
                     .Will<output_as_json_if_requested>()
                     .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
-                    .Will<OutputDebugInformation>()
                 );
 
                 x.ActionConventions(custom =>
@@ -41,9 +40,7 @@ namespace FubuTask.Config
                     custom.Add<wire_up_JSON_URL>();
                     custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
                     custom.Add<wire_up_404_handler_URL>();
-                    custom.Add<wire_up_debug_handler_URL>();
                 });
-
 
                 x.AddControllerActions(a => a
                     .UsingTypesInTheSameAssemblyAs<ViewModel>(s =>
