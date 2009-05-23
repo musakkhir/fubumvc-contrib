@@ -175,6 +175,7 @@
     <Compile Include="Web\DisplayModels\BlogPostLinkDisplay.cs" />
     <Compile Include="Web\DisplayModels\RecentPostsDisplay.cs" />
     <Compile Include="Web\DisplayModels\TagDisplay.cs" />
+    <Compile Include="Web\DisplayModels\TagPostDisplay.cs" />
     <Compile Include="Web\FeedConvertors\IndexViewModelFeedConvertor.cs" />
     <Compile Include="Web\Html\BlogPostHtmlExtension.cs" />
     <Compile Include="Web\Html\HtmlExtensions.cs" />

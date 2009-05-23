@@ -8,6 +8,17 @@ namespace Fohjin.Core.Web.Html
 {
     public static class BlogPostHtmlExtension
     {
+        public static string GetCommentsText(this IFohjinPage viewPage, TagPostDisplay post)
+        {
+           var commentCount = (post.Comments == null) ? 0 : post.Comments.Count();
+            return "<a href=\"{0}#comments\">{1}</a>"
+                .ToFormat(
+                    viewPage.UrlTo().PublishedPost(post),
+                   (commentCount == 1)
+                       ? "{0} comment".ToFormat(commentCount)
+                       : "{0} comments".ToFormat(commentCount));
+        }
+
         public static string GetCommentsText(this IFohjinPage viewPage, PostDisplay post)
         {
            var commentCount = (post.Comments == null) ? 0 : post.Comments.Count();

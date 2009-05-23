@@ -53,31 +53,26 @@ namespace Fohjin.Web
 
                 x.ActionConventions(custom =>
                 {
-                    custom.Add<wire_up_JSON_URL_if_required>();
                     custom.Add<wire_up_RSS_and_ATOM_URLs_if_required>();
                     custom.Add<wire_up_404_handler_URL>();
-                    custom.Add<wire_up_debug_handler_URL>();
                 });
 
                 // Default Behaviors for all actions -- ordered as they're executed
                 /////////////////////////////////////////////////
                 x.ByDefault.EveryControllerAction(d => d
                     .Will<access_the_database_through_a_unit_of_work>()
-                    //.Will<set_up_default_data_the_first_time_this_app_is_run>()
 
                     .Will<set_empty_default_user_on_the_output_viewmodel_to_make_sure_one_exists>()
                     .Will<load_the_current_principal>()
                     .Will<set_the_current_logged_in_user_on_the_output_viewmodel>()
                     .Will<set_user_from_http_cookie_if_current_user_is_not_authenticated>()
 
-                    .Will<get_recent_blog_posts>()
                     .Will<validate_input_view_model_using_convention_based_validation_rules_server_side>()
 
                     .Will<execute_the_result>()
+                    .Will<get_recent_blog_posts>()
                     .Will<OutputAsRssOrAtomFeed>()
                     .Will<set_the_current_site_details_on_the_output_viewmodel>()
-                    .Will<copy_viewmodel_from_input_to_output<ViewModel>>()
-                    .Will<OutputDebugInformation>()
                     );
                 
                 // Automatic controller registration
@@ -99,6 +94,8 @@ namespace Fohjin.Web
                         from method in type.GetMethods(publicDeclaredOnly)
                         select method
                 ));
+
+                x.OverrideConfigFor(HomeAction, config => config.AddOtherUrl("Home/Page/{Page}"));
 
                 //-- Make the primary URL for logout be "/logout" instead of "login/logout"
                 x.OverrideConfigFor(LogoutAction, config =>
@@ -125,6 +122,7 @@ namespace Fohjin.Web
                 x.OverrideConfigFor(TagIndexAction, config =>
                 {
                     config.PrimaryUrl = "tag/{Tag}";
+                    config.AddOtherUrl("tag/{Tag}/{Page}");
                 });
 
                 x.OverrideConfigFor(RedirectToOldBlogIndexAction, config =>
@@ -173,21 +171,21 @@ namespace Fohjin.Web
 
             ValidationConfig.Configure = x =>
             {
-                x.ByDefault.PropertiesMatching(property => !property.NameStartsWith("Optional") && 
+                x.ByDefault.PropertiesMatching(property => !property.Name.StartsWith("Optional") && 
                                                            !property.IsDeclaredIn<ViewModel>(), rule => 
                     rule.WillBeValidatedBy<IsRequired<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.NameContains("Email"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Email"), rule =>
                     rule.WillBeValidatedBy<IsEmail<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.NameContains("Url"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Url"), rule =>
                     rule.WillBeValidatedBy<IsUrl<CanBeAnyViewModel>>());
 
-                x.ByDefault.PropertiesMatching(property => property.NameContains("Answer"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("Answer"), rule =>
                     rule.WillBeValidatedBy<IsValidCaptcha<CanBeAnyViewModel>>(needs =>
-                        needs.NeedsAdditionalProperty(property => property.NameContains("Question"))));
+                        needs.NeedsAdditionalPropertyMatching(property => property.Name.Contains("Question"))));
 
-                x.ByDefault.PropertiesMatching(property => property.NameContains("TwitterUser"), rule =>
+                x.ByDefault.PropertiesMatching(property => property.Name.Contains("TwitterUser"), rule =>
                     rule.WillBeValidatedBy<IsValidTwitterUser<CanBeAnyViewModel>>());
 
                 x.AddViewModelsFromAssembly
@@ -203,7 +201,7 @@ namespace Fohjin.Web
         private static HtmlExpressionBase FohjinDefaultPartialHeader(object itemList, int totalCount)
         {
             GenericOpenTagExpression expr = new GenericOpenTagExpression("ul");
-            if (itemList is IEnumerable<PostDisplay>)
+            if (itemList is IEnumerable<PostDisplay> || itemList is IEnumerable<TagPostDisplay>)
             {
                 expr = new GenericOpenTagExpression("div");
                 expr.Class("blog_post");
@@ -223,14 +221,14 @@ namespace Fohjin.Web
 
         private static string FohjinDefaultPartialFooter(object itemList, int totalCount)
         {
-            if (itemList is IEnumerable<PostDisplay>) return "</div>";
+            if (itemList is IEnumerable<PostDisplay> || itemList is IEnumerable<TagPostDisplay>) return "</div>";
             return "</ul>";
         }
 
         private static HtmlExpressionBase FohjinDefaultPartialBeforeEachItem(object item, int index, int total)
         {
             GenericOpenTagExpression expr = new GenericOpenTagExpression("li");
-            if (item is PostDisplay)
+            if (item is PostDisplay || item is TagPostDisplay)
             {
                 expr = new GenericOpenTagExpression("div");
                 if (index == (total - 1)) expr.Class("last");
@@ -257,11 +255,12 @@ namespace Fohjin.Web
 
         private static string FohjinDefaultPartialAfterEachItem(object item, int index, int totalCount)
         {
-            if (item is PostDisplay) return "</div>";
+            if (item is PostDisplay || item is TagPostDisplay) return "</div>";
             if (item is CommentDisplay) return "</div>";
             return "</li>";
         }
 
+        private readonly Expression<Func<HomeController, object>> HomeAction = c => c.Index(null);
         private readonly Expression<Func<LoginController, object>> LogoutAction = c => c.Logout(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostIndexAction = c => c.Index(null);
         private readonly Expression<Func<BlogPostController, object>> BlogPostCommentAction = c => c.Comment(null);

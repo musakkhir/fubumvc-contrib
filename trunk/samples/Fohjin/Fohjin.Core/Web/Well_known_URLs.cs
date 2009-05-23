@@ -41,6 +41,16 @@ namespace Fohjin.Core.Web
                     post.Slug + "/comment").ToFullUrl();
         }
 
+        public static string PublishedPost(this IUrlResolver resolver, TagPostDisplay post)
+        {
+            // TODO: _resolver.UrlFor<BlogController>() + "/" + ...;
+            return ("~/blog/" +
+                    post.Published.Year + "/" +
+                    post.Published.Month + "/" +
+                    post.Published.Day + "/" +
+                    post.Slug).ToFullUrl();
+        }
+
         public static string PublishedPost(this IUrlResolver resolver, PostDisplay post)
         {
             // TODO: _resolver.UrlFor<BlogController>() + "/" + ...;
