@@ -19,6 +19,7 @@ public class LoggedInMenu : FohjinUserControl<ViewModel> { }
 public class LoggedOutMenu : FohjinUserControl<ViewModel> { }
 
 public class BlogPost : FohjinUserControl<PostDisplay> { }
+public class TagBlogPost : FohjinUserControl<TagPostDisplay> { }
 public class RecentBlogPosts : FohjinUserControl<RecentPostsDisplay> { }
 public class IsReading : FohjinUserControl<ViewModel> { }
 public class BlogPostLink : FohjinUserControl<BlogPostLinkDisplay> { }

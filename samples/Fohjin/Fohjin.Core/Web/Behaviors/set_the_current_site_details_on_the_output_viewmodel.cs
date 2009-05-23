@@ -12,18 +12,29 @@ namespace Fohjin.Core.Web.Behaviors
             _siteConfig = config;
         }
 
-        public void UpdateModel(ViewModel model)
+        public void UpdateInputModel(ViewModel model)
         {
             if (model == null) return;
 
             model.SiteName = _siteConfig.Name;
+        }
+
+        public void UpdateOutputModel(ViewModel model)
+        {
+            if (model == null) return;
+
             model.LanguageDefault = _siteConfig.LanguageDefault;
             model.SEORobots = _siteConfig.SEORobots;
         }
 
+        public override void PrepareInput<INPUT>(INPUT input)
+        {
+            UpdateInputModel(input as ViewModel);
+        }
+
         public override void ModifyOutput<OUTPUT>(OUTPUT output)
         {
-            UpdateModel(output as ViewModel);
+            UpdateOutputModel(output as ViewModel);
         }
     }
 }

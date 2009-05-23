@@ -45,7 +45,8 @@ namespace Fohjin.Core.Web.Controllers
             return new BlogPostViewModel
             {
                 Post = postDisplay,
-                Comment = new CommentFormDisplay(new Comment { User = user }, postDisplay)
+                Comment = new CommentFormDisplay(new Comment { User = user }, postDisplay),
+                SiteName = "{0} - {1}".ToFormat(inModel.SiteName, postDisplay.Title),
             };
         }
 
@@ -84,6 +85,7 @@ namespace Fohjin.Core.Web.Controllers
                             TwitterUserName = inModel.OptionalTwitterUserName,
                         }, 
                     }, postDisplay),
+                    SiteName = "{0} - {1}".ToFormat(inModel.SiteName, postDisplay.Title),
                     //ResultOverride = new RedirectResult(_resolver.PublishedPost(postDisplay) + "#leave_comment"),
                 };
                 bblo.Comment.ValidationResults.CloneFrom(inModel.ValidationResults);
@@ -111,7 +113,7 @@ namespace Fohjin.Core.Web.Controllers
     }
 
     [Serializable]
-    public class BlogPostCommentViewModel : ICanBeValidated<BlogPostCommentViewModel>
+    public class BlogPostCommentViewModel : ViewModel, ICanBeValidated<BlogPostCommentViewModel>
     {
         [Required]public int PostYear { get; set; }
         [Required]public int PostMonth { get; set; }

@@ -23,9 +23,9 @@ namespace Fohjin.Core.Web.Behaviors
             model.RecentPosts = new RecentPostsDisplay(recentPosts);
         }
 
-        public override void PrepareInput<INPUT>(INPUT input)
+        public override void ModifyOutput<OUTPUT>(OUTPUT output)
         {
-            UpdateModel(input as ViewModel);
+            UpdateModel(output as ViewModel);
         }
     }
 }

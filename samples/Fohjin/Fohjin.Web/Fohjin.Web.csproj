@@ -198,6 +198,7 @@
     <Content Include="Views\About\Index.aspx" />
     <Content Include="Views\PageNotFound\Index.aspx" />
     <Content Include="Views\Shared\BlogPostLink.ascx" />
+    <Content Include="Views\Shared\TagBlogPost.ascx" />
     <Content Include="Views\Shared\IsReading.ascx" />
     <Content Include="Views\Shared\RecentBlogPosts.ascx" />
   </ItemGroup>
