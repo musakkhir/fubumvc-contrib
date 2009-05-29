@@ -1,0 +1,24 @@
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		<div class="post">
+			<div class="title">
+				<h2><a href="#">Login</a></h2>
+			</div>
+			<div class="entry">
+				${FormFor<LoginController>(c=>c.Login(null))}
+					<fieldset>				
+						<h1 style="color: red; font-weight: bold;">${Model.Error}</h1>
+						<label for="Username">Username:</label> ${TextBoxFor(m => m.Username)}
+						<label for="Username">Password:</label> ${TextBoxFor(m => m.Password)}
+						<button type="submit">Submit</button>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end content -->
+	<br style="clear: both;" />
+</div>
+<!-- end page -->

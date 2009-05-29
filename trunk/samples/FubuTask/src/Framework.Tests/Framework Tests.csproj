@@ -90,7 +90,6 @@
     <Compile Include="Persistence\NHibernate\NHibernateUnitOfWorkTester.cs" />
     <Compile Include="Persistence\PersistenceSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\LoggedOnPrincipalTester.cs" />
     <Compile Include="Security\LoggedOnPrincipleFactoryTester.cs" />
   </ItemGroup>
   <ItemGroup>

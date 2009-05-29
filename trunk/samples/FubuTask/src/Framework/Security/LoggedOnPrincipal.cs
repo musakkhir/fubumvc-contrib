@@ -1,22 +1,19 @@
-using System.ComponentModel;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
 
 namespace FubuMVC.Framework.Security
 {
-	public class LoggedOnPrincipal<TUserId> : IPrincipal
+	public class LoggedOnPrincipal : IPrincipal
 	{
 		private readonly IIdentity _identity;
-		private readonly TUserId _userId;
-		private static LoggedOnPrincipal<TUserId> _currentStub;
+		private readonly string _username;
+		private static LoggedOnPrincipal _currentStub;
 
 		public LoggedOnPrincipal(IIdentity identity)
 		{
 			_identity = identity;
-			_userId = (TUserId) TypeDescriptor
-										.GetConverter(typeof (TUserId))
-										.ConvertFromString(_identity.Name);
+            _username = _identity.Name;
 		}
 
 		public bool IsInRole(string role)
@@ -26,10 +23,10 @@ namespace FubuMVC.Framework.Security
 			return true;
 		}
 
-		public TUserId UserId { get { return _userId; } }
+		public string Username{ get { return _username; } }
 		IIdentity IPrincipal.Identity { get { return _identity; } }
 
-		public static LoggedOnPrincipal<TUserId> StubCurrent(LoggedOnPrincipal<TUserId> principal)
+		public static LoggedOnPrincipal StubCurrent(LoggedOnPrincipal principal)
 		{
 			_currentStub = principal;
 			return principal;
@@ -40,7 +37,7 @@ namespace FubuMVC.Framework.Security
 			_currentStub = null;
 		}
 
-		public static LoggedOnPrincipal<TUserId> Current
+		public static LoggedOnPrincipal Current
 		{
 			get
 			{
@@ -48,10 +45,10 @@ namespace FubuMVC.Framework.Security
 
 				if (HttpContext.Current != null)
 				{
-					return HttpContext.Current.User as LoggedOnPrincipal<TUserId>;
+					return HttpContext.Current.User as LoggedOnPrincipal;
 				}
 
-				return Thread.CurrentPrincipal as LoggedOnPrincipal<TUserId>;
+				return Thread.CurrentPrincipal as LoggedOnPrincipal;
 			}
 		}
 	}

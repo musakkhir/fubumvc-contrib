@@ -3,11 +3,11 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Framework.Security
 {
-	public class LoggedOnPrincipleFactory<TUserId> : IPrincipalFactory
+	public class LoggedOnPrincipleFactory : IPrincipalFactory
     {
         public IPrincipal CreatePrincipal(IIdentity identity)
         {
-            return new LoggedOnPrincipal<TUserId>(identity);
+            return new LoggedOnPrincipal(identity);
         }
     }
 }

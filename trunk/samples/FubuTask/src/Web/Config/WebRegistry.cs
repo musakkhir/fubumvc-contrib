@@ -1,9 +1,11 @@
+using System.Web;
 using FubuMVC.Core.Controller.Config;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.View;
 using FubuMVC.Framework.Security;
 using FubuMVC.Framework.Spark;
 using FubuTask.Core.Domain;
+using FubuTask.Presentation.Services;
 using Spark;
 using Spark.FileSystem;
 using StructureMap.Configuration.DSL;
@@ -22,13 +24,13 @@ namespace FubuTask.Config
                     return folder;
                 });
 
-            ForRequestedType<ISparkSettings>().TheDefault.IsThis(new SparkSettings());
+            ForRequestedType<ISparkSettings>().TheDefault.IsThis(new SparkSettings().AddNamespace("FubuTask.Presentation.Controllers"));
 
             ForRequestedType<ISparkViewEngine>().TheDefault.Is.OfConcreteType<SparkViewEngine>()
                 .SetterDependency(e => e.Settings).IsTheDefault()
                 .SetterDependency(e => e.ViewFolder).IsTheDefault();
-            
 
+            ForRequestedType<IResponseStatusService>().TheDefault.Is.OfConcreteType<ResponseStatusService>();
 
             ForRequestedType<IViewRenderer>().TheDefault.Is.OfConcreteType<SparkViewRenderer>();
 
@@ -36,7 +38,7 @@ namespace FubuTask.Config
                 ctx => new SparkConventions(ctx.GetInstance<FubuConventions>()));
 
             ForRequestedType<IPrincipalFactory>()
-                .TheDefault.Is.OfConcreteType<LoggedOnPrincipleFactory<User>>();
+                .TheDefault.Is.OfConcreteType<LoggedOnPrincipleFactory>();
 
             //ForRequestedType<ISecurityDataService>().TheDefault.Is.OfConcreteType<SecurityDataService>();
         }
