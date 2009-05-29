@@ -21,10 +21,14 @@
 // limitations under the License.
 // 
 using System;
+using System.Linq.Expressions;
 using System.Web;
+using FubuMVC.Core.Controller.Config;
 using FubuMVC.Core.Html;
+using FubuMVC.Core.Html.Expressions;
 using FubuMVC.Core.View;
 using FubuMVC.Framework.Presentation.WebForms;
+using Microsoft.Practices.ServiceLocation;
 using Spark;
 
 namespace FubuMVC.Framework.Spark
@@ -70,6 +74,19 @@ namespace FubuMVC.Framework.Spark
         public string H(object value)
         {
             return HttpUtility.HtmlEncode(Convert.ToString(value));
+        }
+
+        public TextBoxExpression<TViewModel> TextBoxFor(Expression<Func<TViewModel, object>> expression)
+        {
+            return new TextBoxExpression<TViewModel>(Model, expression, "");
+        }
+
+        public FormExpression FormFor<TController>(Expression<Func<TController, object>> actionExpression)
+            where TController : class
+        {
+            var resolver = ServiceLocator.Current.GetInstance<IUrlResolver>();
+            var url = resolver.UrlFor(actionExpression);
+            return new FormExpression(url);
         }
     }
 }

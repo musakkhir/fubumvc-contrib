@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{391626F0-0F3C-46AF-B560-AE1211C37CE2}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -120,7 +120,10 @@
     <Content Include="images\img19.gif" />
     <Content Include="images\img20.gif" />
     <Content Include="images\spacer.gif" />
+    <None Include="Views\Admin\Index.spark" />
     <None Include="Views\Home\Index.spark" />
+    <None Include="Views\Login\Index.spark" />
+    <None Include="Views\PageNotFound\Index.spark" />
     <None Include="Views\Shared\Application.spark" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -136,6 +139,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Controllers\HomeController.cs" />
+    <Compile Include="Presentation\Controllers\LoginController.cs" />
+    <Compile Include="Presentation\Controllers\PageNotFoundController.cs" />
+    <Compile Include="Presentation\Controllers\AdminController.cs" />
+    <Compile Include="Presentation\Services\IResponseStatusService.cs" />
+    <Compile Include="Presentation\Services\ResponseStatusService.cs" />
     <Compile Include="Presentation\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,9 +186,6 @@
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
