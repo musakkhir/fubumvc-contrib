@@ -1,0 +1,82 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="FubuPage" priority="2" />
+      <Item value="HelloViewModel" priority="1" />
+      <Item value="Model" priority="3" />
+      <Item value="MasterPageFile" priority="0" />
+      <Item value="public" priority="0" />
+      <Item value="Guid" priority="0" />
+      <Item value="Views" priority="0" />
+      <Item value="this" priority="0" />
+      <Item value="prop" priority="0" />
+      <Item value="string" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:HelloWorld.Web.Controllers.Hello.HelloViewModel">
+      <Item value="Id" priority="2" />
+      <Item value="Text" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Guid">
+      <Item value="ToString" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:FubuMVC.Core.Registration.DSL.ViewExpression">
+      <Item value="TryToAttach" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:HelloWorld.Web.Shared.MainViewModel">
+      <Item value="Text" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:Hello.aspx.cs" caret="149" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:MainViewModel.Master.cs" caret="97" fromTop="4" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="387" fromTop="14" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Global.asax.cs" caret="361" fromTop="13" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master" caret="436" fromTop="10" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:Hello.aspx" caret="219" fromTop="1" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloController.cs" caret="293" fromTop="12" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master.cs" caret="149" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:HelloWorldFubuRegistry.cs" caret="284" fromTop="10" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloViewModel.cs" caret="138" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloWorldJSONViewModel.cs" caret="191" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Web.config" caret="126" fromTop="5" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="491" fromTop="21" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="980" fromTop="12" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="284" fromTop="3" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Web.config" caret="0" fromTop="41" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Web.config" caret="0" fromTop="40" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Web.config" caret="1888" fromTop="41" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:HelloWorldFubuRegistry.cs" caret="60" fromTop="1" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:HelloWorldFubuRegistry.cs" caret="472" fromTop="17" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="167" fromTop="6" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Bootstrapper.cs" caret="833" fromTop="29" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/f:Global.asax.cs" caret="361" fromTop="13" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master.cs" caret="124" fromTop="4" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master.cs" caret="149" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:MainViewModel.Master.cs" caret="97" fromTop="4" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:Hello.aspx.cs" caret="149" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master" caret="523" fromTop="17" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloWorldJSONViewModel.cs" caret="13" fromTop="0" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloController.cs" caret="384" fromTop="13" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloController.cs" caret="197" fromTop="8" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:HelloViewModel.cs" caret="138" fromTop="7" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Shared/f:Main.Master" caret="542" fromTop="13" />
+      <File id="7079C607-02A6-401C-BCB4-E48286137D70/d:Controllers/d:Hello/f:Hello.aspx" caret="219" fromTop="1" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+</Configuration>
